@@ -235,22 +235,6 @@ public class GameController {
      * A method called when no corresponding controller operation is implemented yet. This
      * should eventually be removed.
      */
-    public void finishButton() {
-        // XXX just for now to indicate that the actual method is not yet implemented
-        finishProgrammingPhase();
-        assert false;
-    }
-
-    public void exeProgButton() {
-        // XXX just for now to indicate that the actual method is not yet implemented
-        executePrograms();
-        assert false;
-    }
-
-    public void exeCurrRegButton() {
-        // XXX just for now to indicate that the actual method is not yet implemented
-        assert false;
-    }
 
     public void notImplemented() {
 
