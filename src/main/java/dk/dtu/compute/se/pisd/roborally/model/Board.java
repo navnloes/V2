@@ -211,5 +211,15 @@ public class Board extends Subject {
                 ", Step: " + getStep();
     }
 
+    private int count;
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count){
+        if (this.count != count){
+            this.count = count;
+        }
+    }
 }
