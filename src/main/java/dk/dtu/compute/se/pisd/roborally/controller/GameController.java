@@ -242,7 +242,9 @@ public class GameController {
     }
 
     public void exeProgButton() {
-
+        // XXX just for now to indicate that the actual method is not yet implemented
+        executePrograms();
+        assert false;
     }
 
     public void exeCurrRegButton() {
