@@ -250,4 +250,8 @@ public class GameController {
         assert false;
     }
 
+    public void notImplemented() {
+
+    }
+
 }
