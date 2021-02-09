@@ -241,7 +241,11 @@ public class GameController {
         assert false;
     }
 
-    public void notImplemented() {
+    public void exeProgButton() {
+
+    }
+
+    public void exeCurrRegButton() {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
     }
