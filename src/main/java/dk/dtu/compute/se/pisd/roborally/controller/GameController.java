@@ -202,6 +202,11 @@ public class GameController {
     // TODO Assignment V2
     public void moveForward(@NotNull Player player) {
 
+        if (player.getSpace() != null && player.board == player.getSpace().board) {
+            if (board.getNeighbour(player.getSpace(),player.getHeading()) != null && board.getNeighbour(player.getSpace(),player.getHeading()).getPlayer() == null) {
+                player.setSpace(board.getNeighbour(player.getSpace(),player.getHeading()));
+            }
+        }
     }
 
     // TODO Assignment V2
