@@ -202,11 +202,16 @@ public class GameController {
     // TODO Assignment V2
     public void moveForward(@NotNull Player player) {
 
-        if (player.getSpace() != null && player.board == player.getSpace().board) {
-            if (board.getNeighbour(player.getSpace(),player.getHeading()) != null && board.getNeighbour(player.getSpace(),player.getHeading()).getPlayer() == null) {
-                player.setSpace(board.getNeighbour(player.getSpace(),player.getHeading()));
+        Space current = player.getSpace();
+        if (current != null && player.board == current.board) {
+
+            Space target = board.getNeighbour(current,player.getHeading());
+
+            if (target != null && target.getPlayer() == null) {
+                player.setSpace(target);
             }
         }
+
     }
 
     // TODO Assignment V2
@@ -220,11 +225,36 @@ public class GameController {
     // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
 
+        if (player.getHeading() == Heading.SOUTH) {
+            player.setHeading(Heading.WEST);
+        }
+        else if (player.getHeading() == Heading.WEST) {
+            player.setHeading(Heading.NORTH);
+        }
+        else if (player.getHeading() == Heading.NORTH) {
+            player.setHeading(Heading.EAST);
+        }
+        else if (player.getHeading() == Heading.EAST) {
+            player.setHeading(Heading.SOUTH);
+        }
+
     }
 
     // TODO Assignment V2
     public void turnLeft(@NotNull Player player) {
 
+        if (player.getHeading() == (Heading.SOUTH)) {
+            player.setHeading(Heading.EAST);
+        }
+        else if (player.getHeading() == Heading.EAST) {
+            player.setHeading(Heading.NORTH);
+        }
+        else if (player.getHeading() == Heading.NORTH) {
+            player.setHeading(Heading.WEST);
+        }
+        else if (player.getHeading() == Heading.WEST) {
+            player.setHeading(Heading.SOUTH);
+        }
     }
 
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {

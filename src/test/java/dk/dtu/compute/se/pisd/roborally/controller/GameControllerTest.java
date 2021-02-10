@@ -75,9 +75,11 @@ class GameControllerTest {
 
     @Test
     void turnRight() {
+
     }
 
     @Test
     void turnLeft() {
+
     }
 }
