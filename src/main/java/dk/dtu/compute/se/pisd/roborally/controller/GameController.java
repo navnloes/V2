@@ -122,7 +122,7 @@ public class GameController {
 
     // XXX: V2
     public void executePrograms() {
-        board.setStepMode(false);
+        board.setStepMode(true);
         continuePrograms();
     }
 
@@ -202,11 +202,24 @@ public class GameController {
     // TODO Assignment V2
     public void moveForward(@NotNull Player player) {
 
+        Space current = player.getSpace();
+
+        if (current != null && player.board == current.board){
+            Space target = board.getNeighbour(current,player.getHeading());
+
+            if (target != null && target.getPlayer() == null) {
+                player.setSpace(target);
+            }
+
+        }
+
+
     }
 
     // TODO Assignment V2
+    //god idé at bruge moveForward så man ikke skal gensbruge kode
     public void fastForward(@NotNull Player player) {
-
+        moveForward(player);
     }
 
     // TODO Assignment V2
@@ -253,5 +266,6 @@ public class GameController {
     public void notImplemented() {
 
     }
+
 
 }
