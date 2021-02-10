@@ -122,7 +122,7 @@ public class GameController {
 
     // XXX: V2
     public void executePrograms() {
-        board.setStepMode(true);
+        board.setStepMode(false);
         continuePrograms();
     }
 
@@ -202,23 +202,18 @@ public class GameController {
     // TODO Assignment V2
     public void moveForward(@NotNull Player player) {
 
-        Space current = player.getSpace();
-
-        if (current != null && player.board == current.board){
-            Space target = board.getNeighbour(current,player.getHeading());
-
-            if (target != null && target.getPlayer() == null) {
-                player.setSpace(target);
+        if (player.getSpace() != null && player.board == player.getSpace().board) {
+            if (board.getNeighbour(player.getSpace(),player.getHeading()) != null && board.getNeighbour(player.getSpace(),player.getHeading()).getPlayer() == null) {
+                player.setSpace(board.getNeighbour(player.getSpace(),player.getHeading()));
             }
-
         }
-
-
     }
 
     // TODO Assignment V2
-    //god idé at bruge moveForward så man ikke skal gensbruge kode
     public void fastForward(@NotNull Player player) {
+
+        //røv grimt men fungere 5head
+        moveForward(player);
         moveForward(player);
     }
 
@@ -248,24 +243,9 @@ public class GameController {
      * A method called when no corresponding controller operation is implemented yet. This
      * should eventually be removed.
      */
-    public void finishButton() {
-        // XXX just for now to indicate that the actual method is not yet implemented
-        finishProgrammingPhase();
-        assert false;
-    }
-
-    public void exeProgButton() {
-
-    }
-
-    public void exeCurrRegButton() {
-        // XXX just for now to indicate that the actual method is not yet implemented
-        assert false;
-    }
 
     public void notImplemented() {
 
     }
-
 
 }
