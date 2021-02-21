@@ -217,11 +217,10 @@ public class PlayerView extends Tab implements ViewObserver {
 
                     if (ccField != null) {
                         CommandCard card = ccField.getCard();
-
                         if ( card != null ) {
                             for (Command option: card.command.getOptions()) {
                                 Button optionButton = new Button(option.displayName);
-                                optionButton.setOnAction( e -> gameController.notImplemented());
+                                optionButton.setOnAction( e -> gameController.executeCommandOptionAndContinue(option));
                                 optionButton.setDisable(false);
                                 playerInteractionPanel.getChildren().add(optionButton);
                             }
