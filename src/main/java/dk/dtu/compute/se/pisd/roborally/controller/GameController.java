@@ -204,6 +204,12 @@ public class GameController {
     }
 
     //TODO: V3 ExecuteCommandOption
+
+    /**
+     * When in INTERACTION Phase
+     * this method executes the option of the Command
+     * @param option of Command
+     */
     public void executeCommandOptionAndContinue(@NotNull Command option){
         Player currentPlayer = board.getCurrentPlayer();
         if (currentPlayer != null &&
