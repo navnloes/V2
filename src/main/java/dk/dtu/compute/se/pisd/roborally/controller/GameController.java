@@ -178,7 +178,11 @@ public class GameController {
     // XXX: V2
 
     /**
+     * Method executes specific current player's Command Card of this step
+     * (five steps altogether / five registers that can be executed)
+     * If Command Card is interactive, game Phase is set to INTERACTION
      *
+     * Then, the turn goes on to the next player, whose Command Card is activated
      */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
