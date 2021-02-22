@@ -31,10 +31,18 @@ public enum Heading {
 
     SOUTH, WEST, NORTH, EAST;
 
+    /**
+     * Method returns the direction to the right of the current heading
+     * @return the heading to the right of the current
+     */
     public Heading next() {
         return values()[(this.ordinal() + 1) % values().length];
     }
 
+    /**
+     * Method returns the direction to the left of the current heading
+     * @return the heading to the left of the current
+     */
     public Heading prev() {
         return values()[(this.ordinal() + values().length - 1) % values().length];
     }

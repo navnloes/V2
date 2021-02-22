@@ -48,6 +48,12 @@ public class Player extends Subject {
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
+    /**
+     * Constructor which assigns a programming field and random command cars
+     * @param board
+     * @param color of player's robot
+     * @param name of player
+     */
     public Player(@NotNull Board board, String color, @NotNull String name) {
         this.board = board;
         this.name = name;
@@ -66,10 +72,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * getter to return name
+     * @return name of player
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * setter to set name
+     * @param name of player
+     */
     public void setName(String name) {
         if (name != null && !name.equals(this.name)) {
             this.name = name;
@@ -80,10 +94,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * getter that returns color
+     * @return color of player
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * setter that returns color
+     * @param color of player
+     */
     public void setColor(String color) {
         this.color = color;
         notifyChange();
@@ -92,10 +114,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * getter that returns the player's current space
+     * @return space that the player's robot is occupying
+     */
     public Space getSpace() {
         return space;
     }
 
+    /**
+     * setter that places robot on a space
+     * @param space / target space
+     */
     public void setSpace(Space space) {
         Space oldSpace = this.space;
         if (space != oldSpace &&
@@ -111,10 +141,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * getter that returns the heading of player's robot
+     * @return 'Heading' / facing direction
+     */
     public Heading getHeading() {
         return heading;
     }
 
+    /**
+     * setter that sets the heading of player's robot
+     * @param heading / target heading direction
+     */
     public void setHeading(@NotNull Heading heading) {
         if (heading != this.heading) {
             this.heading = heading;
@@ -125,10 +163,20 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * getter to return a specific programming field register
+     * @param i no. that register has
+     * @return programming register number i
+     */
     public CommandCardField getProgramField(int i) {
         return program[i];
     }
 
+    /**
+     * getter to return a specific Command Card
+     * @param i no. of Command Card
+     * @return Command Card no. i
+     */
     public CommandCardField getCardField(int i) {
         return cards[i];
     }
