@@ -60,6 +60,11 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * This method begins the PROGRAMMING phase of the game
+     * random Command Cards are assigned to all players in the game
+     */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -83,6 +88,10 @@ public class GameController {
     }
 
     // XXX: V2
+    /**
+     * Method generates a random Command Card
+     * @return
+     */
     private CommandCard generateRandomCommandCard() {
         Command[] commands = Command.values();
         int random = (int) (Math.random() * commands.length);
@@ -90,6 +99,10 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Method ends Programming Phase and sets Phase to Activation
+     */
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -99,6 +112,11 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     *
+     * @param register int
+     */
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
             for (int i = 0; i < board.getPlayersNumber(); i++) {
