@@ -254,11 +254,14 @@ public class GameController {
     }
 
     //TODO: V3 ExecuteCommandOption
-
     /**
-     * When in INTERACTION Phase
-     * this method executes the Command Option
-     * @param option of Command
+     * When the game is in INTERACTION Phase
+     * The phase is set to ACTIVATION
+     * and the current player's CommandCard is executed
+     * - the turn moves on to the next player, til all steps are executed
+     *
+     * After all steps are executed, the game Phase returns to PROGRAMMING Phase
+     * @param option option of Command
      */
     public void executeCommandOptionAndContinue(@NotNull Command option){
         Player currentPlayer = board.getCurrentPlayer();
