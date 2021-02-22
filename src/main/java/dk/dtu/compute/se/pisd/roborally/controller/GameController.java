@@ -222,6 +222,12 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Command of specific CommandCard is executed
+     * @param player whose turn it is
+     * @param command to be executed
+     */
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
             // XXX This is a very simplistic way of dealing with some basic cards and
@@ -251,7 +257,7 @@ public class GameController {
 
     /**
      * When in INTERACTION Phase
-     * this method executes the option of the Command
+     * this method executes the Command Option
      * @param option of Command
      */
     public void executeCommandOptionAndContinue(@NotNull Command option){
@@ -279,6 +285,10 @@ public class GameController {
     }
 
     // TODO Assignment V2
+    /**
+     * Method moves player to 'Neighbour' / one space forward
+     * @param player to be moved
+     */
     public void moveForward(@NotNull Player player) {
 
         Space current = player.getSpace();
@@ -294,6 +304,11 @@ public class GameController {
     }
 
     // TODO Assignment V2
+
+    /**
+     * Method moves player two spaces forward
+     * @param player to be moved
+     */
     public void fastForward(@NotNull Player player) {
 
         //røv grimt men fungere 5head
@@ -302,40 +317,63 @@ public class GameController {
     }
 
     // TODO Assignment V2
+
+    /**
+     * Method turns player to the right of the current 'Heading' / facing
+     * @param player to be turned
+     */
     public void turnRight(@NotNull Player player) {
 
-        if (player.getHeading() == Heading.SOUTH) {
-            player.setHeading(Heading.WEST);
+        switch (player.getHeading()){
+            case SOUTH:
+                player.setHeading(Heading.WEST);
+                break;
+            case WEST:
+                player.setHeading(Heading.NORTH);
+                break;
+            case NORTH:
+                player.setHeading(Heading.EAST);
+                break;
+            case EAST:
+                player.setHeading(Heading.SOUTH);
+                break;
+            default:
+                player.setHeading(Heading.SOUTH);
         }
-        else if (player.getHeading() == Heading.WEST) {
-            player.setHeading(Heading.NORTH);
-        }
-        else if (player.getHeading() == Heading.NORTH) {
-            player.setHeading(Heading.EAST);
-        }
-        else if (player.getHeading() == Heading.EAST) {
-            player.setHeading(Heading.SOUTH);
-        }
-
     }
 
     // TODO Assignment V2
+    /**
+     * Method turns player to the left of the current 'Heading' / facing
+     * @param player to be turned
+     */
     public void turnLeft(@NotNull Player player) {
 
-        if (player.getHeading() == (Heading.SOUTH)) {
-            player.setHeading(Heading.EAST);
-        }
-        else if (player.getHeading() == Heading.EAST) {
-            player.setHeading(Heading.NORTH);
-        }
-        else if (player.getHeading() == Heading.NORTH) {
-            player.setHeading(Heading.WEST);
-        }
-        else if (player.getHeading() == Heading.WEST) {
-            player.setHeading(Heading.SOUTH);
+        switch (player.getHeading()){
+            case SOUTH:
+                player.setHeading(Heading.EAST);
+                break;
+            case EAST:
+                player.setHeading(Heading.NORTH);
+                break;
+            case NORTH:
+                player.setHeading(Heading.WEST);
+                break;
+            case WEST:
+                player.setHeading(Heading.SOUTH);
+                break;
+            default:
+                player.setHeading(Heading.SOUTH);
         }
     }
 
+    /**
+     *
+     * @param source Card, which is picked
+     * @param target Card, which is moved to CommandCard Field
+     *               -to be executed during ACTIVATION phase
+     * @return
+     */
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
         CommandCard targetCard = target.getCard();
