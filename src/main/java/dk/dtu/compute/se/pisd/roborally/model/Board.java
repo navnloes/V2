@@ -57,6 +57,12 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
+    /**
+     *Constructs a game board, by initialize the width and height, as well as from a given name
+     * @param width width of board
+     * @param height height of board
+     * @param boardName name of board
+     */
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
@@ -71,6 +77,12 @@ public class Board extends Subject {
         this.stepMode = false;
     }
 
+    /**
+     * Constructs a game board, by initialize the width and height,
+     * with an already given name
+     * @param width width of board
+     * @param height height of board
+     */
     public Board(int width, int height) {
         this(width, height, "defaultboard");
     }
@@ -89,6 +101,12 @@ public class Board extends Subject {
         }
     }
 
+    /** The class Space represent a specific position on the gameBoard
+     * This constructs a method to get the position, by initializing x and y coordinates
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return x and y, else null
+     */
     public Space getSpace(int x, int y) {
         if (x >= 0 && x < width &&
                 y >= 0 && y < height) {
@@ -109,6 +127,12 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * The class Player represent a player in the game
+     * This method gets a player by initializing an array of players
+     * @param i specific player number
+     * @return player number, or null
+     */
     public Player getPlayer(int i) {
         if (i >= 0 && i < players.size()) {
             return players.get(i);
@@ -143,6 +167,7 @@ public class Board extends Subject {
         return step;
     }
 
+
     public void setStep(int step) {
         if (step != this.step) {
             this.step = step;
@@ -161,6 +186,11 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * This construct a method to get the players number
+     * @param player player of the game
+     * @return player number, or -1
+     */
     public int getPlayerNumber(@NotNull Player player) {
         if (player.board == this) {
             return players.indexOf(player);
@@ -200,6 +230,10 @@ public class Board extends Subject {
         return getSpace(x, y);
     }
 
+    /**
+     * String representation of the current status of the game
+     * @return message with current phase, player and step
+     */
     public String getStatusMessage() {
         // this is actually a view aspect, but for making assignment V1 easy for
         // the students, this method gives a string representation of the current
