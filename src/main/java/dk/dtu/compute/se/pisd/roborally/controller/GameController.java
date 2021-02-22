@@ -323,23 +323,8 @@ public class GameController {
      * @param player to be turned
      */
     public void turnRight(@NotNull Player player) {
-
-        switch (player.getHeading()){
-            case SOUTH:
-                player.setHeading(Heading.WEST);
-                break;
-            case WEST:
-                player.setHeading(Heading.NORTH);
-                break;
-            case NORTH:
-                player.setHeading(Heading.EAST);
-                break;
-            case EAST:
-                player.setHeading(Heading.SOUTH);
-                break;
-            default:
-                player.setHeading(Heading.SOUTH);
-        }
+        Heading heading = player.getHeading();
+        player.setHeading(heading.next());
     }
 
     // TODO Assignment V2
@@ -348,23 +333,8 @@ public class GameController {
      * @param player to be turned
      */
     public void turnLeft(@NotNull Player player) {
-
-        switch (player.getHeading()){
-            case SOUTH:
-                player.setHeading(Heading.EAST);
-                break;
-            case EAST:
-                player.setHeading(Heading.NORTH);
-                break;
-            case NORTH:
-                player.setHeading(Heading.WEST);
-                break;
-            case WEST:
-                player.setHeading(Heading.SOUTH);
-                break;
-            default:
-                player.setHeading(Heading.SOUTH);
-        }
+        Heading heading = player.getHeading();
+        player.setHeading(heading.prev());
     }
 
     /**
