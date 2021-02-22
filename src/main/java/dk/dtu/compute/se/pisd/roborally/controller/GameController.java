@@ -114,8 +114,8 @@ public class GameController {
     // XXX: V2
 
     /**
-     *
-     * @param register int
+     * Method makes a specific register visible for all players, in ascending order
+     * @param register int for choosing number of register to make visible
      */
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
@@ -128,6 +128,10 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Method makes all registers on the Command Card Field invisible
+     */
     private void makeProgramFieldsInvisible() {
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
@@ -139,18 +143,32 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Method sets stepMode to false
+     * All registers are executed
+     */
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
     }
 
     // XXX: V2
+
+    /**
+     * StepMode is activated
+     * Registers are exectued step-by-step
+     */
     public void executeStep() {
         board.setStepMode(true);
         continuePrograms();
     }
 
     // XXX: V2
+
+    /**
+     * Loop that continues to execute all available registers, while game Phase is Activation
+     */
     private void continuePrograms() {
         do {
             executeNextStep();
@@ -158,6 +176,10 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     *
+     */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
