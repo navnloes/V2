@@ -29,6 +29,11 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
+
+/**
+ * This class will takes care of the card fields on the board and therefore extends subject
+ * as the observer that will notifies the view when it is changed
+ */
 public class CommandCardField extends Subject {
 
     final public Player player;

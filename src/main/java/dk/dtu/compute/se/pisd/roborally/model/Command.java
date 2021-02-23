@@ -31,6 +31,13 @@ import java.util.List;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
+
+/**
+ * The public enum Command is a simple list of commands which are used by the CommandCards
+ * This will be expanded as we will be adding a lot of new commands.
+ */
+
+
 public enum Command {
 
     // This is a very simplistic way of realizing different commands.

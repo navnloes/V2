@@ -30,6 +30,11 @@ import org.jetbrains.annotations.NotNull;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
+
+
+/**
+ * This class will converts the commands from the enum Command to an CommandCard-object and gives it a name as a string
+ */
 public class CommandCard extends Subject {
 
     final public Command command;

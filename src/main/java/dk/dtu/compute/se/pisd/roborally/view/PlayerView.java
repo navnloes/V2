@@ -38,6 +38,10 @@ import org.jetbrains.annotations.NotNull;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
+
+/**
+ * The cards and buttons are displayed to the player
+ */
 public class PlayerView extends Tab implements ViewObserver {
 
     private Player player;
