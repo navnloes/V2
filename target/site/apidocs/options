@@ -1,0 +1,24 @@
+-classpath
+'C:/Users/Bruger/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar;C:/Users/Bruger/.m2/repository/mysql/mysql-connector-java/8.0.11/mysql-connector-java-8.0.11.jar;C:/Users/Bruger/.m2/repository/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar;C:/Users/Bruger/.m2/repository/com/google/guava/guava/19.0/guava-19.0.jar;C:/Users/Bruger/.m2/repository/org/openjfx/javafx-controls/15.0.1/javafx-controls-15.0.1.jar;C:/Users/Bruger/.m2/repository/org/openjfx/javafx-controls/15.0.1/javafx-controls-15.0.1-win.jar;C:/Users/Bruger/.m2/repository/org/openjfx/javafx-graphics/15.0.1/javafx-graphics-15.0.1.jar;C:/Users/Bruger/.m2/repository/org/openjfx/javafx-graphics/15.0.1/javafx-graphics-15.0.1-win.jar;C:/Users/Bruger/.m2/repository/org/openjfx/javafx-base/15.0.1/javafx-base-15.0.1.jar;C:/Users/Bruger/.m2/repository/org/openjfx/javafx-base/15.0.1/javafx-base-15.0.1-win.jar'
+-encoding
+'UTF-8'
+-overview
+'C:/Users/Bruger/IdeaProjects/V2/src/main/java/dk/dtu/compute/se/pisd/overview.html'
+-public
+-sourcepath
+'C:/Users/Bruger/IdeaProjects/V2/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2021. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/Bruger/IdeaProjects/V2/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'roborally 1.1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'roborally 1.1.0-SNAPSHOT API'
