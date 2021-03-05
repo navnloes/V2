@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -291,7 +292,7 @@ public class GameController {
     public void moveToSpace(
             @NotNull Player player,
             @NotNull Space space,
-            @NotNull Heading heading){
+            @NotNull Heading heading) throws ImpossibleMoveException {
 
         Player other = space.getPlayer();
         if (other != null) {
@@ -300,7 +301,7 @@ public class GameController {
             if (target != null) {
                 moveToSpace(other, target, heading);
             } else {
-
+                throw new ImpossibleMoveException(player, space, heading);
             }
         }
         player.setSpace(space);
@@ -322,8 +323,8 @@ public class GameController {
             if (target != null) {
                 try {
                     moveToSpace(player, target, heading);
-                } catch (Exception e){
-
+                } catch (ImpossibleMoveException e){
+                    //
                 }
             }
         }
