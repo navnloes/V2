@@ -34,6 +34,7 @@ public class GameController {
 
     final public Board board;
 
+
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -287,6 +288,25 @@ public class GameController {
         }
     }
 
+    public void moveToSpace(
+            @NotNull Player player,
+            @NotNull Space space,
+            @NotNull Heading heading){
+
+        Player other = space.getPlayer();
+        if (other != null) {
+            Space target = board.getNeighbour(space, heading);
+
+            if (target != null) {
+                moveToSpace(other, target, heading);
+            } else {
+
+            }
+        }
+        player.setSpace(space);
+    }
+
+
     // TODO Assignment V2
     /**
      * Method moves player to 'Neighbour' / one space forward
@@ -296,11 +316,15 @@ public class GameController {
 
         Space current = player.getSpace();
         if (current != null && player.board == current.board) {
+            Heading heading = player.getHeading();
+            Space target = board.getNeighbour(current, heading);
 
-            Space target = board.getNeighbour(current,player.getHeading());
+            if (target != null) {
+                try {
+                    moveToSpace(player, target, heading);
+                } catch (Exception e){
 
-            if (target != null && target.getPlayer() == null) {
-                player.setSpace(target);
+                }
             }
         }
 
