@@ -97,17 +97,4 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    //TODO: implementering??
-    public void addWall(){
-        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setStroke(Color.RED);
-        gc.setLineWidth(4);
-        gc.setLineCap(StrokeLineCap.ROUND);
-
-        gc.strokeLine(2, SPACE_HEIGHT-2,
-                SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-        this.getChildren().add(canvas);
-    }
-
 }
