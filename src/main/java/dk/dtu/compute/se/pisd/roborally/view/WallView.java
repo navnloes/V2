@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class WallView extends SpaceView{
 
     //TODO: vægge
-    public WallView(@NotNull Space space) {
+    public WallView(@NotNull Space space, int i) {
         super(space);
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -18,8 +18,15 @@ public class WallView extends SpaceView{
         gc.setLineWidth(10);
         gc.setLineCap(StrokeLineCap.ROUND);
 
-        gc.strokeLine(2, SPACE_HEIGHT-2,SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-        this.getChildren().add(canvas);
+        if (i == 1) {
+            gc.strokeLine(2, SPACE_HEIGHT -2,
+                    SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+            this.getChildren().add(canvas); }
+
+        else if (i == 0) {
+            gc.strokeLine(2, SPACE_HEIGHT * 0,
+                    SPACE_WIDTH * 0, SPACE_HEIGHT - 2);
+            this.getChildren().add(canvas); }
     }
 
 }
