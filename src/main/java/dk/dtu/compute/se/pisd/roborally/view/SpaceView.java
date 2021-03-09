@@ -64,7 +64,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         } else {
             this.setStyle("-fx-background-color: hotpink;");
         }
-
         // updatePlayer();
 
         // This space view should listen to changes of the space
@@ -96,6 +95,19 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (subject == this.space) {
             updatePlayer();
         }
+    }
+
+    //TODO: implementering??
+    public void addWall(){
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(4);
+        gc.setLineCap(StrokeLineCap.ROUND);
+
+        gc.strokeLine(2, SPACE_HEIGHT-2,
+                SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+        this.getChildren().add(canvas);
     }
 
 }
