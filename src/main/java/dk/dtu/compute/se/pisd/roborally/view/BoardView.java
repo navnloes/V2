@@ -25,6 +25,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Phase;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
@@ -79,7 +80,9 @@ public class BoardView extends VBox implements ViewObserver {
             }
         }
 
-        wallLine(4,4);
+        horizontalLine(4,5);
+        verticalLine(4,5);
+
 
         board.attach(this);
         update(board);
@@ -120,14 +123,23 @@ public class BoardView extends VBox implements ViewObserver {
 
     }
 
-    public void wallLine(int x, int y){
+
+    public void horizontalLine(int x, int y){
             Space space = board.getSpace(x, y);
-            WallView wallView = new WallView(space);
+            WallView wallView = new WallView(space, 1);
             walls[x][y] = wallView;
             mainBoardPane.add(wallView, x, y);
             wallView.setOnMouseClicked(spaceEventHandler);
     }
 
+    public void verticalLine(int x, int y){
+          Space space = board.getSpace(x, y);
+          WallView wallView = new WallView(space, 0);
+          walls[x][y] = wallView;
+          mainBoardPane.add(wallView, x, y);
+          wallView.setOnMouseClicked(spaceEventHandler);
 
+
+    }
 
 }
