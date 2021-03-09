@@ -80,15 +80,8 @@ public class BoardView extends VBox implements ViewObserver {
             }
         }
 
-        for (int x = 0; x < board.width; x++) {
-            for (int y = 0; y < board.height; y++) {
-                Space space = board.getSpace(x, y);
-                WallView wallView = new WallView(space);
-                walls[x][y] = wallView;
-                mainBoardPane.add(wallView, x, y);
-                wallView.setOnMouseClicked(spaceEventHandler);
-            }
-        }
+        //horizontalLine(4,4);
+        vertical(7,7);
 
         board.attach(this);
         update(board);
@@ -128,5 +121,29 @@ public class BoardView extends VBox implements ViewObserver {
         }
 
     }
+
+    public void vertical(int x, int y0){
+        for (int y = 0; y < y0; y++) {
+                Space space = board.getSpace(x, y);
+                WallView wallView = new WallView(space);
+                walls[x][y] = wallView;
+                mainBoardPane.add(wallView, x, y);
+                wallView.setOnMouseClicked(spaceEventHandler);
+
+        }
+    }
+
+    public void horizontalLine(int x0, int y){
+        for (int x = 0; x < x0; x++) {
+            Space space = board.getSpace(x, y);
+            WallView wallView = new WallView(space);
+            walls[x][y] = wallView;
+            mainBoardPane.add(wallView, x, y);
+            wallView.setOnMouseClicked(spaceEventHandler);
+
+        }
+    }
+
+
 
 }
