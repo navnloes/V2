@@ -39,4 +39,8 @@ public class WallCollection {
         }
         return exists;
     }
+
+    public List<Wall> getMyCollection(){
+        return myCollection;
+    }
 }

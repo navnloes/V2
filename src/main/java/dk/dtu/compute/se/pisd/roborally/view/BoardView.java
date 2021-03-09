@@ -40,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 public class BoardView extends VBox implements ViewObserver {
 
     private Board board;
+    Space space;
 
     private GridPane mainBoardPane;
     private SpaceView[][] spaces;
@@ -69,7 +70,7 @@ public class BoardView extends VBox implements ViewObserver {
 
         for (int x = 0; x < board.width; x++) {
             for (int y = 0; y < board.height; y++) {
-                Space space = board.getSpace(x, y);
+                space = board.getSpace(x, y);
                 SpaceView spaceView = new SpaceView(space);
                 spaces[x][y] = spaceView;
                 mainBoardPane.add(spaceView, x, y);
@@ -77,9 +78,17 @@ public class BoardView extends VBox implements ViewObserver {
             }
         }
 
-        horizontalLine(0,0);
+
         WallCollection.getInstance().addWall(new Wall(0,1,1,1));
+        WallCollection.getInstance().addWall(new Wall(3,3,3,4));
+        WallCollection.getInstance().addWall(new Wall(1,1,1,2));
+
+        for (Wall wall : WallCollection.getInstance().getMyCollection()){
+            horizontalLine(wall.x1(),wall.y1());
+            verticalLine(wall.x2(), wall.y2());
+        }
         //verticalLine(4,5);
+
 
 
         board.attach(this);
@@ -121,10 +130,11 @@ public class BoardView extends VBox implements ViewObserver {
 
     }
 
+    //TODO: husk
 
     public void horizontalLine(int x, int y){
             Space space = board.getSpace(x, y);
-            WallView wallView = new WallView(space);
+            WallView wallView = new WallView(space, Direction.HORIZONTAL);
             walls[x][y] = wallView;
             mainBoardPane.add(wallView, x, y);
             wallView.setOnMouseClicked(spaceEventHandler);
@@ -132,12 +142,12 @@ public class BoardView extends VBox implements ViewObserver {
 
     public void verticalLine(int x, int y){
           Space space = board.getSpace(x, y);
-          WallView wallView = new WallView(space);
+          WallView wallView = new WallView(space, Direction.VERTICAL);
           walls[x][y] = wallView;
           mainBoardPane.add(wallView, x, y);
           wallView.setOnMouseClicked(spaceEventHandler);
 
-
     }
+
 
 }
