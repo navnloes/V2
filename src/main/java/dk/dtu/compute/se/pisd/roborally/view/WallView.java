@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class WallView extends SpaceView{
 
+    //TODO: vægge
     public WallView(@NotNull Space space) {
         super(space);
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
