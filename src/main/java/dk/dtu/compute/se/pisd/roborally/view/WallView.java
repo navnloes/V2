@@ -14,12 +14,11 @@ public class WallView extends SpaceView{
         super(space);
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setStroke(Color.RED);
-        gc.setLineWidth(4);
+        gc.setStroke(Color.DARKGREEN);
+        gc.setLineWidth(10);
         gc.setLineCap(StrokeLineCap.ROUND);
 
-        gc.strokeLine(2, SPACE_HEIGHT-2,
-                SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+        gc.strokeLine(2, SPACE_HEIGHT-2,SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
         this.getChildren().add(canvas);
     }
 
