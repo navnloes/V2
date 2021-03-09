@@ -11,10 +11,6 @@ public class WallView extends SpaceView{
 
     public WallView(@NotNull Space space) {
         super(space);
-    }
-
-    //TODO: implementering??
-    public void WallView(){
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.RED);
@@ -25,4 +21,5 @@ public class WallView extends SpaceView{
                 SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
         this.getChildren().add(canvas);
     }
+
 }
