@@ -304,6 +304,10 @@ public class GameController {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
+
+        if (WallCollection.getInstance().wallExist(space.x, space.y, space.x + 1, space.y)){
+            throw new ImpossibleMoveException(player, space, heading);
+        }
         player.setSpace(space);
     }
 
