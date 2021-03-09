@@ -26,7 +26,7 @@ public class WallView extends SpaceView {
         gc.setStroke(Color.DARKGREEN);
         gc.setLineWidth(10);
         gc.setLineCap(StrokeLineCap.ROUND);
-        //husk at tilføje variabel i for kristoffer
+
         if(dir == Direction.HORIZONTAL){
             gc.strokeLine(2, SPACE_HEIGHT - 2,
                     SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
