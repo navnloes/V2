@@ -15,7 +15,11 @@ public class Wall extends Subject {
         this.x = x;
         this.y = y;
         this.heading = heading;
-        hit = false;
+        hit = true;
+    }
+
+    public void hit(){
+
     }
 
 }
