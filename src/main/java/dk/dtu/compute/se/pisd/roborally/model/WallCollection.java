@@ -1,8 +1,10 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+
 import java.util.*;
 
-public class WallCollection {
+public class WallCollection extends Subject {
 
     private List<Wall> myCollection;
     public static WallCollection wallCollection;
@@ -28,11 +30,10 @@ public class WallCollection {
         boolean exists = false;
 
         for (Wall wall : myCollection){
-           coordinateArray = wall.getCoordinates();
-           if (coordinateArray[0] == x1 &&
-               coordinateArray[1] == y1 &&
-                   coordinateArray[2] == x2 &&
-                   coordinateArray[3] == y2){
+           if (wall.x1() == x1 &&
+               wall.y1() == y1 &&
+                   wall.x2() == x2 &&
+                   wall.y2() == y2){
                exists = true;
                break;
            }

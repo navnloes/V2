@@ -15,7 +15,6 @@ enum Direction { HORIZONTAL, VERTICAL}
 
 public class WallView extends SpaceView {
 
-    //TODO: vægge
     public WallView(@NotNull Space space, Direction dir) {
         super(space);
         List<Wall> walls = WallCollection.getInstance().getMyCollection();
@@ -35,21 +34,6 @@ public class WallView extends SpaceView {
                     0, SPACE_HEIGHT - 2);
         }
         this.getChildren().add(canvas);
-
-        /*
-        if (i == 1) {
-            gc.strokeLine(2, SPACE_HEIGHT -2,
-                    SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-            this.getChildren().add(canvas); }
-
-        else if (i == 0) {
-            gc.strokeLine(2, SPACE_HEIGHT * 0,
-                    SPACE_WIDTH * 0, SPACE_HEIGHT - 2);
-            this.getChildren().add(canvas); }
-
-
-    }
-    */
 
     }
 }
