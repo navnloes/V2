@@ -79,7 +79,7 @@ public class BoardView extends VBox implements ViewObserver {
         }
 
 
-        WallCollection.getInstance().addWall(new Wall(0,1,1,1));
+        WallCollection.getInstance().addWall(new Wall(0,0,0,1));
 
         for (Wall wall : WallCollection.getInstance().getMyCollection()){
             horizontalLine(wall.x1(),wall.y1());

@@ -304,8 +304,7 @@ public class GameController {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
-
-        if (WallCollection.getInstance().wallExist(space.x, space.y, space.x + 1, space.y)){
+        if (WallCollection.getInstance().isWallBlocking(player.getSpace().x, player.getSpace().y, space.x, space.y)){
             throw new ImpossibleMoveException(player, space, heading);
         }
         player.setSpace(space);
