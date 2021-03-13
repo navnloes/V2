@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -34,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 public class GameController {
 
     final public Board board;
+    CheckPointCollection checkPointCollection = new CheckPointCollection();
 
 
     public GameController(@NotNull Board board) {
@@ -308,6 +310,11 @@ public class GameController {
         if (wallBlocks){
             throw new ImpossibleMoveException(player, space, heading);
         }
+        boolean isCheckPoint = checkPointCollection.isCheckPoint(space.x,space.y);
+        if (isCheckPoint){
+
+        }
+
 
         player.setSpace(space);
     }

@@ -201,7 +201,6 @@ public class Player extends Subject {
 
     public void arrivedCheckPoint(CheckPointActionField checkPointActionField){
 
-        if (space.x == checkPointActionField.x && space.y == checkPointActionField.y){
             int id = checkPointActionField.id();
             switch (id) {
                 case 0:
@@ -226,7 +225,17 @@ public class Player extends Subject {
                     System.out.println("bug");
 
             }
-        }
+    }
 
+    public int getCheckPointToken(){
+        return checkPointToken;
+    }
+
+    public void setCheckPointToken(int i){
+        checkPointToken = i;
+    }
+
+    public boolean getWinner(){
+        return winner;
     }
 }
