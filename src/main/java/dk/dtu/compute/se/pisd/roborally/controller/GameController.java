@@ -310,13 +310,13 @@ public class GameController {
         if (wallBlocks){
             throw new ImpossibleMoveException(player, space, heading);
         }
-        boolean isCheckPoint = checkPointCollection.isCheckPoint(space.x,space.y);
-        if (isCheckPoint){
-
-        }
-
 
         player.setSpace(space);
+
+        boolean isCheckPoint = checkPointCollection.isCheckPoint(space.x,space.y);
+        if (isCheckPoint){
+            player.arrivedCheckPoint(player.getSpace());
+        }
     }
 
 
