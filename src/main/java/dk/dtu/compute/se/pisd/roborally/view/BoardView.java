@@ -136,7 +136,7 @@ public class BoardView extends VBox implements ViewObserver {
 
     public void horizontalLine(int x, int y){
             Space space = board.getSpace(x, y);
-            WallView wallView = new WallView(space, WallView.Direction.HORIZONTAL);
+            WallView wallView = new WallView(space, Direction.HORIZONTAL);
             walls[x][y] = wallView;
             mainBoardPane.add(wallView, x, y);
             wallView.setOnMouseClicked(spaceEventHandler);
@@ -144,7 +144,7 @@ public class BoardView extends VBox implements ViewObserver {
 
     public void verticalLine(int x, int y){
           Space space = board.getSpace(x, y);
-          WallView wallView = new WallView(space, WallView.Direction.VERTICAL);
+          WallView wallView = new WallView(space,Direction.VERTICAL);
           walls[x][y] = wallView;
           mainBoardPane.add(wallView, x, y);
           wallView.setOnMouseClicked(spaceEventHandler);

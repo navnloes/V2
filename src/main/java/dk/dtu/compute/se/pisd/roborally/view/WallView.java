@@ -12,8 +12,6 @@ import java.util.List;
 
 public class WallView extends SpaceView {
 
-    public enum Direction {HORIZONTAL, VERTICAL};
-
     public WallView(@NotNull Space space, Direction dir) {
         super(space);
         List<Wall> walls = WallCollection.getInstance().getMyCollection();
@@ -28,7 +26,7 @@ public class WallView extends SpaceView {
         if(dir == Direction.HORIZONTAL){
             gc.strokeLine(2, SPACE_HEIGHT - 2,
                     SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-        } else {
+        } else if (dir == Direction.VERTICAL){
             gc.strokeLine(2, 0,
                     0, SPACE_HEIGHT - 2);
         }
