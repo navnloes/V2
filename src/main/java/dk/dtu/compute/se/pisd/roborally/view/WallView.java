@@ -14,7 +14,6 @@ public class WallView extends SpaceView {
 
     public WallView(@NotNull Space space, Direction dir) {
         super(space);
-        List<Wall> walls = WallCollection.getInstance().getMyCollection();
 
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();

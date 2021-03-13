@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
 import org.jetbrains.annotations.NotNull;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
@@ -47,6 +48,11 @@ public class Player extends Subject {
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
+    private int checkPointToken;
+
+    private boolean[] checkPointArray = {false, false, false};
+
+    private boolean winner;
 
     /**
      * Constructor which assigns a programming field and random command cars
@@ -70,6 +76,11 @@ public class Player extends Subject {
         for (int i = 0; i < cards.length; i++) {
             cards[i] = new CommandCardField(this);
         }
+
+        checkPointToken = 0;
+        winner = false;
+
+
     }
 
     /**
@@ -181,4 +192,41 @@ public class Player extends Subject {
         return cards[i];
     }
 
+    public void addCheckPointToken(){
+        checkPointToken  = checkPointToken + 1;
+        if (checkPointToken == 3){
+            winner = true;
+        }
+    }
+
+    public void arrivedCheckPoint(CheckPointActionField checkPointActionField){
+
+        if (space.x == checkPointActionField.x && space.y == checkPointActionField.y){
+            int id = checkPointActionField.id();
+            switch (id) {
+                case 0:
+                    if (checkPointArray[0] == false){
+                        addCheckPointToken();
+                    }
+                    checkPointArray[0] = true;
+                    break;
+                case 1:
+                    if (checkPointArray[1] == false){
+                        addCheckPointToken();
+                    }
+                    checkPointArray[1] = true;
+                    break;
+                case 2:
+                    if (checkPointArray[2] == false){
+                        addCheckPointToken();
+                    }
+                    checkPointArray[2] = true;
+                    break;
+                default:
+                    System.out.println("bug");
+
+            }
+        }
+
+    }
 }

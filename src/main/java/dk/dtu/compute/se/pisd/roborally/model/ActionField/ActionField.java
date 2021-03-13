@@ -11,7 +11,6 @@ public abstract class ActionField extends Subject {
     public final int x;
     public final int y;
     public final String msg;
-    private Player player;
 
     public ActionField (Board board, String name,int x, int y, String msg){
         this.board = board;
@@ -19,10 +18,10 @@ public abstract class ActionField extends Subject {
         this.x = x;
         this.y = y;
         this.msg = msg;
-        player = null;
 
     }
 
-    public abstract void performFieldAction();
+    public abstract int x();
+    public abstract int y();
 
 }

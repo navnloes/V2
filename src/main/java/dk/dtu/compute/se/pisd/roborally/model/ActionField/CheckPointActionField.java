@@ -4,8 +4,11 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 
 public class CheckPointActionField extends ActionField {
 
-    public CheckPointActionField(Board board, String name, int x, int y, String msg){
+    int id;
+
+    public CheckPointActionField(Board board, String name, int x, int y, String msg, int id){
         super(board, name, x, y, msg);
+        this.id = id;
     }
 
     public int x(){
@@ -16,8 +19,9 @@ public class CheckPointActionField extends ActionField {
         return y;
     }
 
-    @Override
-    public void performFieldAction() {
-
+    public int id(){
+        return id;
     }
+
+
 }
