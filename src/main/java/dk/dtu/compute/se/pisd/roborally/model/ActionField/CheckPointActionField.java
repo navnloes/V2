@@ -1,21 +1,23 @@
 package dk.dtu.compute.se.pisd.roborally.model.ActionField;
 
-public class CheckPointActionField {
+import dk.dtu.compute.se.pisd.roborally.model.Board;
 
-    private final int x1;
-    private final int y1;
+public class CheckPointActionField extends ActionField {
 
-    public CheckPointActionField(int x1, int y1){
-        this.x1 = x1;
-        this.y1 = y1;
+    public CheckPointActionField(Board board, String name, int x, int y, String msg){
+        super(board, name, x, y, msg);
     }
 
-    public int x1(){
-        return x1;
+    public int x(){
+        return x;
     }
 
-    public int x2(){
-        return  y1;
+    public int y(){
+        return y;
     }
 
+    @Override
+    public void performFieldAction() {
+
+    }
 }

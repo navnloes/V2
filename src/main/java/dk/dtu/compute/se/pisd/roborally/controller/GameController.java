@@ -308,6 +308,7 @@ public class GameController {
         if (wallBlocks){
             throw new ImpossibleMoveException(player, space, heading);
         }
+
         player.setSpace(space);
     }
 
