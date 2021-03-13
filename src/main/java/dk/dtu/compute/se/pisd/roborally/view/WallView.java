@@ -12,6 +12,8 @@ import java.util.List;
 
 public class WallView extends SpaceView {
 
+    public enum Direction {HORIZONTAL, VERTICAL};
+
     public WallView(@NotNull Space space, Direction dir) {
         super(space);
         List<Wall> walls = WallCollection.getInstance().getMyCollection();
