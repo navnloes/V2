@@ -45,7 +45,7 @@ class PlayerTest {
     }
 
     @Test
-    void arrivedCheckPoint() {
+    void winnerWithThreeTokens() {
 
         Player player = new Player(gameController.board, "blue", "Blue");
 
@@ -53,7 +53,30 @@ class PlayerTest {
         player.addCheckPointToken();
         player.addCheckPointToken();
 
-        assertEquals(player.getWinner(), true);
+        assertTrue(player.getWinner());
 
     }
+
+    @Test
+    void arrivedCheckPoint() {
+        Player player = new Player(gameController.board, "blue", "Blue");
+
+        Space s1 = new Space(gameController.board, 3,3);
+        Space s2 = new Space(gameController.board, 1,6);
+        Space s3 = new Space(gameController.board, 0,8);
+
+        CheckPointActionField c1 = new CheckPointActionField(gameController.board, "blue",3,3,"hej",1);
+        CheckPointActionField c2 = new CheckPointActionField(gameController.board, "blue",1,6,"hej",2);
+        CheckPointActionField c3 = new CheckPointActionField(gameController.board, "blue",0,8,"hej",3);
+
+
+        player.arrivedCheckPoint(s1);
+        player.arrivedCheckPoint(s2);
+        player.arrivedCheckPoint(s3);
+
+        assertTrue(player.getWinner());
+
+    }
+
+
 }

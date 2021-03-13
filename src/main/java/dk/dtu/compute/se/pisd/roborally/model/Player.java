@@ -201,7 +201,7 @@ public class Player extends Subject {
 
     public void arrivedCheckPoint(Space space){
 
-            int id = board.getCheckPoint().id();
+            int id = board.getCheckPointActionField().id();
 
             switch (id) {
                 case 0:

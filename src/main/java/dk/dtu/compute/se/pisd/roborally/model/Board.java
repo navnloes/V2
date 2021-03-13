@@ -259,7 +259,8 @@ public class Board extends Subject {
         }
     }
 
-    public CheckPointActionField getCheckPoint(){
+    public CheckPointActionField getCheckPointActionField(){
         return checkPointActionField;
     }
+
 }
