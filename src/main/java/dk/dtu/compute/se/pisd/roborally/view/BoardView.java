@@ -80,12 +80,16 @@ public class BoardView extends VBox implements ViewObserver {
 
 
         //TODO: skal flyttes til en controller af en art
-        WallCollection.getInstance().addWall(new Wall(0,0,0,1));
-        WallCollection.getInstance().addWall(new Wall(7,1,0,1));
+        WallCollection.getInstance().addWall(new Wall(0,0,0,1,"horizontal"));
+        WallCollection.getInstance().addWall(new Wall(7,1,0,1, "vertical"));
 
         for (Wall wall : WallCollection.getInstance().getMyCollection()){
-            horizontalLine(wall.x1(),wall.y1());
-            verticalLine(wall.x2(), wall.y2());
+
+            if (wall.direction().equals("horizontal")){
+                horizontalLine(wall.x1(),wall.y1());
+            } else {
+                verticalLine(wall.x2(), wall.y2());
+            }
         }
 
 

@@ -11,6 +11,7 @@ public class Wall extends Subject {
     private final int y1;
     private final int x2;
     private final int y2;
+    private String direction;
 
     /**
      * This is the constructor of the Wall object
@@ -21,11 +22,12 @@ public class Wall extends Subject {
      * @param x2 x2 is space x coordinate
      * @param y2 y2 is space y coordinate
      */
-    public Wall(int x1, int y1, int x2, int y2){
+    public Wall(int x1, int y1, int x2, int y2, String direction){
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        this.direction = direction;
     }
 
     public int x1(){
@@ -44,7 +46,9 @@ public class Wall extends Subject {
         return y2;
     }
 
-
+    public String direction(){
+        return direction;
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
+import dk.dtu.compute.se.pisd.roborally.model.Direction;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import dk.dtu.compute.se.pisd.roborally.model.Wall;
 import dk.dtu.compute.se.pisd.roborally.model.WallCollection;
@@ -8,10 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
-
-enum Direction { HORIZONTAL, VERTICAL}
 
 public class WallView extends SpaceView {
 
