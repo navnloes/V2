@@ -1,7 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.model.ActionField;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 public class CheckPointActionField extends ActionField {
 
