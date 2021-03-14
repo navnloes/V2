@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -34,10 +35,13 @@ import org.jetbrains.annotations.NotNull;
 public class GameController {
 
     final public Board board;
-
+    CheckPointCollection checkPointCollection;
+    BoardElementController boardElementController;
 
     public GameController(@NotNull Board board) {
         this.board = board;
+        checkPointCollection = new CheckPointCollection();
+        boardElementController = new BoardElementController(board, checkPointCollection);
     }
 
     /**
@@ -304,7 +308,17 @@ public class GameController {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
+        boolean wallBlocks = WallCollection.getInstance().isWallBlocking(player.getSpace().x, player.getSpace().y, space.x, space.y);
+        if (wallBlocks){
+            throw new ImpossibleMoveException(player, space, heading);
+        }
+
         player.setSpace(space);
+
+        boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
+        if (isCheckPoint){
+            player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
+        }
     }
 
 
@@ -391,6 +405,10 @@ public class GameController {
 
     public void notImplemented() {
 
+    }
+
+    public CheckPointCollection getCheckPointCollection(){
+        return checkPointCollection;
     }
 
 }

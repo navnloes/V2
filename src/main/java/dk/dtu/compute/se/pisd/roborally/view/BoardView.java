@@ -23,10 +23,8 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Phase;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -43,9 +41,12 @@ import org.jetbrains.annotations.NotNull;
 public class BoardView extends VBox implements ViewObserver {
 
     private Board board;
-
+    private Space space;
     private GridPane mainBoardPane;
     private SpaceView[][] spaces;
+    private WallView[][] walls;
+    private WallView wallView;
+    private GameController gameController;
 
     private PlayersView playersView;
 
@@ -54,7 +55,9 @@ public class BoardView extends VBox implements ViewObserver {
     private SpaceEventHandler spaceEventHandler;
 
     public BoardView(@NotNull GameController gameController) {
+
         board = gameController.board;
+        this.gameController = gameController;
 
         mainBoardPane = new GridPane();
         playersView = new PlayersView(gameController);
@@ -65,12 +68,13 @@ public class BoardView extends VBox implements ViewObserver {
         this.getChildren().add(statusLabel);
 
         spaces = new SpaceView[board.width][board.height];
+        walls = new WallView[board.width][board.height];
 
         spaceEventHandler = new SpaceEventHandler(gameController);
 
         for (int x = 0; x < board.width; x++) {
             for (int y = 0; y < board.height; y++) {
-                Space space = board.getSpace(x, y);
+                space = board.getSpace(x, y);
                 SpaceView spaceView = new SpaceView(space);
                 spaces[x][y] = spaceView;
                 mainBoardPane.add(spaceView, x, y);
@@ -87,6 +91,20 @@ public class BoardView extends VBox implements ViewObserver {
         if (subject == board) {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
+            //TODO: hvor den her skal være
+            for (Wall wall : WallCollection.getInstance().getMyCollection()){
+                if (wall.direction() == 0){
+                    horizontalLine(wall.x1(),wall.y1());
+                } else {
+                    verticalLine(wall.x2(), wall.y2());
+                }
+            }
+
+            for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
+                Space space = board.getSpace(c.x(), c.y());
+                CheckPointView cpv = new CheckPointView(space,c.id());
+                mainBoardPane.add(cpv, c.x(), c.y());
+            }
         }
     }
 
@@ -116,5 +134,24 @@ public class BoardView extends VBox implements ViewObserver {
         }
 
     }
+
+    //TODO: husk
+
+    public void horizontalLine(int x, int y){
+            Space space = board.getSpace(x, y);
+            wallView = new WallView(space, Direction.HORIZONTAL);
+            walls[x][y] = wallView;
+            mainBoardPane.add(wallView, x, y);
+    }
+
+    public void verticalLine(int x, int y){
+          Space space = board.getSpace(x, y);
+          wallView = new WallView(space,Direction.VERTICAL);
+          walls[x][y] = wallView;
+          mainBoardPane.add(wallView, x, y);
+          wallView.setOnMouseClicked(spaceEventHandler);
+
+    }
+
 
 }
