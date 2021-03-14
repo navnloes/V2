@@ -142,6 +142,7 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     @Override
     public void updateView(Subject subject) {
+
         if (subject == field && subject != null) {
             CommandCard card = field.getCard();
             if (card != null && field.isVisible()) {

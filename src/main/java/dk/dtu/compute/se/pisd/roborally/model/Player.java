@@ -240,6 +240,10 @@ public class Player extends Subject {
         checkPointToken = i;
     }
 
+    public boolean getCheckPointArray(int i) {return checkPointArray[i];}
+
+    public boolean[] getCheckPointArray() {return checkPointArray;}
+
     public boolean getWinner(){
         return winner;
     }

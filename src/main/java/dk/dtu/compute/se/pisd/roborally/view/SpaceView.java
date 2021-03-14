@@ -58,7 +58,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         if ((space.x + space.y) % 2 == 0) {
             this.setStyle("-fx-background-color: white;");
         } else {
-            this.setStyle("-fx-background-color: hotpink;");
+            this.setStyle("-fx-background-color: #ff69b4;");
         }
         // updatePlayer();
 
@@ -85,10 +85,13 @@ public class SpaceView extends StackPane implements ViewObserver {
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
+
+
     }
 
     @Override
     public void updateView(Subject subject) {
+
         if (subject == this.space) {
             updatePlayer();
         }

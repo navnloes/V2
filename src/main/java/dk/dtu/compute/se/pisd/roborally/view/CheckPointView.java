@@ -36,6 +36,7 @@ public class CheckPointView extends SpaceView {
         this.getChildren().add(label);
 
     }
+
     public void deactivateCP() {
         gc.setFill(Color.GREY);
     }
@@ -45,3 +46,18 @@ public class CheckPointView extends SpaceView {
     }
 
 }
+
+/* DO NOT FUCKING DELETE. THIS IS FOR GREYING OUT. Tal med Kris, hvis der er spørgsmål.
+
+        for (int i = 0; i >= space.getPlayer().getCheckPointArray().length; i++) {
+
+            CheckPointView checkPointView = new CheckPointView(space,i);
+
+            if (space.getPlayer().getCheckPointArray(i)) {
+                checkPointView.deactivateCP();
+            }
+            else if (!space.getPlayer().getCheckPointArray(i)) {
+                checkPointView.activateCP();
+            }
+        }
+ */
