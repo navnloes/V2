@@ -78,8 +78,6 @@ public class BoardView extends VBox implements ViewObserver {
             }
         }
 
-
-        //TODO: skal flyttes til en controller af en art
         WallCollection.getInstance().addWall(new Wall(0,0,0,1,0));
         WallCollection.getInstance().addWall(new Wall(7,1,0,1, 1));
 

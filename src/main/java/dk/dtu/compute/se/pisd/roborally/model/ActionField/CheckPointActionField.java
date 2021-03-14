@@ -6,8 +6,8 @@ public class CheckPointActionField extends ActionField {
 
     int id;
 
-    public CheckPointActionField(Board board, String name, int x, int y, String msg, int id){
-        super(board, name, x, y, msg);
+    public CheckPointActionField(Board board, int x, int y, String msg, int id){
+        super(board, x, y, msg);
         this.id = id;
     }
 

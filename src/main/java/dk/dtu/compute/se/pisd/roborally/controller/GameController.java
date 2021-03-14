@@ -313,9 +313,9 @@ public class GameController {
 
         player.setSpace(space);
 
-        boolean isCheckPoint = checkPointCollection.isCheckPoint(space.x,space.y);
+        boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
         if (isCheckPoint){
-            player.arrivedCheckPoint(player.getSpace());
+            player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
         }
     }
 

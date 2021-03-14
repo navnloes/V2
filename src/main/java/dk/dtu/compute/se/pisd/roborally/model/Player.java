@@ -199,9 +199,7 @@ public class Player extends Subject {
         }
     }
 
-    public void arrivedCheckPoint(Space space){
-
-            int id = board.getCheckPointActionField().id();
+    public void arrivedCheckPoint(int id){
 
             switch (id) {
                 case 0:
@@ -211,13 +209,13 @@ public class Player extends Subject {
                     checkPointArray[0] = true;
                     break;
                 case 1:
-                    if (checkPointArray[1] == false){
+                    if (checkPointArray[0] == true && checkPointArray[1] == false ){
                         addCheckPointToken();
                     }
                     checkPointArray[1] = true;
                     break;
                 case 2:
-                    if (checkPointArray[2] == false){
+                    if (checkPointArray[1] == true && checkPointArray[2] == false){
                         addCheckPointToken();
                     }
                     checkPointArray[2] = true;

@@ -7,14 +7,12 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 public abstract class ActionField extends Subject {
 
     public final Board board;
-    public final String name;
     public final int x;
     public final int y;
     public final String msg;
 
-    public ActionField (Board board, String name,int x, int y, String msg){
+    public ActionField (Board board, int x, int y, String msg){
         this.board = board;
-        this.name = name;
         this.x = x;
         this.y = y;
         this.msg = msg;
