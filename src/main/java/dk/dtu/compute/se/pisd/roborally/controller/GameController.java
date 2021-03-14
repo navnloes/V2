@@ -31,13 +31,20 @@ import org.jetbrains.annotations.NotNull;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
-public class GameController {
-
+public class GameController implements StopWatch.StopWatchListener {
+    /**
+     * StopWatch is going to be implemented here in GameController
+     */
     final public Board board;
+    public StopWatch stopwatch;
+    public boolean won = false;
 
-
-    public GameController(@NotNull Board board) {
+    public GameController(Board board) {
         this.board = board;
+
+        if (this.board.getPhase() == Phase.INITIALISATION)
+            this.board.setPhase(Phase.PROGRAMMING);
+
     }
 
     /**
@@ -397,4 +404,8 @@ public class GameController {
 
     }
 
+    @Override
+    public void onZero() {
+        finishProgrammingPhase();
+    }
 }
