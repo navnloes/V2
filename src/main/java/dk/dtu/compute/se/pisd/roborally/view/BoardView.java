@@ -103,7 +103,7 @@ public class BoardView extends VBox implements ViewObserver {
 
             for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
                 Space space = board.getSpace(c.x(), c.y());
-                CheckPointView cpv = new CheckPointView(space);
+                CheckPointView cpv = new CheckPointView(space,c.id());
                 mainBoardPane.add(cpv, c.x(), c.y());
             }
         }
