@@ -47,6 +47,11 @@ public class Player extends Subject {
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
+    private int checkPointToken;
+
+    private boolean[] checkPointArray = {false, false, false};
+
+    private boolean winner;
 
     /**
      * Constructor which assigns a programming field and random command cars
@@ -70,6 +75,11 @@ public class Player extends Subject {
         for (int i = 0; i < cards.length; i++) {
             cards[i] = new CommandCardField(this);
         }
+
+        checkPointToken = 0;
+        winner = false;
+
+
     }
 
     /**
@@ -181,4 +191,56 @@ public class Player extends Subject {
         return cards[i];
     }
 
+    public void addCheckPointToken(){
+        checkPointToken  = checkPointToken + 1;
+        if (checkPointToken == 3){
+            winner = true;
+            System.out.println(name + " har vundet!!!!");
+        }
+    }
+
+    /**
+     * This method checks which CheckPoint the player has arrived and assigns values for checkPointArray[i]
+     * it ensures that the order of the arrived CheckPoints is correct and adds CheckPointTokens to the player
+     *
+     * @param id int - ID of arrived CheckPoint
+     */
+    public void arrivedCheckPoint(int id){
+
+            switch (id) {
+                case 0:
+                    if (!checkPointArray[0]){
+                        addCheckPointToken();
+                    }
+                    checkPointArray[0] = true;
+                    break;
+                case 1:
+                    if (checkPointArray[0] && !checkPointArray[1]){
+                        addCheckPointToken();
+                    }
+                    checkPointArray[1] = true;
+                    break;
+                case 2:
+                    if (checkPointArray[1] && !checkPointArray[2]){
+                        addCheckPointToken();
+                    }
+                    checkPointArray[2] = true;
+                    break;
+                default:
+                    System.out.println("Illegal id - CheckPoint ID " + id + " in arrivedCheckPoint(int id)");
+
+            }
+    }
+
+    public int getCheckPointToken(){
+        return checkPointToken;
+    }
+
+    public void setCheckPointToken(int i){
+        checkPointToken = i;
+    }
+
+    public boolean getWinner(){
+        return winner;
+    }
 }

@@ -24,6 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.view;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -40,11 +41,12 @@ import org.jetbrains.annotations.NotNull;
 public class BoardView extends VBox implements ViewObserver {
 
     private Board board;
-    Space space;
-
+    private Space space;
     private GridPane mainBoardPane;
     private SpaceView[][] spaces;
     private WallView[][] walls;
+    private WallView wallView;
+    private GameController gameController;
 
     private PlayersView playersView;
 
@@ -53,7 +55,9 @@ public class BoardView extends VBox implements ViewObserver {
     private SpaceEventHandler spaceEventHandler;
 
     public BoardView(@NotNull GameController gameController) {
+
         board = gameController.board;
+        this.gameController = gameController;
 
         mainBoardPane = new GridPane();
         playersView = new PlayersView(gameController);
@@ -78,21 +82,6 @@ public class BoardView extends VBox implements ViewObserver {
             }
         }
 
-
-        //TODO: skal flyttes til en controller af en art
-        WallCollection.getInstance().addWall(new Wall(0,0,0,1,0));
-        WallCollection.getInstance().addWall(new Wall(7,1,0,1, 1));
-
-        for (Wall wall : WallCollection.getInstance().getMyCollection()){
-            if (wall.direction() == 0){
-                horizontalLine(wall.x1(),wall.y1());
-            } else {
-                verticalLine(wall.x2(), wall.y2());
-            }
-        }
-
-
-
         board.attach(this);
         update(board);
     }
@@ -102,6 +91,20 @@ public class BoardView extends VBox implements ViewObserver {
         if (subject == board) {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
+            //TODO: hvor den her skal være
+            for (Wall wall : WallCollection.getInstance().getMyCollection()){
+                if (wall.direction() == 0){
+                    horizontalLine(wall.x1(),wall.y1());
+                } else {
+                    verticalLine(wall.x2(), wall.y2());
+                }
+            }
+
+            for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
+                Space space = board.getSpace(c.x(), c.y());
+                CheckPointView cpv = new CheckPointView(space,c.id());
+                mainBoardPane.add(cpv, c.x(), c.y());
+            }
         }
     }
 
@@ -136,15 +139,14 @@ public class BoardView extends VBox implements ViewObserver {
 
     public void horizontalLine(int x, int y){
             Space space = board.getSpace(x, y);
-            WallView wallView = new WallView(space, Direction.HORIZONTAL);
+            wallView = new WallView(space, Direction.HORIZONTAL);
             walls[x][y] = wallView;
             mainBoardPane.add(wallView, x, y);
-            wallView.setOnMouseClicked(spaceEventHandler);
     }
 
     public void verticalLine(int x, int y){
           Space space = board.getSpace(x, y);
-          WallView wallView = new WallView(space,Direction.VERTICAL);
+          wallView = new WallView(space,Direction.VERTICAL);
           walls[x][y] = wallView;
           mainBoardPane.add(wallView, x, y);
           wallView.setOnMouseClicked(spaceEventHandler);

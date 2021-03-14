@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -36,6 +37,10 @@ public class GameController implements StopWatch.StopWatchListener {
      * StopWatch is going to be implemented here in GameController
      */
     final public Board board;
+    CheckPointCollection checkPointCollection;
+    BoardElementController boardElementController;
+
+    public GameController(@NotNull Board board) {
     public StopWatch stopwatch;
     public boolean won = false;
 
@@ -45,6 +50,8 @@ public class GameController implements StopWatch.StopWatchListener {
         if (this.board.getPhase() == Phase.INITIALISATION)
             this.board.setPhase(Phase.PROGRAMMING);
 
+        checkPointCollection = new CheckPointCollection();
+        boardElementController = new BoardElementController(board, checkPointCollection);
     }
 
     /**
@@ -315,7 +322,13 @@ public class GameController implements StopWatch.StopWatchListener {
         if (wallBlocks){
             throw new ImpossibleMoveException(player, space, heading);
         }
+
         player.setSpace(space);
+
+        boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
+        if (isCheckPoint){
+            player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
+        }
     }
 
 
@@ -408,4 +421,8 @@ public class GameController implements StopWatch.StopWatchListener {
     public void onZero() {
         finishProgrammingPhase();
     }
+    public CheckPointCollection getCheckPointCollection(){
+        return checkPointCollection;
+    }
+
 }

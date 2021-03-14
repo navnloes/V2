@@ -11,7 +11,6 @@ public class WallCollection extends Subject {
      * @author s205353
      * This class keeps a collection of all wall objects
      */
-
     private List<Wall> myCollection;
     private static WallCollection wallCollection;
 
