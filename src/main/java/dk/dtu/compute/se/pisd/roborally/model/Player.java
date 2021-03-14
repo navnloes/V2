@@ -198,6 +198,12 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * This method checks which CheckPoint the player has arrived and assigns values for checkPointArray[i]
+     * it ensures that the order of the arrived CheckPoints is correct and adds CheckPointTokens to the player
+     *
+     * @param id int - ID of arrived CheckPoint
+     */
     public void arrivedCheckPoint(int id){
 
             switch (id) {
@@ -220,7 +226,7 @@ public class Player extends Subject {
                     checkPointArray[2] = true;
                     break;
                 default:
-                    System.out.println("bug");
+                    System.out.println("Illegal id - CheckPoint ID " + id + " in arrivedCheckPoint(int id)");
 
             }
     }
