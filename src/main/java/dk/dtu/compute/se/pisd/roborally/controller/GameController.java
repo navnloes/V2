@@ -35,11 +35,13 @@ import org.jetbrains.annotations.NotNull;
 public class GameController {
 
     final public Board board;
-    CheckPointCollection checkPointCollection = new CheckPointCollection();
-
+    CheckPointCollection checkPointCollection;
+    BoardElementController boardElementController;
 
     public GameController(@NotNull Board board) {
         this.board = board;
+        checkPointCollection = new CheckPointCollection();
+        boardElementController = new BoardElementController(board, checkPointCollection);
     }
 
     /**

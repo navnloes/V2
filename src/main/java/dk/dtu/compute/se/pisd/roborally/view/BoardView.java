@@ -40,11 +40,11 @@ import org.jetbrains.annotations.NotNull;
 public class BoardView extends VBox implements ViewObserver {
 
     private Board board;
-    Space space;
-
+    private Space space;
     private GridPane mainBoardPane;
     private SpaceView[][] spaces;
     private WallView[][] walls;
+    private WallView wallView;
 
     private PlayersView playersView;
 
@@ -78,20 +78,6 @@ public class BoardView extends VBox implements ViewObserver {
             }
         }
 
-        //TODO: flyt til controller
-        WallCollection.getInstance().addWall(new Wall(0,0,0,1,0));
-        WallCollection.getInstance().addWall(new Wall(7,1,0,1, 1));
-
-        for (Wall wall : WallCollection.getInstance().getMyCollection()){
-            if (wall.direction() == 0){
-                horizontalLine(wall.x1(),wall.y1());
-            } else {
-                verticalLine(wall.x2(), wall.y2());
-            }
-        }
-
-
-
         board.attach(this);
         update(board);
     }
@@ -101,6 +87,14 @@ public class BoardView extends VBox implements ViewObserver {
         if (subject == board) {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
+            //TODO: hvor den her skal være
+            for (Wall wall : WallCollection.getInstance().getMyCollection()){
+                if (wall.direction() == 0){
+                    horizontalLine(wall.x1(),wall.y1());
+                } else {
+                    verticalLine(wall.x2(), wall.y2());
+                }
+            }
         }
     }
 
@@ -135,15 +129,14 @@ public class BoardView extends VBox implements ViewObserver {
 
     public void horizontalLine(int x, int y){
             Space space = board.getSpace(x, y);
-            WallView wallView = new WallView(space, Direction.HORIZONTAL);
+            wallView = new WallView(space, Direction.HORIZONTAL);
             walls[x][y] = wallView;
             mainBoardPane.add(wallView, x, y);
-            wallView.setOnMouseClicked(spaceEventHandler);
     }
 
     public void verticalLine(int x, int y){
           Space space = board.getSpace(x, y);
-          WallView wallView = new WallView(space,Direction.VERTICAL);
+          wallView = new WallView(space,Direction.VERTICAL);
           walls[x][y] = wallView;
           mainBoardPane.add(wallView, x, y);
           wallView.setOnMouseClicked(spaceEventHandler);
