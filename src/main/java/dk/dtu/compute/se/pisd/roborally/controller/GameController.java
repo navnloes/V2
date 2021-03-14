@@ -39,12 +39,10 @@ public class GameController implements StopWatch.StopWatchListener {
     final public Board board;
     CheckPointCollection checkPointCollection;
     BoardElementController boardElementController;
-
-    public GameController(@NotNull Board board) {
     public StopWatch stopwatch;
     public boolean won = false;
 
-    public GameController(Board board) {
+    public GameController(@NotNull Board board) {
         this.board = board;
 
         if (this.board.getPhase() == Phase.INITIALISATION)
