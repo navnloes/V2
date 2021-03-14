@@ -209,19 +209,19 @@ public class Player extends Subject {
 
             switch (id) {
                 case 0:
-                    if (checkPointArray[0] == false){
+                    if (!checkPointArray[0]){
                         addCheckPointToken();
                     }
                     checkPointArray[0] = true;
                     break;
                 case 1:
-                    if (checkPointArray[0] == true && checkPointArray[1] == false ){
+                    if (checkPointArray[0] && !checkPointArray[1]){
                         addCheckPointToken();
                     }
                     checkPointArray[1] = true;
                     break;
                 case 2:
-                    if (checkPointArray[1] == true && checkPointArray[2] == false){
+                    if (checkPointArray[1] && !checkPointArray[2]){
                         addCheckPointToken();
                     }
                     checkPointArray[2] = true;
