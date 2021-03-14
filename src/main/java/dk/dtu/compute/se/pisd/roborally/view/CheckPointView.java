@@ -30,6 +30,7 @@ public class CheckPointView extends SpaceView {
             gc.strokeOval(12.5, 12.5, 51, 51);
 
         this.getChildren().add(canvas);
+        canvas.toBack();
 
         Label label = new Label((id+1) + "");
         this.getChildren().add(label);
