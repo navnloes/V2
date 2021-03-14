@@ -195,6 +195,7 @@ public class Player extends Subject {
         checkPointToken  = checkPointToken + 1;
         if (checkPointToken == 3){
             winner = true;
+            System.out.println(name + " har vundet!!!!");
         }
     }
 

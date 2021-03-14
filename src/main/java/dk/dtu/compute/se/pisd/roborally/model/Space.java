@@ -38,7 +38,6 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
-    private CheckPointActionField checkPointActionField;
 
     public Space(Board board, int x, int y) {
         this.board = board;

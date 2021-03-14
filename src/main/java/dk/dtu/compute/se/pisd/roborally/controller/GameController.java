@@ -407,4 +407,8 @@ public class GameController {
 
     }
 
+    public CheckPointCollection getCheckPointCollection(){
+        return checkPointCollection;
+    }
+
 }

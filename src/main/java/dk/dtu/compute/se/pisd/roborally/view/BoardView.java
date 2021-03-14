@@ -24,6 +24,8 @@ package dk.dtu.compute.se.pisd.roborally.view;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -45,6 +47,7 @@ public class BoardView extends VBox implements ViewObserver {
     private SpaceView[][] spaces;
     private WallView[][] walls;
     private WallView wallView;
+    private GameController gameController;
 
     private PlayersView playersView;
 
@@ -53,7 +56,9 @@ public class BoardView extends VBox implements ViewObserver {
     private SpaceEventHandler spaceEventHandler;
 
     public BoardView(@NotNull GameController gameController) {
+
         board = gameController.board;
+        this.gameController = gameController;
 
         mainBoardPane = new GridPane();
         playersView = new PlayersView(gameController);
@@ -94,6 +99,12 @@ public class BoardView extends VBox implements ViewObserver {
                 } else {
                     verticalLine(wall.x2(), wall.y2());
                 }
+            }
+
+            for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
+                Space space = board.getSpace(c.x(), c.y());
+                CheckPointView cpv = new CheckPointView(space);
+                mainBoardPane.add(cpv, c.x(), c.y());
             }
         }
     }
