@@ -78,6 +78,7 @@ public class BoardView extends VBox implements ViewObserver {
             }
         }
 
+        //TODO: flyt til controller
         WallCollection.getInstance().addWall(new Wall(0,0,0,1,0));
         WallCollection.getInstance().addWall(new Wall(7,1,0,1, 1));
 
