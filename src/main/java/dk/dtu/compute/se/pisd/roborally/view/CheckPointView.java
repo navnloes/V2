@@ -30,11 +30,13 @@ public class CheckPointView extends SpaceView {
             gc.strokeOval(12.5, 12.5, 51, 51);
 
         this.getChildren().add(canvas);
+        canvas.toBack();
 
         Label label = new Label((id+1) + "");
         this.getChildren().add(label);
 
     }
+
     public void deactivateCP() {
         gc.setFill(Color.GREY);
     }
@@ -44,3 +46,18 @@ public class CheckPointView extends SpaceView {
     }
 
 }
+
+/* DO NOT FUCKING DELETE. THIS IS FOR GREYING OUT. Tal med Kris, hvis der er spørgsmål.
+
+        for (int i = 0; i >= space.getPlayer().getCheckPointArray().length; i++) {
+
+            CheckPointView checkPointView = new CheckPointView(space,i);
+
+            if (space.getPlayer().getCheckPointArray(i)) {
+                checkPointView.deactivateCP();
+            }
+            else if (!space.getPlayer().getCheckPointArray(i)) {
+                checkPointView.activateCP();
+            }
+        }
+ */
