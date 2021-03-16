@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.designpatterns.observer;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -75,5 +76,4 @@ public abstract class Subject {
 			observer.update(this);
 		}
 	}
-
 }

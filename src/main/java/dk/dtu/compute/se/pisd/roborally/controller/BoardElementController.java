@@ -3,6 +3,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Space;
 import dk.dtu.compute.se.pisd.roborally.model.Wall;
 import dk.dtu.compute.se.pisd.roborally.model.WallCollection;
 import org.jetbrains.annotations.NotNull;
@@ -22,8 +23,12 @@ public class BoardElementController {
     }
 
     public void addAllWalls() {
-        WallCollection.getInstance().addWall(new Wall(0, 0, 0, 1, 0));
-        WallCollection.getInstance().addWall(new Wall(7, 1, 0, 1, 1));
+      //  WallCollection.getInstance().addWall(new Wall(0, 0, 0, 1, 0));
+      //  WallCollection.getInstance().addWall(new Wall(7, 1, 0, 1, 1));
+        Wall wall1 = new Wall(0,0,1,0,0);
+        Space space1 = new Space(board, 3,3);
+        space1.addWall(wall1);
+
     }
 
     public void addAllCheckPoints() {

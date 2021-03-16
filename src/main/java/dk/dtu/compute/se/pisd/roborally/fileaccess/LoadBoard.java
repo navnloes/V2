@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import dk.dtu.compute.se.pisd.roborally.model.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.model.SpaceTemplate;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
@@ -35,6 +36,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 
 /**
  * ...
@@ -68,21 +70,22 @@ public class LoadBoard {
 		// FileReader fileReader = null;
         JsonReader reader = null;
 		try {
-			// fileReader = new FileReader(filename);
-			reader = gson.newJsonReader(new InputStreamReader(inputStream));
-			BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
-
-			result = new Board(template.width, template.height);
-			for (SpaceTemplate spaceTemplate: template.spaces) {
-			    Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
-			    if (space != null) {
-                    space.getActions().addAll(spaceTemplate.actions);
+            // fileReader = new FileReader(filename);
+            reader = gson.newJsonReader(new InputStreamReader(inputStream));
+            BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
+                System.out.println(template.toString());
+                System.exit(0);
+            result = new Board(template.width, template.height);
+            for (SpaceTemplate spaceTemplate : template.spaces) {
+                Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
+                if (space != null) {
+                    //space.getActions().addAll(spaceTemplate.actions);
                     space.getWalls().addAll(spaceTemplate.walls);
                 }
             }
-			reader.close();
-			return result;
-		} catch (IOException e1) {
+            reader.close();
+            return result;
+        }  catch (IOException e1) {
             if (reader != null) {
                 try {
                     reader.close();
@@ -111,7 +114,7 @@ public class LoadBoard {
                     spaceTemplate.x = space.x;
                     spaceTemplate.y = space.y;
                     spaceTemplate.actions.addAll(space.getActions());
-                    spaceTemplate.walls.addAll(space.getWalls());
+                    //TODO:spaceTemplate.walls.addAll(space.getWalls());
                     template.spaces.add(spaceTemplate);
                 }
             }

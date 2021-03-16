@@ -92,13 +92,13 @@ public class BoardView extends VBox implements ViewObserver {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
             //TODO: hvor den her skal være
-            for (Wall wall : WallCollection.getInstance().getMyCollection()){
-                if (wall.direction() == 0){
-                    horizontalLine(wall.x1(),wall.y1());
-                } else {
-                    verticalLine(wall.x2(), wall.y2());
-                }
-            }
+          // for (Wall wall : WallCollection.getInstance().getMyCollection()){
+          //     if (wall.direction() == 0){
+          //         horizontalLine(wall.x1(),wall.y1());
+          //     } else {
+          //         verticalLine(wall.x2(), wall.y2());
+          //     }
+          // }
 
             for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
                 Space space = board.getSpace(c.x(), c.y());

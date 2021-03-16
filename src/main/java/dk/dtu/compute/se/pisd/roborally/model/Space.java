@@ -24,6 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,11 +42,16 @@ public class Space extends Subject {
 
     private Player player;
 
+    private ArrayList<Wall> walls;
+    ArrayList <Heading> headings;
+
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
         this.y = y;
         player = null;
+        walls = new ArrayList<Wall>();
+        headings = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -73,6 +79,18 @@ public class Space extends Subject {
         // also need to update when some player attributes change, the player can
         // notify the space of these changes by calling this method.
         notifyChange();
+    }
+
+    public <E>List<E> getActions() {
+        return null;
+    }
+
+    public ArrayList<Heading> getWalls(){
+        return headings;
+    }
+
+    public void addWall(Wall wall){
+        walls.add(wall);
     }
 
 

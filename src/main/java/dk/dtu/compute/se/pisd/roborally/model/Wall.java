@@ -7,10 +7,10 @@ public class Wall extends Subject {
     /**
      * @author s205353, s205354, s205339, s201192
      */
-    private final int x1;
-    private final int y1;
-    private final int x2;
-    private final int y2;
+    private int x1;
+    private int y1;
+    private int x2;
+    private int y2;
     private int direction;
 
     /**
@@ -29,6 +29,35 @@ public class Wall extends Subject {
         this.x2 = x2;
         this.y2 = y2;
         this.direction = direction;
+    }
+
+    public Wall(Board board, int x1, int y1, Heading dir){
+        this.x1 = x1;
+        this.y1 = y1;
+
+        switch (dir) {
+            case EAST:
+                y2 = y1;
+                x2 = (x1 + 1) % board.width;
+                break;
+            case WEST:
+                y2 = y1;
+                if (x1 >= 1){
+                    x2 = ( x1 - 1) % board.width;
+                } else {
+                    x2 = board.width - 1;
+                }
+            case SOUTH:
+                x2 = x1;
+                y2 = (y1 + 1) % board.height;
+            case NORTH:
+                x2 = x1;
+                if (y1 >= 1){
+                    y2 = y1 - 1;
+                } else {
+                    y2 = board.height - 1;
+                }
+        }
     }
 
     public int x1(){

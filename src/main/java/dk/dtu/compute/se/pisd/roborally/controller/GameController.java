@@ -316,7 +316,8 @@ public class GameController implements StopWatch.StopWatchListener {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
-        boolean wallBlocks = WallCollection.getInstance().isWallBlocking(player.getSpace().x, player.getSpace().y, space.x, space.y);
+        //boolean wallBlocks = WallCollection.getInstance().isWallBlocking(player.getSpace().x, player.getSpace().y, space.x, space.y);
+        boolean wallBlocks = false;
         if (wallBlocks){
             throw new ImpossibleMoveException(player, space, heading);
         }
@@ -419,6 +420,7 @@ public class GameController implements StopWatch.StopWatchListener {
     public void onZero() {
         finishProgrammingPhase();
     }
+
     public CheckPointCollection getCheckPointCollection(){
         return checkPointCollection;
     }
