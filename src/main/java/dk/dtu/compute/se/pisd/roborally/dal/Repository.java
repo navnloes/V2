@@ -21,7 +21,9 @@
  */
 package dk.dtu.compute.se.pisd.roborally.dal;
 
-//import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
+import dk.dtu.compute.se.pisd.roborally.controller.AppController;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Phase;
@@ -208,9 +210,9 @@ class Repository implements IRepository {
 			int playerNo = -1;
 			if (rs.next()) {
 				// TODO the width and height could eventually come from the database
-				// int width = AppController.BOARD_WIDTH;
-				// int height = AppController.BOARD_HEIGHT;
-				// game = new Board(width,height);
+				//int width = AppController.BOARD_WIDTH;
+				//int height = AppController.BOARD_HEIGHT;
+				//game = new Board(width,height);
 				// TODO and we should also store the used game board in the database
 				//      for now, we use the default game board
 				game = LoadBoard.loadBoard(null);
