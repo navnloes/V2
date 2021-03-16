@@ -40,6 +40,9 @@ public class BoardElementController {
 
     public void addAllConveyorBelts() {
         conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 7,7, "ConveyorBelt 1", Heading.NORTH));
+        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 6,7, "ConveyorBelt 2", Heading.EAST));
+        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 5,7, "ConveyorBelt 3", Heading.SOUTH));
+        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 4,7, "ConveyorBelt 4", Heading.WEST));
     }
 
 }
