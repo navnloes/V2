@@ -5,6 +5,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Heading;
 
 public class ConveyorBeltActionField extends ActionField {
 
+    /**
+     * @author S205354
+     */
+
     Heading heading;
 
     public ConveyorBeltActionField(Board board, int x, int y, String msg, Heading heading){
