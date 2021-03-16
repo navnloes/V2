@@ -2,6 +2,8 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltActionField;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltCollection;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Wall;
 import dk.dtu.compute.se.pisd.roborally.model.WallCollection;
@@ -11,13 +13,16 @@ public class BoardElementController {
 
     private Board board;
     private CheckPointCollection checkPointCollection;
+    private ConveyorBeltCollection conveyorBeltCollection;
 
-    public BoardElementController(@NotNull Board board, CheckPointCollection checkPointCollection) {
+    public BoardElementController(@NotNull Board board, CheckPointCollection checkPointCollection, ConveyorBeltCollection conveyorBeltCollection) {
         this.board = board;
         this.checkPointCollection = checkPointCollection;
+        this.conveyorBeltCollection = conveyorBeltCollection;
 
         addAllWalls();
         addAllCheckPoints();
+        addAllConveyorBelts();
 
     }
 
@@ -30,6 +35,10 @@ public class BoardElementController {
         checkPointCollection.addActionField(new CheckPointActionField(board, 3, 3, "CheckPoint 1", 0));
         checkPointCollection.addActionField(new CheckPointActionField(board, 0, 7, "CheckPoint 2", 1));
         checkPointCollection.addActionField(new CheckPointActionField(board, 5, 5, "CheckPoint 3", 2));
+    }
+
+    public void addAllConveyorBelts() {
+        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 8, 8, "ConveyorBelt 1", 0));
     }
 
 }

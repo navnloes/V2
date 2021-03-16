@@ -5,10 +5,15 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
 public class ConveyorBeltView extends SpaceView {
+
+    /**
+     * @author S205354
+     * @param space
+     * @param heading
+     */
 
     public ConveyorBeltView(@NotNull Space space, Heading heading) {
         super(space);
@@ -17,8 +22,6 @@ public class ConveyorBeltView extends SpaceView {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         gc.setStroke(Color.DARKGREEN);
-        gc.setLineWidth(10);
-        gc.setLineCap(StrokeLineCap.ROUND);
 
         if(heading == Heading.NORTH){
             gc.strokeLine(2, SPACE_HEIGHT - 2,

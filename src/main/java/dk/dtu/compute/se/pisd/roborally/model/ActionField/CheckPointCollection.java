@@ -8,6 +8,9 @@ import java.util.List;
 
 public class CheckPointCollection extends Subject {
 
+    /**
+     * @Author (orignally S205353) reused, and changed by S205354
+     */
     private List<CheckPointActionField> myCollection;
 
     public CheckPointCollection(){
