@@ -21,7 +21,7 @@ public class ConveyorBeltView extends SpaceView {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        gc.setStroke(Color.DARKGREEN);
+        gc.setStroke(Color.GREEN);
 
         if(heading == Heading.NORTH){
             gc.strokeLine(2, SPACE_HEIGHT - 2,
