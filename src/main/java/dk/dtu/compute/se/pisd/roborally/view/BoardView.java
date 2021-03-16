@@ -25,6 +25,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltActionField;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -104,6 +105,12 @@ public class BoardView extends VBox implements ViewObserver {
                 Space space = board.getSpace(c.x(), c.y());
                 CheckPointView cpv = new CheckPointView(space,c.id());
                 mainBoardPane.add(cpv, c.x(), c.y());
+            }
+
+            for (ConveyorBeltActionField c : gameController.getConveyorBeltCollection().getMyCollection()){
+                Space space = board.getSpace(c.x(), c.y());
+                ConveyorBeltView cbv = new ConveyorBeltView(space,Heading.NORTH);
+                mainBoardPane.add(cbv, c.x(), c.y());
             }
         }
     }

@@ -414,4 +414,8 @@ public class GameController {
         return checkPointCollection;
     }
 
+    public ConveyorBeltCollection getConveyorBeltCollection() {
+        return conveyorBeltCollection;
+    }
+
 }
