@@ -93,7 +93,7 @@ public class BoardView extends VBox implements ViewObserver {
         if (subject == board) {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
-            //TODO: hvor den her skal være
+            //TODO: skal omregnes for den er mærkelig
            for (int i = 0; i < 8; i++){
                for (int j = 0; j < 8; j++){
                    Space space = board.getSpace(i,j);
