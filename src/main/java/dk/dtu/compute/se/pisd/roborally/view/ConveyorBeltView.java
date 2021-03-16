@@ -34,6 +34,8 @@ public class ConveyorBeltView extends SpaceView {
         }
 
         this.getChildren().add(arrow);
+        arrow.toBack();
+
         this.getChildren().add(label);
     }
 }
