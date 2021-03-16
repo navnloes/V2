@@ -320,10 +320,10 @@ public class GameController implements StopWatch.StopWatchListener {
         }
         //boolean wallBlocks = WallCollection.getInstance().isWallBlocking(player.getSpace().x, player.getSpace().y, space.x, space.y);
         boolean wallBlocks = false;
-        Space space123 = player.getSpace();
-        ArrayList<Heading> spaceHeading = space123.getWalls();
-        for (Heading heading123 : spaceHeading){
-            if (heading123 == heading){
+        Space playerSpace = player.getSpace();
+        ArrayList<Heading> spaceHeadings = playerSpace.getWalls();
+        for (Heading s : spaceHeadings){
+            if (s == heading){
                 wallBlocks = true;
                 break;
             }

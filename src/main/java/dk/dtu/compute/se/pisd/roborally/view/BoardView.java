@@ -108,6 +108,7 @@ public class BoardView extends VBox implements ViewObserver {
                            case SOUTH: horizontalLine(i,j);
                                break;
                            case NORTH:
+                               //virker
                                if (j >= 1){
                                    horizontalLine(i,j - 1);
                                } else {
