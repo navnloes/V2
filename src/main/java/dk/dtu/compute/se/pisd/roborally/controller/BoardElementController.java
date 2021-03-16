@@ -5,6 +5,7 @@ import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltActionField;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltCollection;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Wall;
 import dk.dtu.compute.se.pisd.roborally.model.WallCollection;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +39,7 @@ public class BoardElementController {
     }
 
     public void addAllConveyorBelts() {
-        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 8, 8, "ConveyorBelt 1", 0));
+        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 8, 8, "ConveyorBelt 1", Heading.NORTH));
     }
 
 }

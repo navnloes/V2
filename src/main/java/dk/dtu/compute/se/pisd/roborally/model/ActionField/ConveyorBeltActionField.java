@@ -1,14 +1,15 @@
 package dk.dtu.compute.se.pisd.roborally.model.ActionField;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 
 public class ConveyorBeltActionField extends ActionField {
 
-    int id;
+    Heading heading;
 
-    public ConveyorBeltActionField(Board board, int x, int y, String msg, int id){
+    public ConveyorBeltActionField(Board board, int x, int y, String msg, Heading heading){
         super(board, x, y, msg);
-        this.id = id;
+        this.heading = heading;
     }
 
     public int x(){
@@ -19,8 +20,8 @@ public class ConveyorBeltActionField extends ActionField {
         return y;
     }
 
-    public int id(){
-        return id;
+    public Heading heading(){
+        return heading;
     }
 
 
