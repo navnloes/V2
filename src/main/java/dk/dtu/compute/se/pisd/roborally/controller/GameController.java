@@ -318,7 +318,6 @@ public class GameController implements StopWatch.StopWatchListener {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
-        //boolean wallBlocks = WallCollection.getInstance().isWallBlocking(player.getSpace().x, player.getSpace().y, space.x, space.y);
         boolean wallBlocks = false;
         Space playerSpace = player.getSpace();
         ArrayList<Heading> spaceHeadings = playerSpace.getWalls();
