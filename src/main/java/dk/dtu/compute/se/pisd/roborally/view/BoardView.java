@@ -32,6 +32,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 /**
  * ...
  *
@@ -92,13 +94,31 @@ public class BoardView extends VBox implements ViewObserver {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
             //TODO: hvor den her skal være
-          // for (Wall wall : WallCollection.getInstance().getMyCollection()){
-          //     if (wall.direction() == 0){
-          //         horizontalLine(wall.x1(),wall.y1());
-          //     } else {
-          //         verticalLine(wall.x2(), wall.y2());
-          //     }
-          // }
+           for (int i = 0; i < 8; i++){
+               for (int j = 0; j < 8; j++){
+                   Space space = board.getSpace(i,j);
+                   ArrayList<Heading> headings = space.getWalls();
+                   for (Heading heading: headings){
+                       switch (heading) {
+                           case EAST:
+                            verticalLine(i,j);
+                               break;
+
+                           case WEST:
+                               verticalLine(i,j);
+
+                               break;
+                           case SOUTH:
+                            horizontalLine(i,j);
+                               break;
+                           case NORTH:
+                               horizontalLine(i,j);
+                               break;
+                           default: break;
+                       }
+                   }
+               }
+           }
 
             for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
                 Space space = board.getSpace(c.x(), c.y());

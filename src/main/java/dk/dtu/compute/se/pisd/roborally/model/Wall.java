@@ -47,9 +47,11 @@ public class Wall extends Subject {
                 } else {
                     x2 = board.width - 1;
                 }
+                break;
             case SOUTH:
                 x2 = x1;
                 y2 = (y1 + 1) % board.height;
+                break;
             case NORTH:
                 x2 = x1;
                 if (y1 >= 1){
@@ -57,6 +59,8 @@ public class Wall extends Subject {
                 } else {
                     y2 = board.height - 1;
                 }
+                break;
+            default: break;
         }
     }
 
