@@ -101,6 +101,7 @@ public class BoardView extends VBox implements ViewObserver {
                 }
             }
 
+            //TODO GetMyCollection må ikke ske over gameController.
             for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
                 Space space = board.getSpace(c.x(), c.y());
                 CheckPointView cpv = new CheckPointView(space,c.id());
@@ -109,19 +110,8 @@ public class BoardView extends VBox implements ViewObserver {
 
             for (ConveyorBeltActionField c : gameController.getConveyorBeltCollection().getMyCollection()){
                 Space space = board.getSpace(c.x(), c.y());
-                ConveyorBeltView cbv;
-                if (c.heading() == Heading.NORTH) {
-                    cbv = new ConveyorBeltView(space,Heading.NORTH);
-                    mainBoardPane.add(cbv, c.x(), c.y());}
-                else if (c.heading() == Heading.EAST) {
-                    cbv = new ConveyorBeltView(space,Heading.EAST);
-                    mainBoardPane.add(cbv, c.x(), c.y());}
-                else if (c.heading() == Heading.SOUTH) {
-                    cbv = new ConveyorBeltView(space,Heading.SOUTH);
-                    mainBoardPane.add(cbv, c.x(), c.y());}
-                else if (c.heading() == Heading.WEST) {
-                    cbv = new ConveyorBeltView(space,Heading.WEST);
-                    mainBoardPane.add(cbv, c.x(), c.y());}
+                ConveyorBeltView cbv = new ConveyorBeltView(space,c.heading());
+                mainBoardPane.add(cbv, c.x(), c.y());
 
             }
         }

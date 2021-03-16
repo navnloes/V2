@@ -2,10 +2,11 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.control.Label;
 import org.jetbrains.annotations.NotNull;
+
 
 public class ConveyorBeltView extends SpaceView {
 
@@ -18,25 +19,21 @@ public class ConveyorBeltView extends SpaceView {
     public ConveyorBeltView(@NotNull Space space, Heading heading) {
         super(space);
 
-        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        gc.setStroke(Color.GREEN);
+        Polygon arrow = new Polygon(0.0, 0.0, 15.0, 40, 30.0, 0.0);
+            arrow.setFill(Color.DEEPSKYBLUE);
+            Label label = new Label("Conveyor");
 
         if(heading == Heading.NORTH){
-            gc.strokeLine(2, SPACE_HEIGHT - 2,
-                    SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+            arrow.setRotate(180);
         } else if (heading == Heading.EAST){
-            gc.strokeLine(2, 0,
-                    0, SPACE_HEIGHT - 2);
+            arrow.setRotate(270);
         } else if (heading == Heading.SOUTH){
-            gc.strokeLine(2, 0,
-                    0, SPACE_HEIGHT - 2);
+            arrow.setRotate(0);
         } else if (heading == Heading.WEST){
-            gc.strokeLine(2, 0,
-                    0, SPACE_HEIGHT - 2);
+            arrow.setRotate(90);
         }
-        this.getChildren().add(canvas);
 
+        this.getChildren().add(arrow);
+        this.getChildren().add(label);
     }
 }
