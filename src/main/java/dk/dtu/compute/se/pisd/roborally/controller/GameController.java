@@ -26,6 +26,8 @@ import dk.dtu.compute.se.pisd.roborally.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 /**
  * ...
  *
@@ -318,6 +320,15 @@ public class GameController implements StopWatch.StopWatchListener {
         }
         //boolean wallBlocks = WallCollection.getInstance().isWallBlocking(player.getSpace().x, player.getSpace().y, space.x, space.y);
         boolean wallBlocks = false;
+        Space space123 = player.getSpace();
+        ArrayList<Heading> spaceHeading = space123.getWalls();
+        for (Heading heading123 : spaceHeading){
+            if (heading123 == heading){
+                wallBlocks = true;
+                break;
+            }
+        }
+
         if (wallBlocks){
             throw new ImpossibleMoveException(player, space, heading);
         }

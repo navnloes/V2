@@ -100,19 +100,19 @@ public class BoardView extends VBox implements ViewObserver {
                    ArrayList<Heading> headings = space.getWalls();
                    for (Heading heading: headings){
                        switch (heading) {
-                           case EAST:
-                            verticalLine(i,j);
+                           case EAST: verticalLine(i,j);
                                break;
-
                            case WEST:
-                               verticalLine(i,j);
-
+                              verticalLine(i,j);
                                break;
-                           case SOUTH:
-                            horizontalLine(i,j);
+                           case SOUTH: horizontalLine(i,j);
                                break;
                            case NORTH:
-                               horizontalLine(i,j);
+                               if (j >= 1){
+                                   horizontalLine(i,j - 1);
+                               } else {
+                                   horizontalLine(i,7);
+                               }
                                break;
                            default: break;
                        }
