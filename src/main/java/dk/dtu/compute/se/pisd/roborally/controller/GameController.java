@@ -24,6 +24,8 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltCollection;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsCollection;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -38,6 +40,8 @@ public class GameController implements StopWatch.StopWatchListener {
      */
     final public Board board;
     CheckPointCollection checkPointCollection;
+    ConveyorBeltCollection conveyorBeltCollection;
+    GearsCollection gearsCollection;
     BoardElementController boardElementController;
     public StopWatch stopwatch;
     public boolean won = false;
@@ -49,7 +53,9 @@ public class GameController implements StopWatch.StopWatchListener {
             this.board.setPhase(Phase.PROGRAMMING);
 
         checkPointCollection = new CheckPointCollection();
-        boardElementController = new BoardElementController(board, checkPointCollection);
+        conveyorBeltCollection = new ConveyorBeltCollection();
+        gearsCollection = new GearsCollection();
+        boardElementController = new BoardElementController(board, checkPointCollection, conveyorBeltCollection, gearsCollection);
     }
 
     /**
@@ -421,6 +427,14 @@ public class GameController implements StopWatch.StopWatchListener {
     }
     public CheckPointCollection getCheckPointCollection(){
         return checkPointCollection;
+    }
+
+    public ConveyorBeltCollection getConveyorBeltCollection() {
+        return conveyorBeltCollection;
+    }
+
+    public GearsCollection getGearsCollection() {
+        return gearsCollection;
     }
 
 }
