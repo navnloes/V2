@@ -199,6 +199,11 @@ public class Player extends Subject {
         }
     }
 
+    public void onGears () {
+        boolean onGears = true;
+
+    }
+
     /**
      * This method checks which CheckPoint the player has arrived and assigns values for checkPointArray[i]
      * it ensures that the order of the arrived CheckPoints is correct and adds CheckPointTokens to the player
