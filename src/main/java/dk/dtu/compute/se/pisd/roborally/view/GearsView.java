@@ -15,7 +15,6 @@ public class GearsView extends SpaceView {
     /**
      * @author S205354
      * @param space
-     * @param
      */
 
     public GearsView(@NotNull Space space, Direction direction) {
@@ -34,7 +33,11 @@ public class GearsView extends SpaceView {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        gc.setFill(Color.CORNFLOWERBLUE);
+        if (direction == direction.LEFT) {
+            gc.setFill(Color.RED);}
+        else {
+            gc.setFill(Color.GREEN);
+        }
         gc.fillOval(17.5, 17.5, 40, 40);
 
         Label label = new Label(direction.toString());
