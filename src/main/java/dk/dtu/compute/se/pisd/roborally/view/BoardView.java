@@ -110,7 +110,7 @@ public class BoardView extends VBox implements ViewObserver {
 
             for (ConveyorBeltActionField c : gameController.getConveyorBeltCollection().getMyCollection()){
                 Space space = board.getSpace(c.x(), c.y());
-                ConveyorBeltView cbv = new ConveyorBeltView(space,c.heading());
+                ConveyorBeltView cbv = new ConveyorBeltView(space,c.getHeading());
                 mainBoardPane.add(cbv, c.x(), c.y());
 
             }

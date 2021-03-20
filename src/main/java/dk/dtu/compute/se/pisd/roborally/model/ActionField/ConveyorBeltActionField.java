@@ -24,7 +24,7 @@ public class ConveyorBeltActionField extends ActionField {
         return y;
     }
 
-    public Heading heading(){
+    public Heading getHeading(){
         return heading;
     }
 

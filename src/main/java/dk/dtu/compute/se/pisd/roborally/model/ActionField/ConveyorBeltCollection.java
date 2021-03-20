@@ -15,15 +15,15 @@ public class ConveyorBeltCollection extends Subject {
     }
 
     /**
-     * This method adds a CheckPointActionField to the collection
-     * @param conveyorBeltActionField CheckPointActionField
+     * This method adds a ConveyorBeltActionField to the collection
+     * @param conveyorBeltActionField ConveyorBeltActionField
      */
     public void addActionField(ConveyorBeltActionField conveyorBeltActionField) {
         myCollection.add(conveyorBeltActionField);
     }
 
     /**
-     * This method returns the collection of CheckPointActionField
+     * This method returns the collection of ConveyorBeltActionField
      * @return myCollection - List<ConveyorBeltActionField>
      */
     public List<ConveyorBeltActionField> getMyCollection() {
@@ -31,9 +31,9 @@ public class ConveyorBeltCollection extends Subject {
     }
 
     /**
-     * This method checks, if the given space is a checkPoint
+     * This method checks, if the given space is a conveyor
      * @param space Space - space on the board
-     * @return arrived boolean - true if the space is a checkpoint
+     * @return arrived boolean - true if the space is a conveyor
      */
     public boolean isConveyorBelt(Space space){
 
