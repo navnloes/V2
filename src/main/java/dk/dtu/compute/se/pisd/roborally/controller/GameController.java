@@ -25,6 +25,7 @@ import dk.dtu.compute.se.pisd.roborally.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltCollection;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsCollection;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -38,13 +39,15 @@ public class GameController {
     final public Board board;
     CheckPointCollection checkPointCollection;
     ConveyorBeltCollection conveyorBeltCollection;
+    GearsCollection gearsCollection;
     BoardElementController boardElementController;
 
     public GameController(@NotNull Board board) {
         this.board = board;
         checkPointCollection = new CheckPointCollection();
         conveyorBeltCollection = new ConveyorBeltCollection();
-        boardElementController = new BoardElementController(board, checkPointCollection, conveyorBeltCollection);
+        gearsCollection = new GearsCollection();
+        boardElementController = new BoardElementController(board, checkPointCollection, conveyorBeltCollection, gearsCollection);
     }
 
     /**
@@ -416,6 +419,10 @@ public class GameController {
 
     public ConveyorBeltCollection getConveyorBeltCollection() {
         return conveyorBeltCollection;
+    }
+
+    public GearsCollection getGearsCollection() {
+        return gearsCollection;
     }
 
 }

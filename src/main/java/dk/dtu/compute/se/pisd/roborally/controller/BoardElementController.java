@@ -1,13 +1,7 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltActionField;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltCollection;
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Wall;
-import dk.dtu.compute.se.pisd.roborally.model.WallCollection;
+import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.*;
 import org.jetbrains.annotations.NotNull;
 
 public class BoardElementController {
@@ -15,15 +9,18 @@ public class BoardElementController {
     private Board board;
     private CheckPointCollection checkPointCollection;
     private ConveyorBeltCollection conveyorBeltCollection;
+    private GearsCollection gearsCollection;
 
-    public BoardElementController(@NotNull Board board, CheckPointCollection checkPointCollection, ConveyorBeltCollection conveyorBeltCollection) {
+    public BoardElementController(@NotNull Board board, CheckPointCollection checkPointCollection, ConveyorBeltCollection conveyorBeltCollection, GearsCollection gearsCollection) {
         this.board = board;
         this.checkPointCollection = checkPointCollection;
         this.conveyorBeltCollection = conveyorBeltCollection;
+        this.gearsCollection = gearsCollection;
 
         addAllWalls();
         addAllCheckPoints();
         addAllConveyorBelts();
+        addAllGears();
 
     }
 
@@ -43,6 +40,11 @@ public class BoardElementController {
         conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 6,7, "ConveyorBelt 2", Heading.EAST));
         conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 5,7, "ConveyorBelt 3", Heading.SOUTH));
         conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 4,7, "ConveyorBelt 4", Heading.WEST));
+    }
+
+    public void addAllGears() {
+        gearsCollection.addActionField(new GearsActionField(board, 7,6, "Gear 1", Direction.LEFT));
+        gearsCollection.addActionField(new GearsActionField(board, 6,6, "Gear 2", Direction.RIGHT));
     }
 
 }
