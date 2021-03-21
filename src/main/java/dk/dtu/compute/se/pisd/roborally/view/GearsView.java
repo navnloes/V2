@@ -13,10 +13,10 @@ import org.jetbrains.annotations.NotNull;
 public class GearsView extends SpaceView {
 
     /**
-     * @author S205354
-     * @param space
+     * @author S205354, s205339
+     * @param space is the space the gear is placed
+     * @param direction is the direction the gear will turn the player
      */
-
     public GearsView(@NotNull Space space, Direction direction) {
         super(space);
 
