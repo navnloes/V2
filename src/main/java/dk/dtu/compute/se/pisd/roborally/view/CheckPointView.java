@@ -8,14 +8,20 @@ import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @Author S205354, S205353 (label)
+ * @Author S205354, S205353, s205339 (label)
  */
+
 
 public class CheckPointView extends SpaceView {
 
     private Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
 
+    /**
+     *
+     * @param space is the space the checkPoint is placed
+     * @param id is the unique ID for each of the three checkPoints
+     */
     public CheckPointView(@NotNull Space space, int id) {
         super(space);
 
@@ -47,7 +53,7 @@ public class CheckPointView extends SpaceView {
 
 }
 
-/* DO NOT FUCKING DELETE. THIS IS FOR GREYING OUT. Tal med Kris, hvis der er spørgsmål.
+/* DO NOT DELETE. THIS IS FOR GREYING OUT. Tal med Kris, hvis der er spørgsmål.
 
         for (int i = 0; i >= space.getPlayer().getCheckPointArray().length; i++) {
 

@@ -10,6 +10,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class WallView extends SpaceView {
 
+    /**
+     *
+     * @param space is the space the wall is placed
+     * @param dir is the direction of the wall
+     */
     public WallView(@NotNull Space space, Direction dir) {
         super(space);
 

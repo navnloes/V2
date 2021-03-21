@@ -25,6 +25,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltActionField;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsActionField;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -100,10 +102,23 @@ public class BoardView extends VBox implements ViewObserver {
                 }
             }
 
+            //TODO GetMyCollection må ikke ske over gameController.
             for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
                 Space space = board.getSpace(c.x(), c.y());
                 CheckPointView cpv = new CheckPointView(space,c.id());
                 mainBoardPane.add(cpv, c.x(), c.y());
+            }
+
+            for (ConveyorBeltActionField c : gameController.getConveyorBeltCollection().getMyCollection()){
+                Space space = board.getSpace(c.x(), c.y());
+                ConveyorBeltView cbv = new ConveyorBeltView(space,c.getHeading());
+                mainBoardPane.add(cbv, c.x(), c.y());
+            }
+
+            for (GearsActionField c : gameController.getGearsCollection().getMyCollection()){
+                Space space = board.getSpace(c.x(), c.y());
+                GearsView gv = new GearsView(space,c.getDirection());
+                mainBoardPane.add(gv, c.x(), c.y());
             }
         }
     }
