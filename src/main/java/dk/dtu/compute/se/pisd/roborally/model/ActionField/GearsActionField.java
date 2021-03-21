@@ -13,9 +13,9 @@ public class GearsActionField extends ActionField {
 
     /**
      * @author S201192
-     *  This method construtcs a gearsactionfield.
-     * @param board
-     * @param x x is the coordinats of the space.
+     *  This method constructs a GearsActionfield.
+     * @param board is the specific board which contains spaces.
+     * @param x x is the coordinates of the space.
      * @param y y is the coordinates of the space.
      * @param msg sends a msg to the plauer.
      * @param direction gives the direction of the player.
