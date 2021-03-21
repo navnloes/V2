@@ -319,12 +319,24 @@ public class GameController {
             throw new ImpossibleMoveException(player, space, heading);
         }
 
+        boolean isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
+        if (isConveyerBelt){
+            space = conveyorBeltCollection.conveyerBeltAction(space);
+        }
+
+        boolean isGear = gearsCollection.isGears(space);
+        if (isGear){
+            player.setHeading(gearsCollection.gearAction(player,space));
+        }
+
         player.setSpace(space);
 
         boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
         if (isCheckPoint){
             player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
         }
+
+
     }
 
 

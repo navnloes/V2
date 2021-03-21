@@ -2,6 +2,7 @@ package dk.dtu.compute.se.pisd.roborally.model.ActionField;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Direction;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 
 public class GearsActionField extends ActionField {
 
@@ -9,11 +10,11 @@ public class GearsActionField extends ActionField {
      * @author S205354
      */
 
-    Direction direction;
+    Heading heading;
 
-    public GearsActionField(Board board, int x, int y, String msg, Direction direction){
+    public GearsActionField(Board board, int x, int y, String msg, Heading heading){
         super(board, x, y, msg);
-        this.direction = direction;
+        this.heading = heading;
     }
 
     public int x(){
@@ -24,9 +25,11 @@ public class GearsActionField extends ActionField {
         return y;
     }
 
-    public Direction getDirection(){
-        return direction;
+    public Heading getHeading(){
+        return heading;
     }
+
+
 
 
 
