@@ -25,12 +25,16 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.controller.StopWatch;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -56,6 +60,7 @@ public class PlayerView extends Tab implements ViewObserver {
 
     private VBox buttonPanel;
 
+
     private Button finishButton;
     private Button executeButton;
     private Button stepButton;
@@ -65,8 +70,10 @@ public class PlayerView extends Tab implements ViewObserver {
 
 
     private VBox playerInteractionPanel;
-
+    private StopWatch Stopwatch;
     private GameController gameController;
+
+
 
     public PlayerView(@NotNull GameController gameController, @NotNull Player player) {
         super(player.getName());
@@ -79,7 +86,7 @@ public class PlayerView extends Tab implements ViewObserver {
         this.player = player;
 
         programLabel = new Label("Program");
-        StopWatch stopWatch = new StopWatch(1, 30, 30);
+        StopWatch stopWatch = new StopWatch(30,1000, 1000);
         stopWatchLabel = new Label("StopWatch   "+stopWatch.getActiveInterval());
 
 
@@ -99,14 +106,13 @@ public class PlayerView extends Tab implements ViewObserver {
         //      players, but on the PlayersView (view for all players). This should be
         //      refactored.
         startButton = new Button("Start");
-        startButton.setOnAction( e -> gameController.stopwatch.startTimer());
+        startButton.setOnAction( e -> stopWatch.startTimer());
 
         stopButton = new Button("Stop");
-        stopButton.setOnAction( e -> gameController.stopwatch.stop());
+        stopButton.setOnAction(e ->stopWatch.stop());
 
-        resetButton = new Button("Reset");
-        //resetButton.setOnAction( e -> gameController.stopwatch.(0);
-
+        //resetButton = new Button("Reset");
+        //resetButton.setOnAction( e -> gameController.stopwatch.());
 
         finishButton = new Button("Finish Programming");
         finishButton.setOnAction( e -> gameController.finishProgrammingPhase());
@@ -117,10 +123,9 @@ public class PlayerView extends Tab implements ViewObserver {
         stepButton = new Button("Execute Current Register");
         stepButton.setOnAction( e-> gameController.executeStep());
 
-        buttonPanel = new VBox(startButton, stopButton);
-        buttonPanel.setAlignment(Pos.CENTER_RIGHT);
-        buttonPanel.setSpacing(3.0);
-        buttonPanel = new VBox(finishButton, executeButton, stepButton);
+
+      //
+        buttonPanel = new VBox(startButton,stopButton,finishButton, executeButton, stepButton);
         buttonPanel.setAlignment(Pos.CENTER_LEFT);
         buttonPanel.setSpacing(3.0);
         // programPane.add(buttonPanel, Player.NO_REGISTERS, 0); done in update now
@@ -156,6 +161,7 @@ public class PlayerView extends Tab implements ViewObserver {
             update(player.board);
         }
     }
+
 
     @Override
     public void updateView(Subject subject) {
