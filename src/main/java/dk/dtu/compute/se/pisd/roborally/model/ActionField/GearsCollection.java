@@ -1,6 +1,8 @@
 package dk.dtu.compute.se.pisd.roborally.model.ActionField;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 import java.util.ArrayList;
@@ -38,12 +40,25 @@ public class GearsCollection extends Subject {
     public boolean isGears(Space space){
 
         boolean arrived = false;
-        for (GearsActionField c : myCollection){
-            if (space.x == c.x && space.y == c.y){
+        for (GearsActionField g : myCollection){
+            if (space.x == g.x && space.y == g.y){
                 arrived = true;
                 break;
             }
         }
         return arrived;
     }
+
+    public Heading gearAction(Player player,Space space){
+
+        Heading heading = player.getHeading();
+        for (GearsActionField g : myCollection){
+            if (space.x == g.x && space.y == g.y){
+                heading = g.getHeading();
+                break;
+            }
+        }
+        return heading;
+    }
+
 }

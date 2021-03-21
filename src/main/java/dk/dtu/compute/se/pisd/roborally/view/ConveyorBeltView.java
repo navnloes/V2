@@ -12,8 +12,8 @@ public class ConveyorBeltView extends SpaceView {
 
     /**
      * @author S205354
-     * @param space
-     * @param heading
+     * @param space is the space the conveyorBelt is placed
+     * @param heading is the direction the conveyorBelt is headed
      */
 
     public ConveyorBeltView(@NotNull Space space, Heading heading) {

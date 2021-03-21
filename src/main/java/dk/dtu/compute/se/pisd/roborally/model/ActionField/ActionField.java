@@ -4,6 +4,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
+
 public abstract class ActionField extends Subject {
 
     public final Board board;
@@ -11,6 +12,13 @@ public abstract class ActionField extends Subject {
     public final int y;
     public final String msg;
 
+    /**
+     *
+     * @param board
+     * @param x x is space x coordinate
+     * @param y y is space y coordinate
+     * @param msg is a message that informs you about, the object you landed on
+     */
     public ActionField (Board board, int x, int y, String msg){
         this.board = board;
         this.x = x;
