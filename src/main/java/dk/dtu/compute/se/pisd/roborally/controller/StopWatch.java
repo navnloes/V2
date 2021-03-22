@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
+import javafx.scene.control.Label;
+
 /**
  * This is StopWatch also called timer/hourglass in the assignment
  * and StopWatch it can be implemented anywhere
@@ -17,26 +20,32 @@ public class StopWatch extends Subject {
     int delay;
     int period;
     Timer timer;
-    ArrayList<StopWatchListener> listeners;
 
-    public StopWatch(int interval, int delay, int period) {
+    GameController gameController;
+
+    private Label label;
+
+    public StopWatch(int interval, int delay, int period, Label displayLabel, GameController gameController) {
         this.timer = new Timer();
         this.interval = interval;
         this.delay = delay;
         this.period = period;
-        listeners = new ArrayList<>();
+        label = displayLabel;
+        this.gameController = gameController;
     }
 
-    public void addListener(StopWatchListener listener){
-        listeners.add(listener);
-    }
+
 
     public void startTimer(){
         this.timer = new Timer();
         activeInterval = interval;
-        timer.scheduleAtFixedRate(new TimerTask(){
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
             public void run() {
-                setInterval();
+                Platform.runLater(() -> {
+                    setInterval();
+                });
             }
         }, delay, period);
     }
@@ -44,14 +53,15 @@ public class StopWatch extends Subject {
     public final int setInterval() {
         if (activeInterval == 1) {
             timer.cancel();
-            for (StopWatchListener l : listeners){
+            /*for (StopWatchListener l : listeners){
                 l.onZero();
-            }
+            }*/
+            gameController.finishProgrammingPhase();
         }
         --activeInterval;
 
         notifyChange();
-
+        label.setText(activeInterval + "");
         return activeInterval;
     }
 
@@ -72,11 +82,5 @@ public class StopWatch extends Subject {
         this.interval = interval;
     }
 
-    public interface StopWatchListener{
-        void onZero();
-
-    }
-
 
 }
-
