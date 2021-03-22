@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
-public class GameController implements StopWatch.StopWatchListener {
+public class GameController {
     /**
      * StopWatch is going to be implemented here in GameController
      */
@@ -43,7 +43,6 @@ public class GameController implements StopWatch.StopWatchListener {
     ConveyorBeltCollection conveyorBeltCollection;
     GearsCollection gearsCollection;
     BoardElementController boardElementController;
-    public StopWatch stopwatch;
     public boolean won = false;
 
     public GameController(@NotNull Board board) {
@@ -433,7 +432,7 @@ public class GameController implements StopWatch.StopWatchListener {
 
     }
 
-    @Override
+
     public void onZero() {
         finishProgrammingPhase();
     }

@@ -23,11 +23,13 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.controller.StopWatch;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +46,7 @@ public class PlayerView extends Tab implements ViewObserver {
 
     private VBox top;
 
-    private Label programLabel;
+    private Label programLabel, stopWatchLabel;
     private GridPane programPane;
     private Label cardsLabel;
     private GridPane cardsPane;
@@ -57,7 +59,7 @@ public class PlayerView extends Tab implements ViewObserver {
     private Button finishButton;
     private Button executeButton;
     private Button stepButton;
-
+    public StopWatch stopwatch;
     private VBox playerInteractionPanel;
 
     private GameController gameController;
@@ -73,7 +75,7 @@ public class PlayerView extends Tab implements ViewObserver {
         this.player = player;
 
         programLabel = new Label("Program");
-
+        stopWatchLabel = new Label("stop watch");
         programPane = new GridPane();
         programPane.setVgap(2.0);
         programPane.setHgap(2.0);
@@ -122,6 +124,7 @@ public class PlayerView extends Tab implements ViewObserver {
         }
 
         top.getChildren().add(programLabel);
+        top.getChildren().add(stopWatchLabel);
         top.getChildren().add(programPane);
         top.getChildren().add(cardsLabel);
         top.getChildren().add(cardsPane);
@@ -130,6 +133,10 @@ public class PlayerView extends Tab implements ViewObserver {
             player.board.attach(this);
             update(player.board);
         }
+
+        stopwatch = new StopWatch(30, 2, 1000, stopWatchLabel,  gameController);
+
+        stopwatch.startTimer();
     }
 
     @Override
@@ -231,5 +238,7 @@ public class PlayerView extends Tab implements ViewObserver {
             }
         }
     }
+
+
 
 }
