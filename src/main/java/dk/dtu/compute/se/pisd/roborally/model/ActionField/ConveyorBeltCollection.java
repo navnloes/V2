@@ -48,9 +48,14 @@ public class ConveyorBeltCollection extends Subject {
         return arrived;
     }
 
+    /**
+     * This method models the action of the conveyerActionField
+     * @param space that the robot (player) lands on
+     * @return newSpace which is where the conveyerBelt moves the player to
+     */
     public Space conveyerBeltAction(Space space){
 
-        Space newSpace = null;
+        Space newSpace = space;
         for (ConveyorBeltActionField c : myCollection){
             if (space.x == c.x && space.y == c.y){
                 newSpace = space.board.getNeighbour(space,c.getHeading());

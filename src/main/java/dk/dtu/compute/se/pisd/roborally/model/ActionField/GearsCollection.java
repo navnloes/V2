@@ -50,6 +50,12 @@ public class GearsCollection extends Subject {
         return arrived;
     }
 
+    /**
+     * This method models the action that a gearActionField performs to the robot that lands on it
+     * @param player player that lands on gearActionField
+     * @param space space that the player has landed on
+     * @return
+     */
     public Heading gearAction(Player player,Space space){
 
         Heading heading = player.getHeading();
