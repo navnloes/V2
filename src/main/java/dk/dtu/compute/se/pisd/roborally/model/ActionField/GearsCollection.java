@@ -1,6 +1,7 @@
 package dk.dtu.compute.se.pisd.roborally.model.ActionField;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.Direction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -54,7 +55,10 @@ public class GearsCollection extends Subject {
         Heading heading = player.getHeading();
         for (GearsActionField g : myCollection){
             if (space.x == g.x && space.y == g.y){
-                heading = g.getHeading();
+
+                if(g.direction == Direction.LEFT) {
+                heading = heading.prev(); }
+                else {heading = heading.next();}
                 break;
             }
         }

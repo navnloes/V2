@@ -117,7 +117,7 @@ public class BoardView extends VBox implements ViewObserver {
 
             for (GearsActionField c : gameController.getGearsCollection().getMyCollection()){
                 Space space = board.getSpace(c.x(), c.y());
-                GearsView gv = new GearsView(space,c.getHeading());
+                GearsView gv = new GearsView(space,c.getDirection());
                 mainBoardPane.add(gv, c.x(), c.y());
             }
         }

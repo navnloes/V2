@@ -10,7 +10,7 @@ public class GearsActionField extends ActionField {
      * @author S205354
      */
 
-    Heading heading;
+    Direction direction;
 
     /**
      * @author S201192
@@ -19,11 +19,11 @@ public class GearsActionField extends ActionField {
      * @param x x is the coordinates of the space.
      * @param y y is the coordinates of the space.
      * @param msg sends a msg to the plauer.
-     * @param heading gives the direction of the player.
+     * @param direction gives the direction of the player.
      */
-    public GearsActionField(Board board, int x, int y, String msg, Heading heading){
+    public GearsActionField(Board board, int x, int y, String msg, Direction direction){
         super(board, x, y, msg);
-        this.heading = heading;
+        this.direction = direction;
     }
 
     public int x(){
@@ -34,8 +34,8 @@ public class GearsActionField extends ActionField {
         return y;
     }
 
-    public Heading getHeading(){
-        return heading;
+    public Direction getDirection(){
+        return direction;
     }
 
 

@@ -43,10 +43,10 @@ public class BoardElementController {
     }
 
     public void addAllGears() {
-        gearsCollection.addActionField(new GearsActionField(board, 7,6, "Gear 1", Heading.EAST));
-        gearsCollection.addActionField(new GearsActionField(board, 6,6, "Gear 2", Heading.WEST));
-        gearsCollection.addActionField(new GearsActionField(board, 2,2, "Gear 3", Heading.NORTH));
-        gearsCollection.addActionField(new GearsActionField(board, 4,2, "Gear 4", Heading.SOUTH));
+        gearsCollection.addActionField(new GearsActionField(board, 7,6, "Gear 1", Direction.LEFT));
+        gearsCollection.addActionField(new GearsActionField(board, 6,6, "Gear 2", Direction.RIGHT));
+        gearsCollection.addActionField(new GearsActionField(board, 2,2, "Gear 3", Direction.LEFT));
+        gearsCollection.addActionField(new GearsActionField(board, 4,2, "Gear 4", Direction.RIGHT));
     }
 
 }

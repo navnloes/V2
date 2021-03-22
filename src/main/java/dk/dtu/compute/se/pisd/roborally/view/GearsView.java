@@ -19,7 +19,7 @@ public class GearsView extends SpaceView {
      * @param direction is the direction the gear will turn the player
      */
 
-    public GearsView(@NotNull Space space, Heading heading) {
+    public GearsView(@NotNull Space space, Direction direction) {
         super(space);
 
         Polygon gearPart1 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
@@ -35,14 +35,14 @@ public class GearsView extends SpaceView {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        if (heading == Heading.EAST || heading == Heading.SOUTH) {
-            gc.setFill(Color.RED);}
+        if (direction == Direction.LEFT) {
+            gc.setFill(Color.DARKRED);}
         else {
             gc.setFill(Color.GREEN);
         }
         gc.fillOval(17.5, 17.5, 40, 40);
 
-        Label label = new Label(heading.toString());
+        Label label = new Label(direction.toString());
 
         this.getChildren().add(canvas);
         canvas.toBack();
