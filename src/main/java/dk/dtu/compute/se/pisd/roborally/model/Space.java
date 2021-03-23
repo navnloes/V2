@@ -43,7 +43,7 @@ public class Space extends Subject {
     private Player player;
 
     private ArrayList<Wall> walls;
-    ArrayList <Heading> headings;
+    private ArrayList <Heading> headings;
 
     public Space(Board board, int x, int y) {
         this.board = board;
