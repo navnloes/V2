@@ -98,7 +98,7 @@ public class AppController implements Observer {
     }
 
     public void saveGame() {
-        RepositoryAccess.getRepository().createGameInDB(gameController.board);
+        RepositoryAccess.getRepository().updateGameInDB(gameController.board);
     }
 
     public void loadGame() {
