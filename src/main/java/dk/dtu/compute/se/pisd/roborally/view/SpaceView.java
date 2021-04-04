@@ -24,10 +24,17 @@ package dk.dtu.compute.se.pisd.roborally.view;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * ...
@@ -41,7 +48,9 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_WIDTH = 75;  // 60; // 75;
 
     public final Space space;
-
+    ArrayList<String> headings;
+    Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+    GraphicsContext gc = canvas.getGraphicsContext2D();
 
     public SpaceView(@NotNull Space space) {
         this.space = space;
@@ -88,6 +97,45 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         }
 
+        headings = space.getWalls();
+
+        if(!headings.isEmpty()) {
+
+            gc.setStroke(Color.DARKGREEN);
+            gc.setLineWidth(10);
+            gc.setLineCap(StrokeLineCap.ROUND);
+            for (String wall: headings) {
+                if (wall.equalsIgnoreCase("SOUTH")) {
+                    gc.strokeLine(2,  SPACE_HEIGHT - 2,
+                            SPACE_WIDTH - 2, SPACE_HEIGHT -2 );
+                }
+                else if( wall.equalsIgnoreCase("NORTH") ){
+                    gc.strokeLine(2, 2,
+                            SPACE_WIDTH - 2, 2);
+                }
+                else if (wall.equalsIgnoreCase("EAST")) {
+                    gc.strokeLine(SPACE_WIDTH - 2, 2,
+                            SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+                } else {
+                    gc.strokeLine(2, 2,
+                            2, SPACE_HEIGHT - 2);
+                }
+            }
+        }
+
+        if(space.getCheckPointId() !=  -1) {
+            gc.setLineWidth(1);
+            gc.setStroke(Color.BLUE);
+            gc.setFill(Color.GOLD);
+            gc.fillOval(12.5, 12.5, 49, 49);
+            gc.strokeOval(12.5, 12.5, 50, 50);
+            gc.strokeOval(12.5, 12.5, 51, 51);
+
+            Node label = new javafx.scene.control.Label(space.getCheckPointId() +1 + "");
+            this.getChildren().add(label);
+        }
+        this.getChildren().add(canvas);
+        canvas.toBack();
 
     }
 

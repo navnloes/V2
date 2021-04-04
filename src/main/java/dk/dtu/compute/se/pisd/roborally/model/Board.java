@@ -263,4 +263,19 @@ public class Board extends Subject {
         return checkPointActionField;
     }
 
+    private Command userChoice = null;
+
+    public Command getUserChoice() {
+        return userChoice;
+    }
+
+    public void setUserChoice(Command userChoice){
+        if (this.userChoice != userChoice){
+            this.userChoice = userChoice;
+            notifyChange();
+        }
+    }
+
+
+
 }

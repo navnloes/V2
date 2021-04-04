@@ -12,12 +12,12 @@ public class WallCollection extends Subject {
      * This class keeps a collection of all wall objects
      */
     private List<Wall> myCollection;
-    private static WallCollection wallCollection;
+    private WallCollection wallCollection;
 
     /**
      * private constructor --> Singleton Design Pattern
      */
-    private WallCollection() {
+    public WallCollection() {
         myCollection = new ArrayList<>();
     }
 
@@ -25,16 +25,6 @@ public class WallCollection extends Subject {
      * static getter
      * @return Singleton WallCollection instance
      */
-    public static WallCollection getInstance(){
-        if (wallCollection == null){
-            wallCollection = new WallCollection();
-        }
-        return wallCollection;
-    }
-
-    public void addWall(Wall wall){
-        myCollection.add(wall);
-    }
 
     /**
      * @author s205353
@@ -51,16 +41,6 @@ public class WallCollection extends Subject {
 
         boolean blocked = false;
 
-        for (Wall wall : myCollection){
-           if (currentX == wall.x1() && currentY == wall.y1() &&
-                   newX == wall.x2() && newY == wall.y2() ||
-                   currentX == wall.x2() && currentY == wall.y2() &&
-                           newX == wall.x1() && newY == wall.y1())
-            {
-               blocked = true;
-               break;
-           }
-        }
         return blocked;
     }
 
