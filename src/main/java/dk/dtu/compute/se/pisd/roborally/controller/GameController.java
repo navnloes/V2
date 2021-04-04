@@ -313,9 +313,9 @@ public class GameController implements StopWatch.StopWatchListener {
         }
         boolean wallBlocks = false;
         Space playerSpace = player.getSpace();
-        ArrayList<Heading> spaceHeadings = playerSpace.getWalls();
-        for (Heading s : spaceHeadings){
-            if (s == heading){
+        ArrayList<String> spaceHeadings = playerSpace.getWalls();
+        for (String s : spaceHeadings){
+            if (s.equalsIgnoreCase(heading.toString())){
                 wallBlocks = true;
                 break;
             }

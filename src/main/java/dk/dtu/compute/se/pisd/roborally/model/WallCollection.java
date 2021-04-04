@@ -41,16 +41,6 @@ public class WallCollection extends Subject {
 
         boolean blocked = false;
 
-        for (Wall wall : myCollection){
-           if (currentX == wall.x1() && currentY == wall.y1() &&
-                   newX == wall.x2() && newY == wall.y2() ||
-                   currentX == wall.x2() && currentY == wall.y2() &&
-                           newX == wall.x1() && newY == wall.y1())
-            {
-               blocked = true;
-               break;
-           }
-        }
         return blocked;
     }
 

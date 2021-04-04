@@ -13,21 +13,5 @@ public class WallView extends SpaceView {
     public WallView(@NotNull Space space, Direction dir) {
         super(space);
 
-        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        gc.setStroke(Color.DARKGREEN);
-        gc.setLineWidth(10);
-        gc.setLineCap(StrokeLineCap.ROUND);
-
-        if(dir == Direction.HORIZONTAL){
-            gc.strokeLine(2, SPACE_HEIGHT - 2,
-                    SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-        } else if (dir == Direction.VERTICAL){
-            gc.strokeLine(2, 0,
-                    0, SPACE_HEIGHT - 2);
-        }
-        this.getChildren().add(canvas);
-
     }
 }

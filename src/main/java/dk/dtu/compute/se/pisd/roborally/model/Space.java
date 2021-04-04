@@ -39,10 +39,11 @@ public class Space extends Subject {
 
     public final int x;
     public final int y;
+    private int checkPointId = -1;
 
     private Player player;
 
-    private ArrayList<Wall> walls;
+    private ArrayList<String> walls;
     private ArrayList <Heading> headings;
 
     public Space(Board board, int x, int y) {
@@ -50,8 +51,16 @@ public class Space extends Subject {
         this.x = x;
         this.y = y;
         player = null;
-        walls = new ArrayList<Wall>();
+        walls = new ArrayList<String>();
         headings = new ArrayList<>();
+    }
+
+    public int getCheckPointId() {
+        return checkPointId;
+    }
+
+    public void setCheckPointId(int i) {
+        checkPointId = i;
     }
 
     public Player getPlayer() {
@@ -85,11 +94,11 @@ public class Space extends Subject {
         return null;
     }
 
-    public ArrayList<Heading> getWalls(){
-        return headings;
+    public ArrayList<String> getWalls(){
+        return walls;
     }
 
-    public void addWall(Wall wall){
+    public void addWall(String wall){
         walls.add(wall);
     }
 

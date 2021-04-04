@@ -70,7 +70,10 @@ public class BoardView extends VBox implements ViewObserver {
         this.getChildren().add(statusLabel);
 
         spaces = new SpaceView[board.width][board.height];
-        walls = new WallView[board.width][board.height];
+        for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
+            Space space = board.getSpace(c.x(), c.y());
+            space.setCheckPointId(c.id());
+        }
 
         spaceEventHandler = new SpaceEventHandler(gameController);
 
@@ -93,33 +96,6 @@ public class BoardView extends VBox implements ViewObserver {
         if (subject == board) {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
-            //TODO: skal omregnes for den er mærkelig
-           for (int i = 0; i < 8; i++){
-               for (int j = 0; j < 8; j++){
-                   Space space = board.getSpace(i,j);
-                   ArrayList<Heading> headings = space.getWalls();
-                   for (Heading heading: headings){
-                       switch (heading) {
-                           case EAST: verticalLine(i,j);
-                               break;
-                           case WEST:
-                              verticalLine(i,j);
-                               break;
-                           case SOUTH: horizontalLine(i,j);
-                               break;
-                           case NORTH:
-                               //virker
-                               if (j >= 1){
-                                   horizontalLine(i,j - 1);
-                               } else {
-                                   horizontalLine(i,7);
-                               }
-                               break;
-                           default: break;
-                       }
-                   }
-               }
-           }
 
             for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
                 Space space = board.getSpace(c.x(), c.y());
