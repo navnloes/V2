@@ -48,6 +48,10 @@ public class Board extends Subject {
 
     private final Space[][] spaces;
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     private final List<Player> players = new ArrayList<>();
 
     private Player current;

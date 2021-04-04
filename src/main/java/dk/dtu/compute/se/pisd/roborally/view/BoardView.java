@@ -48,8 +48,6 @@ public class BoardView extends VBox implements ViewObserver {
     private Space space;
     private GridPane mainBoardPane;
     private SpaceView[][] spaces;
-    private WallView[][] walls;
-    private WallView wallView;
     private GameController gameController;
 
     private PlayersView playersView;
@@ -144,24 +142,6 @@ public class BoardView extends VBox implements ViewObserver {
                 }
             }
         }
-
-    }
-
-    //TODO: husk
-
-    public void horizontalLine(int x, int y){
-            Space space = board.getSpace(x, y);
-            wallView = new WallView(space, Direction.HORIZONTAL);
-            walls[x][y] = wallView;
-            mainBoardPane.add(wallView, x, y);
-    }
-
-    public void verticalLine(int x, int y){
-          Space space = board.getSpace(x, y);
-          wallView = new WallView(space,Direction.VERTICAL);
-          walls[x][y] = wallView;
-          mainBoardPane.add(wallView, x, y);
-          wallView.setOnMouseClicked(spaceEventHandler);
 
     }
 

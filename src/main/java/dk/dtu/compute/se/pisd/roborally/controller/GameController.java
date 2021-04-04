@@ -441,14 +441,23 @@ public class GameController {
         finishProgrammingPhase();
     }
 
+    /*
+    This method returns the checkPointCollection of the game
+     */
     public CheckPointCollection getCheckPointCollection(){
         return checkPointCollection;
     }
 
+    /*
+    This method returns the conveyorBeltCollection of the game
+     */
     public ConveyorBeltCollection getConveyorBeltCollection() {
         return conveyorBeltCollection;
     }
 
+    /*
+    This method returns the gearsCollection of the game
+     */
     public GearsCollection getGearsCollection() {
         return gearsCollection;
     }

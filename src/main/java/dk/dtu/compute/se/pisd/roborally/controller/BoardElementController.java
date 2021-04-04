@@ -23,19 +23,9 @@ public class BoardElementController {
         this.conveyorBeltCollection = conveyorBeltCollection;
         this.gearsCollection = gearsCollection;
 
-        addAllWalls();
         addAllCheckPoints();
         addAllConveyorBelts();
         addAllGears();
-
-    }
-
-    public void addAllWalls() {
-      //  WallCollection.getInstance().addWall(new Wall(0, 0, 0, 1, 0));
-      //  WallCollection.getInstance().addWall(new Wall(7, 1, 0, 1, 1));
-       // Wall wall1 = new Wall(0,0,1,0,0);
-        //Space space1 = new Space(board, 3,3);
-        //space1.addWall(wall1);
 
     }
 

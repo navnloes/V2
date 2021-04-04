@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.dal;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 import java.util.List;
 
@@ -40,5 +41,7 @@ public interface IRepository {
 	Board loadGameFromDB(int id);
 	
 	List<GameInDB> getGames();
+
+	void addCards(Board board, Player currentPlayer, int index, int command);
 
 }

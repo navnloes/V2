@@ -41,6 +41,8 @@ public class Player extends Subject {
 
     private String name;
     private String color;
+    private int playerId;
+    private int cardIndex = 0;
 
     private Space space;
     private Heading heading = SOUTH;
@@ -52,6 +54,10 @@ public class Player extends Subject {
     private boolean[] checkPointArray = {false, false, false};
 
     private boolean winner;
+
+    public CommandCardField[] getCards() {
+        return cards;
+    }
 
     /**
      * Constructor which assigns a programming field and random command cars
@@ -199,11 +205,15 @@ public class Player extends Subject {
         }
     }
 
-    public void onGears () {
-        boolean onGears = true;
+    public int getCardIndex() { return cardIndex; }
 
+    public void setCardIndex(int index) { cardIndex = index; }
+
+    public int getPlayerId() { return playerId; }
+
+    public void setPlayerId(int id) {
+        playerId = id;
     }
-
     /**
      * This method checks which CheckPoint the player has arrived and assigns values for checkPointArray[i]
      * it ensures that the order of the arrived CheckPoints is correct and adds CheckPointTokens to the player
@@ -212,29 +222,29 @@ public class Player extends Subject {
      */
     public void arrivedCheckPoint(int id){
 
-            switch (id) {
-                case 0:
-                    if (!checkPointArray[0]){
-                        addCheckPointToken();
-                    }
-                    checkPointArray[0] = true;
-                    break;
-                case 1:
-                    if (checkPointArray[0] && !checkPointArray[1]){
-                        addCheckPointToken();
-                    }
-                    checkPointArray[1] = true;
-                    break;
-                case 2:
-                    if (checkPointArray[1] && !checkPointArray[2]){
-                        addCheckPointToken();
-                    }
-                    checkPointArray[2] = true;
-                    break;
-                default:
-                    System.out.println("Illegal id - CheckPoint ID " + id + " in arrivedCheckPoint(int id)");
+        switch (id) {
+            case 0:
+                if (!checkPointArray[0]){
+                    addCheckPointToken();
+                }
+                checkPointArray[0] = true;
+                break;
+            case 1:
+                if (checkPointArray[0] && !checkPointArray[1]){
+                    addCheckPointToken();
+                }
+                checkPointArray[1] = true;
+                break;
+            case 2:
+                if (checkPointArray[1] && !checkPointArray[2]){
+                    addCheckPointToken();
+                }
+                checkPointArray[2] = true;
+                break;
+            default:
+                System.out.println("Illegal id - CheckPoint ID " + id + " in arrivedCheckPoint(int id)");
 
-            }
+        }
     }
 
     public int getCheckPointToken(){
