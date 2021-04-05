@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
@@ -226,6 +227,21 @@ public class GameController {
                             return;
                         }
                         executeCommand(currentPlayer, command);
+
+                        int index = currentPlayer.getCardIndex();
+                        currentPlayer.setCardIndex(index + 1);
+                        //in order to save each invoked command
+                        int cmd = -1;
+                        if(command == Command.FORWARD)
+                            cmd = 0;
+                        else if(command == Command.RIGHT)
+                            cmd = 1;
+                        else if(command == Command.LEFT)
+                            cmd = 2;
+                        else if(command == Command.FAST_FORWARD)
+                            cmd = 3;
+                        if(cmd != -1)
+                            RepositoryAccess.getRepository().addCards(board, currentPlayer, index, cmd);
                     }
                 }
 

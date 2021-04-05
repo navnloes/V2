@@ -191,6 +191,11 @@ class Repository implements IRepository {
 		return false;
 	}
 
+	/*
+	This method deletes and inserts the commandCard fields on the playermat into the database
+	This method is invoked when player chooses "Save Game"
+	//TODO: new cards need to be added here
+	 */
 	private void updateCardFieldsInDB(Board game) {
 		assert game.getGameId() != null;
 		int gid = game.getGameId().intValue();
@@ -202,7 +207,7 @@ class Repository implements IRepository {
 			for(Player p:game.getPlayers()) {
 				int pid = p.getPlayerId();
 				CommandCardField[]  cfd = p.getCards();
-				for(int i=0; i<cfd.length; i++) {
+				for(int i=0; i < cfd.length; i++) {
 					int cid =  -1;
 					if(cfd[i].getCard().getCommand() == Command.FORWARD)
 						cid = 0;
@@ -215,7 +220,6 @@ class Repository implements IRepository {
 					else if(cfd[i].getCard().getCommand() == Command.OPTION_LEFT_RIGHT)
 						cid = 4;
 					if(cid != -1) {
-						System.out.println("-------- insert into gameCards with gid " + gid + " pid " + pid + " index " + i +  " cid " + cid);
 						ps = getSaveCardStmtStatement();
 						ps.setInt(1, gid);
 						ps.setInt(2, pid);
@@ -410,6 +414,10 @@ class Repository implements IRepository {
 	private PreparedStatement save_card_stmt = null;
 	private PreparedStatement delete_card_stmt = null;
 
+	/*
+	This prepared statement deletes the saved cards for the given gameID
+	- this is useful because players can save the same game more than once
+	 */
 	private PreparedStatement getDeleteCardStmtStatement() {
 		if (delete_card_stmt == null) {
 			Connection connection = connector.getConnection();

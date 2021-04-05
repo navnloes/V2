@@ -17,7 +17,6 @@ public class ImpossibleMoveException extends Exception {
         this.space = space;
         this.heading = heading;
 
-        System.out.println("move impossible");
     }
 
 }
