@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Player (
   FOREIGN KEY (gameID) REFERENCES Game(gameID)
 );;
 
-CREATE TABLE IF NOT EXISTS cards (
+CREATE TABLE IF NOT EXISTS progressCard (
                                      gameID int NOT NULL,
                                      playerID tinyint NOT NULL,
                                      cardIndex int NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS cards (
                                      FOREIGN KEY (gameID, playerID) REFERENCES Player(gameID, playerID)
 );;
 
-CREATE TABLE IF NOT EXISTS gameCards (
+CREATE TABLE IF NOT EXISTS playerMatCard (
                                          gameID int NOT NULL,
                                          playerID tinyint NOT NULL,
                                          cardIndex int NOT NULL,
