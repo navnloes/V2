@@ -16,7 +16,7 @@ public class GearsView extends SpaceView {
     /**
      * @author S205354, s205339
      * @param space is the space the gear is placed
-     * @param direction is the direction the gear will turn the player
+     * @param heading is the direction the gear will turn the player
      */
 
     public GearsView(@NotNull Space space, Heading heading) {
@@ -36,9 +36,9 @@ public class GearsView extends SpaceView {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         if (heading == Heading.EAST || heading == Heading.SOUTH) {
-            gc.setFill(Color.RED);}
+            gc.setFill(Color.BURLYWOOD);}
         else {
-            gc.setFill(Color.GREEN);
+            gc.setFill(Color.LIGHTGOLDENRODYELLOW);
         }
         gc.fillOval(17.5, 17.5, 40, 40);
 

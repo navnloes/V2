@@ -195,6 +195,7 @@ class Repository implements IRepository {
 	This method deletes and inserts the commandCard fields on the playermat into the database
 	This method is invoked when player chooses "Save Game"
 	//TODO: new cards need to be added here
+	//TODO: ALSO make it into switch
 	 */
 	private void updateCardFieldsInDB(Board game) {
 		assert game.getGameId() != null;

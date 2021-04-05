@@ -231,6 +231,7 @@ public class GameController {
                         int index = currentPlayer.getCardIndex();
                         currentPlayer.setCardIndex(index + 1);
                         //in order to save each invoked command
+                        //TODO: lav til switch
                         int cmd = -1;
                         if(command == Command.FORWARD)
                             cmd = 0;
