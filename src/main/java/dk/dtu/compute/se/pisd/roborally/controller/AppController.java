@@ -107,6 +107,9 @@ public class AppController implements Observer {
         if (gameController == null) {
             newGame();
         }
+
+        //TODO
+        RepositoryAccess.getRepository().loadGameFromDB(1);
     }
 
     /**
