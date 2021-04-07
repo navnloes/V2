@@ -59,6 +59,8 @@ public class PlayerView extends Tab implements ViewObserver {
     private Button finishButton;
     private Button executeButton;
     private Button stepButton;
+    private Button stopButton;
+    private Button startButton;
     public StopWatch stopwatch;
     private VBox playerInteractionPanel;
 
@@ -101,7 +103,14 @@ public class PlayerView extends Tab implements ViewObserver {
         stepButton = new Button("Execute Current Register");
         stepButton.setOnAction( e-> gameController.executeStep());
 
-        buttonPanel = new VBox(finishButton, executeButton, stepButton);
+        startButton = new Button("Start");
+        startButton.setOnAction( e -> stopwatch.startTimer());
+
+        stopButton = new Button("Stop");
+        stopButton.setOnAction(e ->stopwatch.stop());
+
+
+        buttonPanel = new VBox(startButton,stopButton,finishButton, executeButton, stepButton);
         buttonPanel.setAlignment(Pos.CENTER_LEFT);
         buttonPanel.setSpacing(3.0);
         // programPane.add(buttonPanel, Player.NO_REGISTERS, 0); done in update now
