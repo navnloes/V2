@@ -6,14 +6,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Heading;
 
 public class GearsActionField extends ActionField {
 
-    /**
-     * @author S205354
-     */
-
     Heading heading;
 
     /**
-     * @author S201192
+     * @author S201192 & S205354
      *  This method constructs a GearsActionfield.
      * @param board is the specific board which contains spaces.
      * @param x x is the coordinates of the space.

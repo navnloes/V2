@@ -7,14 +7,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 public class ConveyorBeltActionField extends ActionField {
 
-    /**
-     * @author S205354
-     */
-
     Heading heading;
 
     /**
-     * @author S201192
+     * @author S201192 & S205354
      *  This method construtcs a gearsactionfield.
      * @param board
      * @param x x is the coordinats of the space.
