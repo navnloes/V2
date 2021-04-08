@@ -1,9 +1,6 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -94,4 +91,20 @@ class GameControllerTest {
         Assertions.assertEquals(current, board.getSpace(0, 0).getPlayer(), "Player " + current.getName() + " should beSpace (7,0)!");
         Assertions.assertEquals(Heading.EAST, current.getHeading(), "Player 0 should be heading WEST");
     }
+
+    @Test
+    void moveToSpace() {
+
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+        Space playerSpace = new Space(board,0,0);
+        Space target = new Space(board, 0,1);
+        target.addWall("NORTH");
+
+        Assertions.assertThrows(ImpossibleMoveException.class,() -> {
+            //her er current heading SOUTH
+            gameController.moveToSpace(current,target,Heading.SOUTH);
+        });
+    }
+
 }
