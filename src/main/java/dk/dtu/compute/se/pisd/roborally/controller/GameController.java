@@ -114,7 +114,7 @@ public class GameController {
     /**
      * Method generates a random Command Card
      *
-     * @return
+     * @return new random CommandCard
      */
     private CommandCard generateRandomCommandCard() {
         Command[] commands = Command.values();
@@ -478,7 +478,7 @@ public class GameController {
      * @param source Card, which is picked
      * @param target Card, which is moved to CommandCard Field
      *               -to be executed during ACTIVATION phase
-     * @return
+     * @return boolean
      */
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
