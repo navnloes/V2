@@ -231,16 +231,26 @@ public class GameController {
                         int index = currentPlayer.getCardIndex();
                         currentPlayer.setCardIndex(index + 1);
                         //in order to save each invoked command
-                        //TODO: lav til switch
                         int cmd = -1;
-                        if(command == Command.FORWARD)
-                            cmd = 0;
-                        else if(command == Command.RIGHT)
-                            cmd = 1;
-                        else if(command == Command.LEFT)
-                            cmd = 2;
-                        else if(command == Command.FAST_FORWARD)
-                            cmd = 3;
+                        switch (command) {
+                            case FORWARD:
+                                cmd = 0;
+                                break;
+                            case RIGHT:
+                                cmd = 1;
+                                break;
+                            case LEFT:
+                                cmd = 2;
+                                break;
+                            case FAST_FORWARD:
+                                cmd = 3;
+                                break;
+                            case OPTION_LEFT_RIGHT:
+                                cmd = 4;
+                                break;
+                            default:
+                                System.out.println("Illegal cardType - CardID " + cmd + " in executeNextStep");
+                        }
                         if(cmd != -1)
                             RepositoryAccess.getRepository().addCards(board, currentPlayer, index, cmd);
                     }

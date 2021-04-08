@@ -205,6 +205,7 @@ public class Player extends Subject {
         }
     }
 
+
     public int getCardIndex() { return cardIndex; }
 
     public void setCardIndex(int index) { cardIndex = index; }

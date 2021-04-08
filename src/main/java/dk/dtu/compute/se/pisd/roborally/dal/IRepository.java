@@ -24,6 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.dal;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**

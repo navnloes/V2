@@ -38,6 +38,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -110,6 +111,9 @@ public class AppController implements Observer {
 
         //TODO
         RepositoryAccess.getRepository().loadGameFromDB(1);
+
+
+
     }
 
     /**
