@@ -66,7 +66,7 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
-    public void moveCurrentPlayerToSpace(@NotNull Space space)  {
+    public void moveCurrentPlayerToSpace(@NotNull Space space) {
 
 
         if (space.getPlayer() == null) {
@@ -110,8 +110,10 @@ public class GameController {
     }
 
     // XXX: V2
+
     /**
      * Method generates a random Command Card
+     *
      * @return
      */
     private CommandCard generateRandomCommandCard() {
@@ -137,6 +139,7 @@ public class GameController {
 
     /**
      * Method makes a specific register visible for all players, in ascending order
+     *
      * @param register int for choosing number of register to make visible
      */
     private void makeProgramFieldsVisible(int register) {
@@ -203,7 +206,7 @@ public class GameController {
      * Method executes specific current player's Command Card of this step
      * (five steps altogether / five registers that can be executed)
      * If Command Card is interactive, game Phase is set to INTERACTION
-     *
+     * <p>
      * Then, the turn goes on to the next player, whose Command Card is activated
      */
     private void executeNextStep() {
@@ -214,10 +217,10 @@ public class GameController {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {
                 Command userChoice = board.getUserChoice();
-                if (userChoice != null){
+                if (userChoice != null) {
                     board.setUserChoice(null);
                     board.setPhase(Phase.ACTIVATION);
-                    executeCommand(currentPlayer,userChoice);
+                    executeCommand(currentPlayer, userChoice);
                 } else {
                     CommandCard card = currentPlayer.getProgramField(step).getCard();
                     if (card != null) {
@@ -251,7 +254,7 @@ public class GameController {
                             default:
                                 System.out.println("Illegal cardType - CardID " + cmd + " in executeNextStep");
                         }
-                        if(cmd != -1)
+                        if (cmd != -1)
                             RepositoryAccess.getRepository().addCards(board, currentPlayer, index, cmd);
                     }
                 }
@@ -283,7 +286,8 @@ public class GameController {
 
     /**
      * Command of specific CommandCard is executed
-     * @param player whose turn it is
+     *
+     * @param player  whose turn it is
      * @param command to be executed
      */
     private void executeCommand(@NotNull Player player, Command command) {
@@ -312,16 +316,18 @@ public class GameController {
     }
 
     //TODO: V3 ExecuteCommandOption
+
     /**
      * When the game is in INTERACTION Phase
      * The phase is set to ACTIVATION
      * and the current player's CommandCard is executed
      * - the turn moves on to the next player, til all steps are executed
-     *
+     * <p>
      * After all steps are executed, the game Phase returns to PROGRAMMING Phase
+     *
      * @param option option of Command
      */
-    public void executeCommandOptionAndContinue(@NotNull Command option){
+    public void executeCommandOptionAndContinue(@NotNull Command option) {
         assert board.getPhase() == Phase.PLAYER_INTERACTION;
         assert board.getCurrentPlayer() != null;
         board.setUserChoice(option);
@@ -345,13 +351,45 @@ public class GameController {
         }
         boolean wallBlocks = false;
         Space playerSpace = player.getSpace();
+
         ArrayList<String> spaceHeadings = playerSpace.getWalls();
-        for (String s : spaceHeadings){
-            if (s.equalsIgnoreCase(heading.toString())){
+        ArrayList<String> targetHeadings = space.getWalls();
+
+        for (String s : spaceHeadings) {
+            if (s.equalsIgnoreCase(heading.toString())) {
                 wallBlocks = true;
                 break;
             }
         }
+
+        for (String t : targetHeadings) {
+            switch (t) {
+                case "SOUTH":
+                    if (player.getHeading().equals(Heading.NORTH)) {
+                        wallBlocks = true;
+                        break;
+                    }
+                case "NORTH":
+                    if (player.getHeading().equals(Heading.SOUTH)) {
+                        wallBlocks = true;
+                        break;
+                    }
+                case "WEST":
+                    if (player.getHeading().equals(Heading.EAST)) {
+                        wallBlocks = true;
+                        break;
+                    }
+                case "EAST":
+                    if (player.getHeading() == Heading.WEST) {
+                        wallBlocks = true;
+                        break;
+                    }
+                default:
+                    System.out.println("Illegal heading - player.getHeading() " + t + " in moveToSpace");
+
+            }
+        }
+
 
         if (wallBlocks){
             throw new ImpossibleMoveException(player, space, heading);
