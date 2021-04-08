@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 /**
  * This is StopWatch also called timer/hourglass in the assignment
@@ -21,17 +22,19 @@ public class StopWatch extends Subject {
     int period;
     Timer timer;
 
-    GameController gameController;
+    //GameController gameController;
+
+    private Duration time = Duration.ZERO;
 
     private Label label;
 
-    public StopWatch(int interval, int delay, int period, Label displayLabel, GameController gameController) {
+    public StopWatch(int interval, int delay, int period, Label displayLabel) {
         this.timer = new Timer();
         this.interval = interval;
         this.delay = delay;
         this.period = period;
         label = displayLabel;
-        this.gameController = gameController;
+        //this.gameController = gameController;
     }
 
 
@@ -56,7 +59,7 @@ public class StopWatch extends Subject {
             /*for (StopWatchListener l : listeners){
                 l.onZero();
             }*/
-            gameController.finishProgrammingPhase();
+            //gameController.finishProgrammingPhase();
         }
         --activeInterval;
 
@@ -82,5 +85,7 @@ public class StopWatch extends Subject {
         this.interval = interval;
     }
 
-
+    public void reset() {
+        time = Duration.ZERO;
+    }
 }
