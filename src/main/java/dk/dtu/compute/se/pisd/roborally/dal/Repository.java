@@ -566,6 +566,7 @@ class Repository implements IRepository {
                 id = rs.getInt("gameId");
                 gameIds.add(id);
             }
+            rs.close();
         } catch (SQLException e) {
             // TODO error handling
             e.printStackTrace();
@@ -573,11 +574,17 @@ class Repository implements IRepository {
         return gameIds;
     }
 
-    public ArrayList<Player> getPlayerList(Board board, int no){
+    /**
+     * This method gets the saved players from the database and adds them to ArrayList<Player> players
+     * @param board Board board
+     * @param gameId int gameId of the chosen game
+     * @return ArrayList<Player> players
+     */
+    public ArrayList<Player> getPlayerList(Board board, int gameId){
         ArrayList<Player> players = new ArrayList<>();
 
         Connection connection = connector.getConnection();
-        String query = "select * from player where gameId =" + no;
+        String query = "select * from player where gameId =" + gameId;
         try {
             connection.setAutoCommit(false);
             PreparedStatement ps = connection.prepareStatement(query);
@@ -589,12 +596,39 @@ class Repository implements IRepository {
                 player.setSpace(new Space (board, rs.getInt(5),rs.getInt(6)));
                 players.add(player);
             }
+            rs.close();
         } catch (SQLException e) {
             // TODO error handling
             e.printStackTrace();
         }
 
         return players;
+    }
+
+    public void setProgramCards(Board board, Player player){
+
+        ArrayList<CommandCardField> programCards = new ArrayList<>();
+
+        Connection connection = connector.getConnection();
+        String query = "select * from playerMatCard where gameId =" + board.getGameId() + " and playerId =" + player.getPlayerId();
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Command command = Command.getCommand(rs.getInt(4));
+                CommandCard commandCard = new CommandCard(command);
+                CommandCardField commandCardField = new CommandCardField(player);
+                commandCardField.setCard(commandCard);
+                player.setCardField(rs.getInt(3),commandCardField);
+
+            }
+            rs.close();
+        } catch (SQLException e) {
+            // TODO error handling
+            e.printStackTrace();
+        }
+
     }
 
 

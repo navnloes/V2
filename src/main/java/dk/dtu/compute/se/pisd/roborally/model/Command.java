@@ -92,4 +92,29 @@ public enum Command {
         return cId;
     }
 
+    public static Command getCommand(int index){
+        Command command = null;
+        switch (index) {
+            case 0:
+                command = FORWARD;
+                break;
+            case 1:
+                command = RIGHT;
+                break;
+            case 2:
+                command = LEFT;
+                break;
+            case 3:
+                command = FAST_FORWARD;
+                break;
+            case 4:
+                command = OPTION_LEFT_RIGHT;
+                break;
+            default:
+                System.out.println("Illegal cardIndex - int index " + index + " in Command.getCommand");
+                break;
+        }
+        return command;
+    }
+
 }

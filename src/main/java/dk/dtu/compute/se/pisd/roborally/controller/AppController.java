@@ -103,6 +103,9 @@ public class AppController implements Observer {
         RepositoryAccess.getRepository().updateGameInDB(gameController.board);
     }
 
+    /**
+     * This method loads the chosen game and players from the database to the board
+     */
     public void loadGame() {
         Board board = LoadBoard.loadBoard(null);
         gameController = new GameController(board);
@@ -119,11 +122,13 @@ public class AppController implements Observer {
 
         ArrayList<Player> players = RepositoryAccess.getRepository().getPlayerList(board,no);
         for (Player player : players){
+            RepositoryAccess.getRepository().setProgramCards(board,player);
             board.addPlayer(player);
             player.setSpace(board.getSpace(player.getSpace().x, player.getSpace().y));
         }
 
         board.setCurrentPlayer(board.getPlayer(0));
+
         gameController.startProgrammingPhase();
         roboRally.createBoardView(gameController);
 

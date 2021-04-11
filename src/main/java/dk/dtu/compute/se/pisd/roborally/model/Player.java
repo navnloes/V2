@@ -197,6 +197,10 @@ public class Player extends Subject {
         return cards[i];
     }
 
+    public void setCardField(int i, CommandCardField commandCardField){
+        cards[i] = commandCardField;
+    }
+
     public void addCheckPointToken(){
         checkPointToken  = checkPointToken + 1;
         if (checkPointToken == 3){
