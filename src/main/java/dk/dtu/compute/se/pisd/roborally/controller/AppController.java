@@ -123,7 +123,7 @@ public class AppController implements Observer {
             board.addPlayer(player);
             player.setSpace(board.getSpace(player.getSpace().x, player.getSpace().y));
         }
-
+        //TODO: ændres til reel currentPlayer
         board.setCurrentPlayer(board.getPlayer(0));
 
         gameController.startProgrammingPhase();
