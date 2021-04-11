@@ -303,8 +303,6 @@ public class GameController {
         }
     }
 
-    //TODO: V3 ExecuteCommandOption
-
     /**
      * When the game is in INTERACTION Phase
      * The phase is set to ACTIVATION
@@ -404,8 +402,6 @@ public class GameController {
 
     }
 
-
-    // TODO Assignment V2
     /**
      * Method moves player to 'Neighbour' / one space forward
      * @param player to be moved
@@ -428,8 +424,6 @@ public class GameController {
 
     }
 
-    // TODO Assignment V2
-
     /**
      * Method moves player two spaces forward
      * @param player to be moved
@@ -441,8 +435,6 @@ public class GameController {
         moveForward(player);
     }
 
-    // TODO Assignment V2
-
     /**
      * Method turns player to the right of the current 'Heading' / facing
      * @param player to be turned
@@ -452,7 +444,6 @@ public class GameController {
         player.setHeading(heading.next());
     }
 
-    // TODO Assignment V2
     /**
      * Method turns player to the left of the current 'Heading' / facing
      * @param player to be turned
