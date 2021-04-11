@@ -22,11 +22,13 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -93,8 +95,15 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
+        }
 
+    }
 
+    @Override
+    public void updateView(Subject subject) {
+
+        if (subject == this.space) {
+            updatePlayer();
         }
 
         headings = space.getWalls();
@@ -134,17 +143,29 @@ public class SpaceView extends StackPane implements ViewObserver {
             Node label = new javafx.scene.control.Label(space.getCheckPointId() +1 + "");
             this.getChildren().add(label);
         }
+
+        if (space.hasConveyerBelt()){
+            Polygon arrow = new Polygon(0.0, 0.0, 15.0, 40, 30.0, 0.0);
+            arrow.setFill(Color.DEEPSKYBLUE);
+            javafx.scene.control.Label label = new Label("Conveyor");
+
+            Heading heading = space.getActions().get(0).getHeading();
+            if(heading == Heading.NORTH){
+                arrow.setRotate(180);
+            } else if (heading == Heading.EAST){
+                arrow.setRotate(270);
+            } else if (heading == Heading.SOUTH){
+                arrow.setRotate(0);
+            } else if (heading == Heading.WEST){
+                arrow.setRotate(90);
+            }
+
+            this.getChildren().add(arrow);
+        }
+
+
         this.getChildren().add(canvas);
         canvas.toBack();
-
-    }
-
-    @Override
-    public void updateView(Subject subject) {
-
-        if (subject == this.space) {
-            updatePlayer();
-        }
     }
 
 }

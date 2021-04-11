@@ -22,10 +22,9 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.ConveyorBeltActionField;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ...
@@ -40,11 +39,13 @@ public class Space extends Subject {
     public final int x;
     public final int y;
     private int checkPointId = -1;
+    private boolean hasConveyerBelt = false;
 
     private Player player;
 
     private ArrayList<String> walls;
     private ArrayList <Heading> headings;
+    private ArrayList<ConveyorBeltActionField> actions;
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -90,8 +91,8 @@ public class Space extends Subject {
         notifyChange();
     }
 
-    public <E>List<E> getActions() {
-        return null;
+    public ArrayList<ConveyorBeltActionField> getActions() {
+        return actions;
     }
 
     public ArrayList<String> getWalls(){
@@ -101,6 +102,15 @@ public class Space extends Subject {
     public void addWall(String wall){
         walls.add(wall);
     }
+
+    public boolean hasConveyerBelt(){
+        return hasConveyerBelt;
+    }
+
+    public void setConveyerBelt(boolean flag){
+        hasConveyerBelt = flag;
+    }
+
 
 
 }

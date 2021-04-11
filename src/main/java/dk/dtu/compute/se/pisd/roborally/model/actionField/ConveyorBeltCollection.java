@@ -1,7 +1,6 @@
-package dk.dtu.compute.se.pisd.roborally.model.ActionField;
+package dk.dtu.compute.se.pisd.roborally.model.actionField;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 import java.util.ArrayList;

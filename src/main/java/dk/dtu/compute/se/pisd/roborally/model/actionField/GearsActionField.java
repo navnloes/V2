@@ -1,11 +1,9 @@
-package dk.dtu.compute.se.pisd.roborally.model.ActionField;
+package dk.dtu.compute.se.pisd.roborally.model.actionField;
 
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
 
-public class ConveyorBeltActionField extends ActionField {
+public class GearsActionField extends ActionField {
 
     /**
      * @author S205354
@@ -15,15 +13,14 @@ public class ConveyorBeltActionField extends ActionField {
 
     /**
      * @author S201192
-     *  This method construtcs a gearsactionfield.
-     * @param board
-     * @param x x is the coordinats of the space.
+     *  This method constructs a GearsActionfield.
+     * @param board is the specific board which contains spaces.
+     * @param x x is the coordinates of the space.
      * @param y y is the coordinates of the space.
      * @param msg sends a msg to the plauer.
-     * @param heading is the heading of the player.
+     * @param heading gives the direction of the player.
      */
-
-    public ConveyorBeltActionField(Board board, int x, int y, String msg, Heading heading){
+    public GearsActionField(Board board, int x, int y, String msg, Heading heading){
         super(board, x, y, msg);
         this.heading = heading;
     }
@@ -39,5 +36,9 @@ public class ConveyorBeltActionField extends ActionField {
     public Heading getHeading(){
         return heading;
     }
+
+
+
+
 
 }

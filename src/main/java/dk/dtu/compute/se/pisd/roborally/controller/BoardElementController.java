@@ -1,13 +1,10 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.CheckPointActionField;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.CheckPointCollection;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
-import dk.dtu.compute.se.pisd.roborally.model.Wall;
-import dk.dtu.compute.se.pisd.roborally.model.WallCollection;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.*;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.*;
 import org.jetbrains.annotations.NotNull;
 
 public class BoardElementController {
@@ -36,10 +33,10 @@ public class BoardElementController {
     }
 
     public void addAllConveyorBelts() {
-        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 7,7, "ConveyorBelt 1", Heading.NORTH));
-        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 6,7, "ConveyorBelt 2", Heading.EAST));
-        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 5,7, "ConveyorBelt 3", Heading.SOUTH));
-        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 4,7, "ConveyorBelt 4", Heading.WEST));
+        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 7,7,Heading.NORTH));
+        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 6,7,Heading.EAST));
+        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 5,7,Heading.SOUTH));
+        conveyorBeltCollection.addActionField(new ConveyorBeltActionField(board, 4,7,Heading.WEST));
     }
 
     public void addAllGears() {

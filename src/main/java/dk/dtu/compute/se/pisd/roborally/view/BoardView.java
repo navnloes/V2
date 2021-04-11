@@ -24,17 +24,15 @@ package dk.dtu.compute.se.pisd.roborally.view;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltActionField;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsActionField;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.CheckPointActionField;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.ConveyorBeltActionField;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.GearsActionField;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 /**
  * ...

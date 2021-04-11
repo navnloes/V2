@@ -26,7 +26,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import dk.dtu.compute.se.pisd.roborally.model.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.model.SpaceTemplate;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
@@ -36,7 +35,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Field;
 
 /**
  * ...

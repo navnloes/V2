@@ -1,16 +1,16 @@
-package dk.dtu.compute.se.pisd.roborally.model.ActionField;
+package dk.dtu.compute.se.pisd.roborally.model.actionField;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 
 
 public abstract class ActionField extends Subject {
 
-    public final Board board;
-    public final int x;
-    public final int y;
-    public final String msg;
+    public Board board;
+    public int x;
+    public int y;
+    public String msg;
 
     /**
      *
@@ -25,6 +25,9 @@ public abstract class ActionField extends Subject {
         this.y = y;
         this.msg = msg;
 
+    }
+
+    public ActionField(Heading heading){
     }
 
     public abstract int x();

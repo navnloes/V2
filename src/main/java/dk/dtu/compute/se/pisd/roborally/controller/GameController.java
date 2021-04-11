@@ -21,12 +21,11 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltCollection;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsCollection;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.CheckPointCollection;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.ConveyorBeltCollection;
+import dk.dtu.compute.se.pisd.roborally.model.actionField.GearsCollection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
