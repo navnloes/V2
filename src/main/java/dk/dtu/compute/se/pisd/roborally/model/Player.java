@@ -263,4 +263,5 @@ public class Player extends Subject {
     public boolean getWinner(){
         return winner;
     }
+
 }

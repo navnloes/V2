@@ -39,6 +39,7 @@ import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -103,16 +104,28 @@ public class AppController implements Observer {
     }
 
     public void loadGame() {
-        // XXX needs to be implememted eventually
-        // for now, we just create a new game
-        if (gameController == null) {
-            newGame();
+        Board board = LoadBoard.loadBoard(null);
+        gameController = new GameController(board);
+
+        ArrayList<Integer> gameIds = RepositoryAccess.getRepository().getGameIds();
+
+        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(gameIds.get(0), gameIds);
+        dialog.setTitle("Saved games");
+        dialog.setHeaderText("Select saved game no.");
+        Optional<Integer> result = dialog.showAndWait();
+        int no = result.get();
+        board.setGameId(no);
+
+
+        ArrayList<Player> players = RepositoryAccess.getRepository().getPlayerList(board,no);
+        for (Player player : players){
+            board.addPlayer(player);
+            player.setSpace(board.getSpace(player.getSpace().x, player.getSpace().y));
         }
 
-        //TODO
-        RepositoryAccess.getRepository().loadGameFromDB(1);
-
-
+        board.setCurrentPlayer(board.getPlayer(0));
+        gameController.startProgrammingPhase();
+        roboRally.createBoardView(gameController);
 
     }
 

@@ -231,31 +231,13 @@ public class GameController {
                         }
                         executeCommand(currentPlayer, command);
 
-                        int index = currentPlayer.getCardIndex();
-                        currentPlayer.setCardIndex(index + 1);
-                        //in order to save each invoked command
-                        int cmd = -1;
-                        switch (command) {
-                            case FORWARD:
-                                cmd = 0;
-                                break;
-                            case RIGHT:
-                                cmd = 1;
-                                break;
-                            case LEFT:
-                                cmd = 2;
-                                break;
-                            case FAST_FORWARD:
-                                cmd = 3;
-                                break;
-                            case OPTION_LEFT_RIGHT:
-                                cmd = 4;
-                                break;
-                            default:
-                                System.out.println("Illegal cardType - CardID " + cmd + " in executeNextStep");
-                        }
-                        if (cmd != -1)
-                            RepositoryAccess.getRepository().addCards(board, currentPlayer, index, cmd);
+                        //int index = currentPlayer.getCardIndex();
+                        //currentPlayer.setCardIndex(index + 1);
+                        ////in order to save each invoked command
+                        //int cmd = Command.getId(command);
+//
+                        //if (cmd != -1)
+                        //    RepositoryAccess.getRepository().addCards(board, currentPlayer, index, cmd);
                     }
                 }
 
@@ -367,25 +349,26 @@ public class GameController {
                 case "SOUTH":
                     if (player.getHeading().equals(Heading.NORTH)) {
                         wallBlocks = true;
-                        break;
                     }
+                    break;
                 case "NORTH":
                     if (player.getHeading().equals(Heading.SOUTH)) {
                         wallBlocks = true;
-                        break;
                     }
+                    break;
                 case "WEST":
                     if (player.getHeading().equals(Heading.EAST)) {
                         wallBlocks = true;
-                        break;
                     }
+                    break;
                 case "EAST":
                     if (player.getHeading() == Heading.WEST) {
                         wallBlocks = true;
-                        break;
                     }
+                    break;
                 default:
                     System.out.println("Illegal heading - player.getHeading() " + t + " in moveToSpace");
+                    break;
 
             }
         }

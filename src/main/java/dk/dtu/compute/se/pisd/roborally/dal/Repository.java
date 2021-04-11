@@ -198,11 +198,12 @@ class Repository implements IRepository {
     private void updateCardFieldsInDB(Board game) {
         assert game.getGameId() != null;
         int gid = game.getGameId().intValue();
+        Connection connection = connector.getConnection();
         try {
             PreparedStatement ps = getDeleteCardStmtStatement();
             ps.setInt(1, gid);
             ps.executeUpdate();
-
+            connection.commit();
             for (Player p : game.getPlayers()) {
                 int pId = p.getPlayerId();
                 CommandCardField[] commandCardFieldArray = p.getCards();
@@ -212,25 +213,7 @@ class Repository implements IRepository {
 
                     Command commandCard = commandCardFieldArray[i].getCard().getCommand();
 
-                    switch (commandCard) {
-                        case FORWARD:
-                            cId = 0;
-                            break;
-                        case RIGHT:
-                            cId = 1;
-                            break;
-                        case LEFT:
-                            cId = 2;
-                            break;
-                        case FAST_FORWARD:
-                            cId = 3;
-                            break;
-                        case OPTION_LEFT_RIGHT:
-                            cId = 4;
-                            break;
-                        default:
-                            System.out.println("Illegal cardType - CardID " + cId + " in updatecardFieldsInDB");
-                    }
+                    cId = Command.getId(commandCard);
 
                     if (cId != -1) {
                         ps = getSaveCardStmtStatement();
@@ -568,6 +551,50 @@ class Repository implements IRepository {
             }
         }
         return select_games_stmt;
+    }
+
+    public ArrayList<Integer> getGameIds(){
+        ArrayList<Integer> gameIds = new ArrayList<>();
+        Connection connection = connector.getConnection();
+        String query = "select * from game order by gameId DESC";
+        int id = 0;
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("gameId");
+                gameIds.add(id);
+            }
+        } catch (SQLException e) {
+            // TODO error handling
+            e.printStackTrace();
+        }
+        return gameIds;
+    }
+
+    public ArrayList<Player> getPlayerList(Board board, int no){
+        ArrayList<Player> players = new ArrayList<>();
+
+        Connection connection = connector.getConnection();
+        String query = "select * from player where gameId =" + no;
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Player player = new Player(board,rs.getString(4),rs.getString(3));
+                player.setPlayerId(rs.getInt(2));
+                player.setHeading(Heading.getHeading(rs.getInt(7)));
+                player.setSpace(new Space (board, rs.getInt(5),rs.getInt(6)));
+                players.add(player);
+            }
+        } catch (SQLException e) {
+            // TODO error handling
+            e.printStackTrace();
+        }
+
+        return players;
     }
 
 

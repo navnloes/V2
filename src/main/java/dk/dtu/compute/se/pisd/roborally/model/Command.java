@@ -67,4 +67,29 @@ public enum Command {
         return options;
     }
 
+    public static int getId(Command command){
+        int cId = -1;
+        switch (command) {
+            case FORWARD:
+                cId = 0;
+                break;
+            case RIGHT:
+                cId = 1;
+                break;
+            case LEFT:
+                cId = 2;
+                break;
+            case FAST_FORWARD:
+                cId = 3;
+                break;
+            case OPTION_LEFT_RIGHT:
+                cId = 4;
+                break;
+            default:
+                System.out.println("Illegal cardType - CardID " + cId + " in updatecardFieldsInDB");
+                break;
+        }
+        return cId;
+    }
+
 }

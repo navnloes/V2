@@ -46,4 +46,24 @@ public enum Heading {
     public Heading prev() {
         return values()[(this.ordinal() + values().length - 1) % values().length];
     }
+
+    public static Heading getHeading(int index){
+        Heading heading = SOUTH;
+        switch (index) {
+            case 1:
+                heading = WEST;
+                break;
+            case 2:
+                heading  = NORTH;
+                break;
+            case 3:
+                heading = EAST;
+                break;
+            default:
+                break;
+
+        }
+        return heading;
+    }
+
 }

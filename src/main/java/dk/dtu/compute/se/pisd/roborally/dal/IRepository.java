@@ -25,6 +25,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,5 +45,9 @@ public interface IRepository {
 	List<GameInDB> getGames();
 
 	void addCards(Board board, Player currentPlayer, int index, int command);
+
+	ArrayList<Integer> getGameIds();
+
+	ArrayList<Player> getPlayerList(Board board, int no);
 
 }
