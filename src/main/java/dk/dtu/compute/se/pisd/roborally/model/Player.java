@@ -55,6 +55,11 @@ public class Player extends Subject {
 
     private boolean winner;
 
+    private Space startSpace = null;
+
+    private int hit = 0;
+    private boolean respawn = false;
+
     public CommandCardField[] getCards() {
         return cards;
     }
@@ -266,6 +271,30 @@ public class Player extends Subject {
 
     public boolean getWinner(){
         return winner;
+    }
+
+    public void setStartSpace(Space space){
+        startSpace = space;
+    }
+
+    public void hit(){
+        hit++;
+        if (hit == 3){
+            respawn = true;
+            hit = 0;
+        }
+    }
+
+    public boolean isRespawn(){
+        return respawn;
+    }
+
+    public void setRespawn(boolean state){
+        respawn = state;
+    }
+
+    public Space getStartSpace(){
+        return startSpace;
     }
 
 }
