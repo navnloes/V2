@@ -35,7 +35,6 @@ import java.util.ArrayList;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
 public class GameController {
     /**
@@ -47,6 +46,7 @@ public class GameController {
     GearsCollection gearsCollection;
     BoardElementController boardElementController;
     public boolean won = false;
+    private boolean robotInRange;
 
     public GameController(@NotNull Board board) {
         this.board = board;
@@ -103,7 +103,7 @@ public class GameController {
                 for (int j = 0; j < Player.NO_CARDS; j++) {
                     CommandCardField field = player.getCardField(j);
 
-                    if (field.getCard() == null){
+                    if (field.getCard() == null) {
                         field.setCard(generateRandomCommandCard());
                     }
 
@@ -300,6 +300,7 @@ public class GameController {
                 default:
                     // DO NOTHING (for now)
             }
+
         }
     }
 
@@ -378,60 +379,56 @@ public class GameController {
         }
 
 
-        if (wallBlocks){
+        if (wallBlocks) {
             throw new ImpossibleMoveException(player, space, heading);
         }
 
         boolean isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
-        while (isConveyerBelt){
+        while (isConveyerBelt) {
             space = conveyorBeltCollection.conveyerBeltAction(space);
             isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
         }
 
         boolean isGear = gearsCollection.isGears(space);
-        if (isGear){
-            player.setHeading(gearsCollection.gearAction(player,space));
+        if (isGear) {
+            player.setHeading(gearsCollection.gearAction(player, space));
         }
 
         boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
-        if (isCheckPoint){
+        if (isCheckPoint) {
             player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
         }
 
         player.setSpace(space);
 
-        boolean robotInRange = false;
+        robotInRange = false;
+        int range = 3;
         Player otherRobot = null;
 
-        int range = 3;
-
-        //TODO: ryk i metode + heading skal affyre laser også
-        for (int i = 0; i < range; i++){
-            Space targetSpace = board.getNeighbour(space,heading);
+        for (int i = 0; i < range; i++) {
+            Space targetSpace = board.getNeighbour(space, heading);
+            otherRobot = targetSpace.getPlayer();
             space = targetSpace;
-            if (targetSpace.getPlayer() != null){
-                otherRobot = targetSpace.getPlayer();
+            if (otherRobot != null) {
                 robotInRange = true;
                 break;
             }
         }
 
-        //other player
-        if (robotInRange){
+        if (robotInRange) {
             otherRobot.hit();
-            if (otherRobot.isRespawn()){
+            System.out.println(otherRobot.getHit());
+            if (otherRobot.isRespawn()) {
                 otherRobot.setSpace(otherRobot.getStartSpace());
                 otherRobot.setRespawn(false);
             }
         }
 
-
-
-
     }
 
     /**
      * Method moves player to 'Neighbour' / one space forward
+     *
      * @param player to be moved
      */
     public void moveForward(@NotNull Player player) {
@@ -444,7 +441,7 @@ public class GameController {
             if (target != null) {
                 try {
                     moveToSpace(player, target, heading);
-                } catch (ImpossibleMoveException e){
+                } catch (ImpossibleMoveException e) {
                     //
                 }
             }
@@ -454,6 +451,7 @@ public class GameController {
 
     /**
      * Method moves player two spaces forward
+     *
      * @param player to be moved
      */
     public void fastForward(@NotNull Player player) {
@@ -465,6 +463,7 @@ public class GameController {
 
     /**
      * Method turns player to the right of the current 'Heading' / facing
+     *
      * @param player to be turned
      */
     public void turnRight(@NotNull Player player) {
@@ -474,6 +473,7 @@ public class GameController {
 
     /**
      * Method turns player to the left of the current 'Heading' / facing
+     *
      * @param player to be turned
      */
     public void turnLeft(@NotNull Player player) {
@@ -482,7 +482,6 @@ public class GameController {
     }
 
     /**
-     *
      * @param source Card, which is picked
      * @param target Card, which is moved to CommandCard Field
      *               -to be executed during ACTIVATION phase
@@ -517,7 +516,7 @@ public class GameController {
     /*
     This method returns the checkPointCollection of the game
      */
-    public CheckPointCollection getCheckPointCollection(){
+    public CheckPointCollection getCheckPointCollection() {
         return checkPointCollection;
     }
 
@@ -534,5 +533,6 @@ public class GameController {
     public GearsCollection getGearsCollection() {
         return gearsCollection;
     }
+
 
 }

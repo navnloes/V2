@@ -285,6 +285,10 @@ public class Player extends Subject {
         }
     }
 
+    public int getHit(){
+        return hit;
+    }
+
     public boolean isRespawn(){
         return respawn;
     }
