@@ -48,6 +48,10 @@ public class Board extends Subject {
 
     private final Space[][] spaces;
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     private final List<Player> players = new ArrayList<>();
 
     private Player current;
@@ -262,5 +266,20 @@ public class Board extends Subject {
     public CheckPointActionField getCheckPointActionField(){
         return checkPointActionField;
     }
+
+    private Command userChoice = null;
+
+    public Command getUserChoice() {
+        return userChoice;
+    }
+
+    public void setUserChoice(Command userChoice){
+        if (this.userChoice != userChoice){
+            this.userChoice = userChoice;
+            notifyChange();
+        }
+    }
+
+
 
 }

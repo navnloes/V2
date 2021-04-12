@@ -38,7 +38,7 @@ public class GearsView extends SpaceView {
         if (direction == Direction.LEFT) {
             gc.setFill(Color.DARKRED);}
         else {
-            gc.setFill(Color.GREEN);
+            gc.setFill(Color.LIGHTGOLDENRODYELLOW);
         }
         gc.fillOval(17.5, 17.5, 40, 40);
 

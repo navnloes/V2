@@ -20,6 +20,7 @@
  *
  */
 package dk.dtu.compute.se.pisd.roborally;
+import dk.dtu.compute.se.pisd.roborally.dal.*;
 
 /**
  * This is a class for starting up the RoboRally application. This is a
@@ -35,5 +36,6 @@ public class StartRoboRally {
     public static void main(String[] args) {
         RoboRally.main(args);
     }
+    Connector connector = new Connector();
 
 }

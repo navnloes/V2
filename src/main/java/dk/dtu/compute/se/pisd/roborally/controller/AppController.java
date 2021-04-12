@@ -26,9 +26,12 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
+import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
+import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -36,6 +39,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -74,15 +79,15 @@ public class AppController implements Observer {
                 }
             }
 
-            // XXX the board should eventually be created programmatically or loaded from a file
-            //     here we just create an empty board with the required number of players.
-            Board board = new Board(8,8);
+            Board board = LoadBoard.loadBoard(null);
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {
                 Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
                 board.addPlayer(player);
-                player.setSpace(board.getSpace(i % board.width, i));
+                Space space = board.getSpace(i % board.width, i);
+                player.setSpace(space);
+                player.setStartSpace(space);
             }
 
             // XXX: V2
@@ -90,19 +95,43 @@ public class AppController implements Observer {
             gameController.startProgrammingPhase();
 
             roboRally.createBoardView(gameController);
+            RepositoryAccess.getRepository().createGameInDB(board);
         }
     }
 
     public void saveGame() {
-        // XXX needs to be implemented eventually
+        RepositoryAccess.getRepository().updateGameInDB(gameController.board);
     }
 
+    /**
+     * This method loads the chosen game and players from the database to the board
+     */
     public void loadGame() {
-        // XXX needs to be implememted eventually
-        // for now, we just create a new game
-        if (gameController == null) {
-            newGame();
+        Board board = LoadBoard.loadBoard(null);
+        gameController = new GameController(board);
+
+        ArrayList<Integer> gameIds = RepositoryAccess.getRepository().getGameIds();
+
+        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(gameIds.get(0), gameIds);
+        dialog.setTitle("Saved games");
+        dialog.setHeaderText("Select saved game no.");
+        Optional<Integer> result = dialog.showAndWait();
+        int no = result.get();
+        board.setGameId(no);
+
+
+        ArrayList<Player> players = RepositoryAccess.getRepository().getPlayerList(board,no);
+        for (Player player : players){
+            RepositoryAccess.getRepository().setProgramCards(board,player);
+            board.addPlayer(player);
+            player.setSpace(board.getSpace(player.getSpace().x, player.getSpace().y));
         }
+        //TODO: ændres til reel currentPlayer
+        board.setCurrentPlayer(board.getPlayer(0));
+
+        gameController.startProgrammingPhase();
+        roboRally.createBoardView(gameController);
+
     }
 
     /**

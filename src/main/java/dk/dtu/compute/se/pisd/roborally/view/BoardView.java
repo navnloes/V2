@@ -34,6 +34,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 /**
  * ...
  *
@@ -46,8 +48,6 @@ public class BoardView extends VBox implements ViewObserver {
     private Space space;
     private GridPane mainBoardPane;
     private SpaceView[][] spaces;
-    private WallView[][] walls;
-    private WallView wallView;
     private GameController gameController;
 
     private PlayersView playersView;
@@ -70,7 +70,10 @@ public class BoardView extends VBox implements ViewObserver {
         this.getChildren().add(statusLabel);
 
         spaces = new SpaceView[board.width][board.height];
-        walls = new WallView[board.width][board.height];
+        for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
+            Space space = board.getSpace(c.x(), c.y());
+            space.setCheckPointId(c.id());
+        }
 
         spaceEventHandler = new SpaceEventHandler(gameController);
 
@@ -93,14 +96,6 @@ public class BoardView extends VBox implements ViewObserver {
         if (subject == board) {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
-            //TODO: hvor den her skal være
-            for (Wall wall : WallCollection.getInstance().getMyCollection()){
-                if (wall.direction() == 0){
-                    horizontalLine(wall.x1(),wall.y1());
-                } else {
-                    verticalLine(wall.x2(), wall.y2());
-                }
-            }
 
             //TODO GetMyCollection må ikke ske over gameController.
             for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
@@ -147,24 +142,6 @@ public class BoardView extends VBox implements ViewObserver {
                 }
             }
         }
-
-    }
-
-    //TODO: husk
-
-    public void horizontalLine(int x, int y){
-            Space space = board.getSpace(x, y);
-            wallView = new WallView(space, Direction.HORIZONTAL);
-            walls[x][y] = wallView;
-            mainBoardPane.add(wallView, x, y);
-    }
-
-    public void verticalLine(int x, int y){
-          Space space = board.getSpace(x, y);
-          wallView = new WallView(space,Direction.VERTICAL);
-          walls[x][y] = wallView;
-          mainBoardPane.add(wallView, x, y);
-          wallView.setOnMouseClicked(spaceEventHandler);
 
     }
 

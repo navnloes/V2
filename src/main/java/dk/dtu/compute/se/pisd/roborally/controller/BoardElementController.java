@@ -1,5 +1,11 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
+import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.Wall;
+import dk.dtu.compute.se.pisd.roborally.model.WallCollection;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.*;
 import org.jetbrains.annotations.NotNull;
@@ -23,17 +29,10 @@ public class BoardElementController {
         this.conveyorBeltCollection = conveyorBeltCollection;
         this.gearsCollection = gearsCollection;
 
-        addAllWalls();
         addAllCheckPoints();
         addAllConveyorBelts();
         addAllGears();
 
-    }
-
-    public void addAllWalls() {
-        WallCollection.getInstance().addWall(new Wall(7, 1, 0, 1, 1));
-        WallCollection.getInstance().addWall(new Wall(5, 4, 4, 4, 1));
-        WallCollection.getInstance().addWall(new Wall(3, 5, 4, 5, 0));
     }
 
     public void addAllCheckPoints() {

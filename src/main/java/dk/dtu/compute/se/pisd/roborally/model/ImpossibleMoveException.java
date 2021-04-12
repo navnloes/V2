@@ -1,4 +1,4 @@
-package dk.dtu.compute.se.pisd.roborally;
+package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
@@ -17,7 +17,6 @@ public class ImpossibleMoveException extends Exception {
         this.space = space;
         this.heading = heading;
 
-        System.out.println("move impossible");
     }
 
 }

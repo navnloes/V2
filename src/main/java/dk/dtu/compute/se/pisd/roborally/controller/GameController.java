@@ -21,12 +21,15 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import dk.dtu.compute.se.pisd.roborally.ImpossibleMoveException;
+import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
+import dk.dtu.compute.se.pisd.roborally.model.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltCollection;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsCollection;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 /**
  * ...
@@ -63,7 +66,7 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
-    public void moveCurrentPlayerToSpace(@NotNull Space space)  {
+    public void moveCurrentPlayerToSpace(@NotNull Space space) {
 
 
         if (space.getPlayer() == null) {
@@ -99,17 +102,25 @@ public class GameController {
                 }
                 for (int j = 0; j < Player.NO_CARDS; j++) {
                     CommandCardField field = player.getCardField(j);
-                    field.setCard(generateRandomCommandCard());
+
+                    if (field.getCard() == null){
+                        field.setCard(generateRandomCommandCard());
+                    }
+
                     field.setVisible(true);
                 }
+
             }
         }
+
     }
 
     // XXX: V2
+
     /**
      * Method generates a random Command Card
-     * @return
+     *
+     * @return new random CommandCard
      */
     private CommandCard generateRandomCommandCard() {
         Command[] commands = Command.values();
@@ -134,6 +145,7 @@ public class GameController {
 
     /**
      * Method makes a specific register visible for all players, in ascending order
+     *
      * @param register int for choosing number of register to make visible
      */
     private void makeProgramFieldsVisible(int register) {
@@ -200,23 +212,41 @@ public class GameController {
      * Method executes specific current player's Command Card of this step
      * (five steps altogether / five registers that can be executed)
      * If Command Card is interactive, game Phase is set to INTERACTION
-     *
+     * <p>
      * Then, the turn goes on to the next player, whose Command Card is activated
      */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
-        if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
+        if ((board.getPhase() == Phase.ACTIVATION) ||
+                (board.getPhase() == Phase.PLAYER_INTERACTION && board.getUserChoice() != null)
+                        && currentPlayer != null) {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {
-                CommandCard card = currentPlayer.getProgramField(step).getCard();
-                if (card != null) {
-                    Command command = card.command;
-                    if (command.isInteractive()) {
-                        board.setPhase(Phase.PLAYER_INTERACTION);
-                        return;
+                Command userChoice = board.getUserChoice();
+                if (userChoice != null) {
+                    board.setUserChoice(null);
+                    board.setPhase(Phase.ACTIVATION);
+                    executeCommand(currentPlayer, userChoice);
+                } else {
+                    CommandCard card = currentPlayer.getProgramField(step).getCard();
+                    if (card != null) {
+                        Command command = card.command;
+                        if (command.isInteractive()) {
+                            board.setPhase(Phase.PLAYER_INTERACTION);
+                            return;
+                        }
+                        executeCommand(currentPlayer, command);
+
+                        //int index = currentPlayer.getCardIndex();
+                        //currentPlayer.setCardIndex(index + 1);
+                        ////in order to save each invoked command
+                        //int cmd = Command.getId(command);
+//
+                        //if (cmd != -1)
+                        //    RepositoryAccess.getRepository().addCards(board, currentPlayer, index, cmd);
                     }
-                    executeCommand(currentPlayer, command);
                 }
+
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
@@ -244,7 +274,8 @@ public class GameController {
 
     /**
      * Command of specific CommandCard is executed
-     * @param player whose turn it is
+     *
+     * @param player  whose turn it is
      * @param command to be executed
      */
     private void executeCommand(@NotNull Player player, Command command) {
@@ -272,38 +303,21 @@ public class GameController {
         }
     }
 
-    //TODO: V3 ExecuteCommandOption
     /**
      * When the game is in INTERACTION Phase
      * The phase is set to ACTIVATION
      * and the current player's CommandCard is executed
      * - the turn moves on to the next player, til all steps are executed
-     *
+     * <p>
      * After all steps are executed, the game Phase returns to PROGRAMMING Phase
+     *
      * @param option option of Command
      */
-    public void executeCommandOptionAndContinue(@NotNull Command option){
-        Player currentPlayer = board.getCurrentPlayer();
-        if (currentPlayer != null &&
-                board.getPhase() == Phase.PLAYER_INTERACTION &&
-                option != null) {
-            board.setPhase(Phase.ACTIVATION);
-            executeCommand(currentPlayer,option);
-
-            int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
-            if (nextPlayerNumber < board.getPlayersNumber()) {
-                board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
-            } else {
-                int step = board.getStep() + 1;
-                if (step < Player.NO_REGISTERS) {
-                    makeProgramFieldsVisible(step);
-                    board.setStep(step);
-                    board.setCurrentPlayer(board.getPlayer(0));
-                } else {
-                    startProgrammingPhase();
-                }
-            }
-        }
+    public void executeCommandOptionAndContinue(@NotNull Command option) {
+        assert board.getPhase() == Phase.PLAYER_INTERACTION;
+        assert board.getCurrentPlayer() != null;
+        board.setUserChoice(option);
+        continuePrograms();
     }
 
     public void moveToSpace(
@@ -321,7 +335,49 @@ public class GameController {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
-        boolean wallBlocks = WallCollection.getInstance().isWallBlocking(player.getSpace().x, player.getSpace().y, space.x, space.y);
+        boolean wallBlocks = false;
+        Space playerSpace = player.getSpace();
+
+        ArrayList<String> spaceHeadings = playerSpace.getWalls();
+        ArrayList<String> targetHeadings = space.getWalls();
+
+        for (String s : spaceHeadings) {
+            if (s.equalsIgnoreCase(heading.toString())) {
+                wallBlocks = true;
+                break;
+            }
+        }
+
+        for (String t : targetHeadings) {
+            switch (t) {
+                case "SOUTH":
+                    if (player.getHeading().equals(Heading.NORTH)) {
+                        wallBlocks = true;
+                    }
+                    break;
+                case "NORTH":
+                    if (player.getHeading().equals(Heading.SOUTH)) {
+                        wallBlocks = true;
+                    }
+                    break;
+                case "WEST":
+                    if (player.getHeading().equals(Heading.EAST)) {
+                        wallBlocks = true;
+                    }
+                    break;
+                case "EAST":
+                    if (player.getHeading() == Heading.WEST) {
+                        wallBlocks = true;
+                    }
+                    break;
+                default:
+                    System.out.println("Illegal heading - player.getHeading() " + t + " in moveToSpace");
+                    break;
+
+            }
+        }
+
+
         if (wallBlocks){
             throw new ImpossibleMoveException(player, space, heading);
         }
@@ -337,18 +393,43 @@ public class GameController {
             player.setHeading(gearsCollection.gearAction(player,space));
         }
 
-        player.setSpace(space);
-
         boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
         if (isCheckPoint){
             player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
         }
 
+        player.setSpace(space);
+
+        boolean robotInRange = false;
+        Player otherRobot = null;
+
+        int range = 3;
+
+        //TODO: ryk i metode + heading skal affyre laser også
+        for (int i = 0; i < range; i++){
+            Space targetSpace = board.getNeighbour(space,heading);
+            space = targetSpace;
+            if (targetSpace.getPlayer() != null){
+                otherRobot = targetSpace.getPlayer();
+                robotInRange = true;
+                break;
+            }
+        }
+
+        //other player
+        if (robotInRange){
+            otherRobot.hit();
+            if (otherRobot.isRespawn()){
+                otherRobot.setSpace(otherRobot.getStartSpace());
+                otherRobot.setRespawn(false);
+            }
+        }
+
+
+
 
     }
 
-
-    // TODO Assignment V2
     /**
      * Method moves player to 'Neighbour' / one space forward
      * @param player to be moved
@@ -371,8 +452,6 @@ public class GameController {
 
     }
 
-    // TODO Assignment V2
-
     /**
      * Method moves player two spaces forward
      * @param player to be moved
@@ -384,8 +463,6 @@ public class GameController {
         moveForward(player);
     }
 
-    // TODO Assignment V2
-
     /**
      * Method turns player to the right of the current 'Heading' / facing
      * @param player to be turned
@@ -395,7 +472,6 @@ public class GameController {
         player.setHeading(heading.next());
     }
 
-    // TODO Assignment V2
     /**
      * Method turns player to the left of the current 'Heading' / facing
      * @param player to be turned
@@ -410,7 +486,7 @@ public class GameController {
      * @param source Card, which is picked
      * @param target Card, which is moved to CommandCard Field
      *               -to be executed during ACTIVATION phase
-     * @return
+     * @return boolean
      */
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
@@ -437,14 +513,24 @@ public class GameController {
     public void onZero() {
         finishProgrammingPhase();
     }
+
+    /*
+    This method returns the checkPointCollection of the game
+     */
     public CheckPointCollection getCheckPointCollection(){
         return checkPointCollection;
     }
 
+    /*
+    This method returns the conveyorBeltCollection of the game
+     */
     public ConveyorBeltCollection getConveyorBeltCollection() {
         return conveyorBeltCollection;
     }
 
+    /*
+    This method returns the gearsCollection of the game
+     */
     public GearsCollection getGearsCollection() {
         return gearsCollection;
     }
