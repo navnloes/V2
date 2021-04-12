@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.Node;
@@ -34,8 +35,14 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * ...
@@ -52,6 +59,8 @@ public class SpaceView extends StackPane implements ViewObserver {
     ArrayList<String> headings;
     Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
     GraphicsContext gc = canvas.getGraphicsContext2D();
+    BufferedImage image;
+    Graphics2D g = (Graphics2D) image.getGraphics();
 
     public SpaceView(@NotNull Space space) {
         this.space = space;
@@ -102,6 +111,15 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         headings = space.getWalls();
 
+        drawWalls();
+        drawCheckPoints();
+        playerAttackMove(player);
+
+        this.getChildren().add(canvas);
+        canvas.toBack();
+
+    }
+    private void drawWalls() {
         if(!headings.isEmpty()) {
 
             gc.setStroke(Color.DARKGREEN);
@@ -125,7 +143,9 @@ public class SpaceView extends StackPane implements ViewObserver {
                 }
             }
         }
+    }
 
+    private void drawCheckPoints() {
         if(space.getCheckPointId() !=  -1) {
             gc.setLineWidth(1);
             gc.setStroke(Color.BLUE);
@@ -137,9 +157,46 @@ public class SpaceView extends StackPane implements ViewObserver {
             Node label = new javafx.scene.control.Label(space.getCheckPointId() +1 + "");
             this.getChildren().add(label);
         }
-        this.getChildren().add(canvas);
-        canvas.toBack();
+    }
 
+    private void playerAttackMove(Player player) {
+
+//        if(!(player == null)) {
+//
+//            String billedSti = "pictures/laser";
+//
+//            try {
+//                BufferedImage laser = ImageIO.read(new File(billedSti));
+//                JLabel picLabel = new JLabel(new ImageIcon(laser));
+//                JPanel jPanel = new JPanel();
+//                jPanel.add(picLabel);
+//            } catch (Exception e) {
+//            }
+//        }
+
+
+
+
+
+//        if (!(player == null)) {
+//            gc.setLineWidth(8);
+//            gc.setStroke(Color.DARKRED);
+//
+//            if (player.getHeading() == Heading.NORTH) {
+//                gc.strokeLine(0, 0,
+//                        0, 0);
+//            } else if (player.getHeading() == Heading.EAST) {
+//                gc.strokeLine(2, 2,
+//                        SPACE_WIDTH - 2, 2);
+//            } else if (player.getHeading() == Heading.SOUTH) {
+//                gc.strokeLine(35, 35,
+//                        35, 50);
+//            } else if (player.getHeading() == Heading.WEST) {
+//                gc.strokeLine(SPACE_WIDTH - 2, 2,
+//                        SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+//            }
+//
+//        }
     }
 
     @Override
