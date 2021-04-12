@@ -327,8 +327,9 @@ public class GameController {
         }
 
         boolean isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
-        if (isConveyerBelt){
+        while (isConveyerBelt){
             space = conveyorBeltCollection.conveyerBeltAction(space);
+            isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
         }
 
         boolean isGear = gearsCollection.isGears(space);

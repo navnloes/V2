@@ -8,6 +8,8 @@ public class BoardElementController {
 
     /**
      * Author @S205354, @S205353
+     * Klassen her håndtere alle elementer som bliver sat på banen. Dette er vægge, gears, checkpoints mm.
+     * Alt dette bliver håndteret ved collections.
      */
 
     private Board board;
