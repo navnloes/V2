@@ -417,7 +417,6 @@ public class GameController {
 
         if (robotInRange) {
             otherRobot.hit();
-            System.out.println(otherRobot.getHit());
             if (otherRobot.isRespawn()) {
                 otherRobot.setSpace(otherRobot.getStartSpace());
                 otherRobot.setRespawn(false);

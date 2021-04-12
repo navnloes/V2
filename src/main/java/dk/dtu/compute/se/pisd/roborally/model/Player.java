@@ -57,7 +57,7 @@ public class Player extends Subject {
 
     private Space startSpace = null;
 
-    private int hit = 0;
+    private int life = 3;
     private boolean respawn = false;
 
     public CommandCardField[] getCards() {
@@ -278,15 +278,11 @@ public class Player extends Subject {
     }
 
     public void hit(){
-        hit++;
-        if (hit == 3){
+        life--;
+        if (life == 0){
             respawn = true;
-            hit = 0;
+            life = 3;
         }
-    }
-
-    public int getHit(){
-        return hit;
     }
 
     public boolean isRespawn(){
