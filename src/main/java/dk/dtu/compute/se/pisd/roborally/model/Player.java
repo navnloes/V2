@@ -22,7 +22,11 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
@@ -251,12 +255,28 @@ public class Player extends Subject {
                 if (checkPointArray[1] && !checkPointArray[2]){
                     addCheckPointToken();
                     checkPointArray[2] = true;
+
+
                 }
 
                 break;
             default:
                 System.out.println("Illegal id - CheckPoint ID " + id + " in arrivedCheckPoint(int id)");
 
+        }
+
+    }
+
+    public void createWinner() {
+        if (checkPointArray[2]) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(name + " (" + color + ")" +" has won the game");
+            alert.setContentText(name + " (" + color + ")" +" has won the game" + "\n Start new game by going to file -> new game");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (!result.isPresent() || result.get() != ButtonType.OK) {
+
+            }
         }
     }
 

@@ -445,6 +445,8 @@ public class GameController {
                 }
             }
         }
+        player.createWinner();
+        
 
     }
 
