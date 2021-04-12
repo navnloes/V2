@@ -11,6 +11,9 @@ import java.util.List;
 
 public class GearsCollection extends Subject {
 
+    /**
+    @author S201192 & S205354
+    */
     private List<GearsActionField> myCollection;
 
     public GearsCollection(){
