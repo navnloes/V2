@@ -404,6 +404,7 @@ public class GameController {
 
         int range = 3;
 
+        //TODO: ryk i metode + heading skal affyre laser også
         for (int i = 0; i < range; i++){
             Space targetSpace = board.getNeighbour(space,heading);
             space = targetSpace;
