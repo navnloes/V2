@@ -403,57 +403,15 @@ public class GameController {
         Player otherRobot = null;
 
         int range = 3;
-        switch (heading){
-            case NORTH:
-            for (int i = 0; i < range; i++){
-                Space targetSpace = new Space(board,space.x,(space.y - i) % board.height);
-                Space otherRobotSpace = board.getNeighbour(targetSpace,heading);
-                if (otherRobotSpace.getPlayer() != null){
-                    otherRobot = otherRobotSpace.getPlayer();
-                    robotInRange = true;
-                    break;
-                }
+
+        for (int i = 0; i < range; i++){
+            Space targetSpace = board.getNeighbour(space,heading);
+            space = targetSpace;
+            if (targetSpace.getPlayer() != null){
+                otherRobot = targetSpace.getPlayer();
+                robotInRange = true;
+                break;
             }
-            break;
-
-            case SOUTH:
-                for (int i = 0; i < range; i++){
-                    Space targetSpace = board.getNeighbour(space,heading);
-                    space = targetSpace;
-                    if (targetSpace.getPlayer() != null){
-                        otherRobot = targetSpace.getPlayer();
-                        robotInRange = true;
-                        break;
-                    }
-                }
-                break;
-
-            case WEST:
-                for (int i = 0; i < range; i++){
-                    Space targetSpace = new Space(board,(space.x - 1) % board.width,space.y);
-                    Space otherRobotSpace = board.getNeighbour(targetSpace,heading);
-                    if (otherRobotSpace.getPlayer() != null){
-                        otherRobot = otherRobotSpace.getPlayer();
-                        robotInRange = true;
-                        break;
-                    }
-                }
-                break;
-
-            case EAST:
-                for (int i = 0; i < range; i++){
-                    Space targetSpace = new Space(board,(space.x + 1) % board.width,space.y + i);
-                    Space otherRobotSpace = board.getNeighbour(targetSpace,heading);
-                    if (otherRobotSpace.getPlayer() != null){
-                        otherRobot = otherRobotSpace.getPlayer();
-                        robotInRange = true;
-                        break;
-                    }
-                }
-                break;
-            default:
-                System.out.println("bug");
-                break;
         }
 
         //other player
