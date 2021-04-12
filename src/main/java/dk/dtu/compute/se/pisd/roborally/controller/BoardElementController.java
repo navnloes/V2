@@ -6,6 +6,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class BoardElementController {
 
+    /**
+     * Author @S205354, @S205353
+     */
+
     private Board board;
     private CheckPointCollection checkPointCollection;
     private ConveyorBeltCollection conveyorBeltCollection;
