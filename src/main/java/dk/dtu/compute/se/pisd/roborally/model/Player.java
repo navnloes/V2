@@ -236,20 +236,23 @@ public class Player extends Subject {
             case 0:
                 if (!checkPointArray[0]){
                     addCheckPointToken();
+                    checkPointArray[0] = true;
                 }
-                checkPointArray[0] = true;
+
                 break;
             case 1:
                 if (checkPointArray[0] && !checkPointArray[1]){
                     addCheckPointToken();
+                    checkPointArray[1] = true;
                 }
-                checkPointArray[1] = true;
+
                 break;
             case 2:
                 if (checkPointArray[1] && !checkPointArray[2]){
                     addCheckPointToken();
+                    checkPointArray[2] = true;
                 }
-                checkPointArray[2] = true;
+
                 break;
             default:
                 System.out.println("Illegal id - CheckPoint ID " + id + " in arrivedCheckPoint(int id)");

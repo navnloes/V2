@@ -59,8 +59,6 @@ public class SpaceView extends StackPane implements ViewObserver {
     ArrayList<String> headings;
     Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    BufferedImage image;
-    Graphics2D g = (Graphics2D) image.getGraphics();
 
     public SpaceView(@NotNull Space space) {
         this.space = space;
@@ -159,6 +157,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    //TODO: Laser hvis muligt.
     private void playerAttackMove(Player player) {
 
 //        if(!(player == null)) {
