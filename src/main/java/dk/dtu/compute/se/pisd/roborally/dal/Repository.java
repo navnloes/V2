@@ -610,7 +610,7 @@ class Repository implements IRepository {
         ArrayList<CommandCardField> programCards = new ArrayList<>();
 
         Connection connection = connector.getConnection();
-        String query = "select * from playerMatCard where gameId =" + board.getGameId() + " and playerId =" + player.getPlayerId();
+        String query = "select * from playerHandCard where gameId =" + board.getGameId() + " and playerId =" + player.getPlayerId();
         try {
             connection.setAutoCommit(false);
             PreparedStatement ps = connection.prepareStatement(query);
