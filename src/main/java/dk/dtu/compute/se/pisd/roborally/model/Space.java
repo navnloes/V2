@@ -22,8 +22,10 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.ActionField.ActionField;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +45,9 @@ public class Space extends Subject {
 
     private Player player;
 
-    private ArrayList<String> walls;
-    private ArrayList <Heading> headings;
+    private List<String> walls;
+    private List <Heading> headings;
+    private List<ActionField> actionFields;
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -53,6 +56,7 @@ public class Space extends Subject {
         player = null;
         walls = new ArrayList<String>();
         headings = new ArrayList<>();
+        actionFields = new ArrayList<>();
     }
 
     public int getCheckPointId() {
@@ -90,16 +94,20 @@ public class Space extends Subject {
         notifyChange();
     }
 
-    public <E>List<E> getActions() {
-        return null;
+    public List<ActionField> getActions() {
+        return actionFields;
     }
 
-    public ArrayList<String> getWalls(){
+    public List<String> getWalls(){
         return walls;
     }
 
     public void addWall(String wall){
         walls.add(wall);
+    }
+
+    public void addActionField(ActionField actionField){
+        actionFields.add(actionField);
     }
 
 

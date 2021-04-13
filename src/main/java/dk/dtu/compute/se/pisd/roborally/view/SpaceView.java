@@ -35,14 +35,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 /**
  * ...
@@ -56,7 +49,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_WIDTH = 75;  // 60; // 75;
 
     public final Space space;
-    ArrayList<String> headings;
+    List<String> headings;
     Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -108,6 +101,9 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
 
         headings = space.getWalls();
+
+        //TODO: tegne actions
+        space.getActions();
 
         drawWalls();
         drawCheckPoints();

@@ -30,6 +30,7 @@ import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsCollection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ...
@@ -54,10 +55,13 @@ public class GameController {
         if (this.board.getPhase() == Phase.INITIALISATION)
             this.board.setPhase(Phase.PROGRAMMING);
 
+        /*
         checkPointCollection = new CheckPointCollection();
         conveyorBeltCollection = new ConveyorBeltCollection();
         gearsCollection = new GearsCollection();
         boardElementController = new BoardElementController(board, checkPointCollection, conveyorBeltCollection, gearsCollection);
+
+         */
     }
 
     /**
@@ -339,8 +343,8 @@ public class GameController {
         boolean wallBlocks = false;
         Space playerSpace = player.getSpace();
 
-        ArrayList<String> spaceHeadings = playerSpace.getWalls();
-        ArrayList<String> targetHeadings = space.getWalls();
+        List<String> spaceHeadings = playerSpace.getWalls();
+        List<String> targetHeadings = space.getWalls();
 
         for (String s : spaceHeadings) {
             if (s.equalsIgnoreCase(heading.toString())) {

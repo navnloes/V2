@@ -1,33 +1,18 @@
 package dk.dtu.compute.se.pisd.roborally.model.ActionField;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 
 public abstract class ActionField extends Subject {
 
-    public final Board board;
-    public final int x;
-    public final int y;
-    public final String msg;
-
-    /**
-     *
-     * @param board
-     * @param x x is space x coordinate
-     * @param y y is space y coordinate
-     * @param msg is a message that informs you about, the object you landed on
-     */
-    public ActionField (Board board, int x, int y, String msg){
-        this.board = board;
-        this.x = x;
-        this.y = y;
-        this.msg = msg;
+    public ActionField (){
 
     }
 
-    public abstract int x();
-    public abstract int y();
+    public abstract void doAction(GameController gameController, Space space);
 
 }
