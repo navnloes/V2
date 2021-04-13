@@ -401,8 +401,8 @@ class Repository implements IRepository {
             "INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
 
     private static final String SQL_INSERT_CARD = "INSERT INTO progressCard (gameId, playerId, cardIndex, cardId) VALUES (?,?,?,?)";
-    private static final String SQL_SAVE_CARD = "INSERT INTO playerMatCard (gameId, playerId, cardIndex, cardId) VALUES (?,?,?,?)";
-    private static final String SQL_DELETE_CARD = "DELETE from playerMatCard where gameId = ?";
+    private static final String SQL_SAVE_CARD = "INSERT INTO playerHandCard (gameId, playerId, cardIndex, cardId) VALUES (?,?,?,?)";
+    private static final String SQL_DELETE_CARD = "DELETE from playerHandCard where gameId = ?";
 
     private PreparedStatement insert_card_stmt = null;
     private PreparedStatement save_card_stmt = null;
