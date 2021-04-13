@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.ActionField;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
 
@@ -47,7 +48,7 @@ public class Space extends Subject {
 
     private List<String> walls;
     private List <Heading> headings;
-    private List<ActionField> actionFields;
+    private List<FieldAction> actionFields;
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -94,7 +95,7 @@ public class Space extends Subject {
         notifyChange();
     }
 
-    public List<ActionField> getActions() {
+    public List<dk.dtu.compute.se.pisd.roborally.controller.FieldAction> getActions() {
         return actionFields;
     }
 
@@ -106,8 +107,8 @@ public class Space extends Subject {
         walls.add(wall);
     }
 
-    public void addActionField(ActionField actionField){
-        actionFields.add(actionField);
+    public void addFieldAction(dk.dtu.compute.se.pisd.roborally.controller.FieldAction fieldAction){
+        actionFields.add(fieldAction);
     }
 
 

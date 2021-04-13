@@ -1,34 +1,30 @@
 package dk.dtu.compute.se.pisd.roborally.model.ActionField;
 
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 public class CheckPointActionField extends ActionField {
 
     int id;
     /**
      * @author S201192
-     *  This method construtcs a CheckPointsActionfield
-     * @param board is the specific board which contains spaces
-     * @param x x is the coordinates of the space
-     * @param y y is the coordinates of the space
-     * @param msg sends a msg to the player
-     * @param id is the unique ID for each checkpoint
      */
-    public CheckPointActionField(Board board, int x, int y, String msg, int id){
-        super(board, x, y, msg);
-        this.id = id;
+    public CheckPointActionField(){
+
     }
 
-    public int x(){
-        return x;
-    }
+    @Override
+    public void doAction(GameController gameController, Space space) {
 
-    public int y(){
-        return y;
     }
 
     public int id(){
         return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
 

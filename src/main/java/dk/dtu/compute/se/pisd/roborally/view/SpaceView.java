@@ -22,6 +22,8 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -41,7 +43,6 @@ import java.util.List;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
@@ -81,18 +82,39 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         this.getChildren().clear();
 
+        //Conveyorbelt
+        if (!space.getActions().isEmpty()) {
+            FieldAction fieldAction = space.getActions().get(0);
+            if (fieldAction instanceof ConveyorBelt) {
+                Polygon arrow = new Polygon(0.0, 0.0, 15.0, 40, 30.0, 0.0);
+                arrow.setFill(Color.DEEPSKYBLUE);
+                Heading heading = ((ConveyorBelt) fieldAction).getHeading();
+                if (heading == Heading.NORTH) {
+                    arrow.setRotate(180);
+                } else if (heading == Heading.EAST) {
+                    arrow.setRotate(270);
+                } else if (heading == Heading.SOUTH) {
+                    arrow.setRotate(0);
+                } else if (heading == Heading.WEST) {
+                    arrow.setRotate(90);
+                }
+                this.getChildren().add(arrow);
+            }
+        }
+
+
         Player player = space.getPlayer();
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,
-                    20.0, 0.0 );
+                    20.0, 0.0);
             try {
                 arrow.setFill(Color.valueOf(player.getColor()));
             } catch (Exception e) {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
 
-            arrow.setRotate((90*player.getHeading().ordinal())%360);
+            arrow.setRotate((90 * player.getHeading().ordinal()) % 360);
             this.getChildren().add(arrow);
 
             Label label = new Label(Integer.toString(player.getCheckPointToken()));
@@ -113,22 +135,21 @@ public class SpaceView extends StackPane implements ViewObserver {
         canvas.toBack();
 
     }
+
     private void drawWalls() {
-        if(!headings.isEmpty()) {
+        if (!headings.isEmpty()) {
 
             gc.setStroke(Color.DARKGREEN);
             gc.setLineWidth(10);
             gc.setLineCap(StrokeLineCap.ROUND);
-            for (String wall: headings) {
+            for (String wall : headings) {
                 if (wall.equalsIgnoreCase("SOUTH")) {
-                    gc.strokeLine(2,  SPACE_HEIGHT - 2,
-                            SPACE_WIDTH - 2, SPACE_HEIGHT -2 );
-                }
-                else if( wall.equalsIgnoreCase("NORTH") ){
+                    gc.strokeLine(2, SPACE_HEIGHT - 2,
+                            SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+                } else if (wall.equalsIgnoreCase("NORTH")) {
                     gc.strokeLine(2, 2,
                             SPACE_WIDTH - 2, 2);
-                }
-                else if (wall.equalsIgnoreCase("EAST")) {
+                } else if (wall.equalsIgnoreCase("EAST")) {
                     gc.strokeLine(SPACE_WIDTH - 2, 2,
                             SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
                 } else {
@@ -140,7 +161,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     private void drawCheckPoints() {
-        if(space.getCheckPointId() !=  -1) {
+        if (space.getCheckPointId() != -1) {
             gc.setLineWidth(1);
             gc.setStroke(Color.BLUE);
             gc.setFill(Color.GOLD);
@@ -148,7 +169,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             gc.strokeOval(12.5, 12.5, 50, 50);
             gc.strokeOval(12.5, 12.5, 51, 51);
 
-            Node label = new javafx.scene.control.Label(space.getCheckPointId() +1 + "");
+            Node label = new javafx.scene.control.Label(space.getCheckPointId() + 1 + "");
             this.getChildren().add(label);
         }
     }
@@ -168,9 +189,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 //            } catch (Exception e) {
 //            }
 //        }
-
-
-
 
 
 //        if (!(player == null)) {

@@ -36,33 +36,33 @@ public class ConveyorBeltCollection extends Subject {
      * @param space Space - space on the board
      * @return arrived boolean - true if the space is a conveyor
      */
-    public boolean isConveyorBelt(Space space){
-
-        boolean arrived = false;
-        for (ConveyorBeltActionField c : myCollection){
-            if (space.x == c.x && space.y == c.y){
-                arrived = true;
-                break;
-            }
-        }
-        return arrived;
-    }
+//    public boolean isConveyorBelt(Space space){
+//
+//        boolean arrived = false;
+//        for (ConveyorBeltActionField c : myCollection){
+//            if (space.x == c.x && space.y == c.y){
+//                arrived = true;
+//                break;
+//            }
+//        }
+//        return arrived;
+//    }
 
     /**
      * This method models the action of the conveyerActionField
      * @param space that the robot (player) lands on
      * @return newSpace which is where the conveyerBelt moves the player to
      */
-    public Space conveyerBeltAction(Space space){
-
-        Space newSpace = space;
-        for (ConveyorBeltActionField c : myCollection){
-            if (space.x == c.x && space.y == c.y){
-                newSpace = space.board.getNeighbour(space,c.getHeading());
-                break;
-            }
-        }
-        return newSpace;
-    }
+//    public Space conveyerBeltAction(Space space){
+//
+//        Space newSpace = space;
+//        for (ConveyorBeltActionField c : myCollection){
+//            if (space.x == c.x && space.y == c.y){
+//                newSpace = space.board.getNeighbour(space,c.getHeading());
+//                break;
+//            }
+//        }
+//        return newSpace;
+//    }
 
 }

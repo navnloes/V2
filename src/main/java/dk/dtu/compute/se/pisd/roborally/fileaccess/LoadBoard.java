@@ -25,11 +25,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
 import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltActionField;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsActionField;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -73,11 +72,11 @@ public class LoadBoard {
             reader = gson.newJsonReader(new InputStreamReader(inputStream));
             BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
 
-            result = new Board(template.width, template.height);
+            result = createBoard();
             for (SpaceTemplate spaceTemplate : template.spaces) {
                 Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
                 if (space != null) {
-                    //space.getActions().addAll(spaceTemplate.actions);
+                    space.getActions().addAll(spaceTemplate.actions);
                    space.getWalls().addAll(spaceTemplate.walls);
                 }
             }
@@ -163,16 +162,19 @@ public class LoadBoard {
         Board board = new Board(8,8);
         Space space = board.getSpace(5,5);
 
-        ConveyorBeltActionField conveyorBeltActionField = new ConveyorBeltActionField();
+        ConveyorBelt conveyorBeltActionField = new ConveyorBelt();
         conveyorBeltActionField.setHeading(Heading.NORTH);
-        space.addActionField(conveyorBeltActionField);
+        space.addFieldAction(conveyorBeltActionField);
 
         space = board.getSpace(5,7);
-        GearsActionField gearsActionField = new GearsActionField();
+        /*GearsActionField gearsActionField = new GearsActionField();
         gearsActionField.setDirection(Direction.RIGHT);
-        space.addActionField(gearsActionField);
+        space.addFieldAction(gearsActionField);
+
+         */
 
         space.addWall("NORTH");
+
 
         return board;
     }

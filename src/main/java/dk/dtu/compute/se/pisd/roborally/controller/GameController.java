@@ -24,9 +24,6 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltCollection;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsCollection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -42,10 +39,9 @@ public class GameController {
      * StopWatch is going to be implemented here in GameController
      */
     final public Board board;
-    CheckPointCollection checkPointCollection;
-    ConveyorBeltCollection conveyorBeltCollection;
-    GearsCollection gearsCollection;
-    BoardElementController boardElementController;
+//    CheckPointCollection checkPointCollection;
+//    ConveyorBeltCollection conveyorBeltCollection;
+//    GearsCollection gearsCollection;
     public boolean won = false;
     private boolean robotInRange;
 
@@ -387,21 +383,24 @@ public class GameController {
             throw new ImpossibleMoveException(player, space, heading);
         }
 
-        boolean isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
-        while (isConveyerBelt) {
-            space = conveyorBeltCollection.conveyerBeltAction(space);
-            isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
-        }
 
-        boolean isGear = gearsCollection.isGears(space);
-        if (isGear) {
-            player.setHeading(gearsCollection.gearAction(player, space));
-        }
+//        boolean isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
+//        while (isConveyerBelt) {
+//            space = conveyorBeltCollection.conveyerBeltAction(space);
+//            isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
+//        }
+//
+//        boolean isGear = gearsCollection.isGears(space);
+//        if (isGear) {
+//            player.setHeading(gearsCollection.gearAction(player, space));
+//        }
+//
+//        boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
+//        if (isCheckPoint) {
+//            player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
+//        }
 
-        boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
-        if (isCheckPoint) {
-            player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
-        }
+
 
         player.setSpace(space);
 
@@ -521,23 +520,23 @@ public class GameController {
     /*
     This method returns the checkPointCollection of the game
      */
-    public CheckPointCollection getCheckPointCollection() {
-        return checkPointCollection;
-    }
-
-    /*
-    This method returns the conveyorBeltCollection of the game
-     */
-    public ConveyorBeltCollection getConveyorBeltCollection() {
-        return conveyorBeltCollection;
-    }
-
-    /*
-    This method returns the gearsCollection of the game
-     */
-    public GearsCollection getGearsCollection() {
-        return gearsCollection;
-    }
+//    public CheckPointCollection getCheckPointCollection() {
+//        return checkPointCollection;
+//    }
+//
+//    /*
+//    This method returns the conveyorBeltCollection of the game
+//     */
+//    public ConveyorBeltCollection getConveyorBeltCollection() {
+//        return conveyorBeltCollection;
+//    }
+//
+//    /*
+//    This method returns the gearsCollection of the game
+//     */
+//    public GearsCollection getGearsCollection() {
+//        return gearsCollection;
+//    }
 
 
 }
