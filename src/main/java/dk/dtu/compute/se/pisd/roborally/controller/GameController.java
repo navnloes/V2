@@ -24,12 +24,10 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointCollection;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.ConveyorBeltCollection;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.GearsCollection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ...
@@ -41,23 +39,25 @@ public class GameController {
      * StopWatch is going to be implemented here in GameController
      */
     final public Board board;
-    CheckPointCollection checkPointCollection;
-    ConveyorBeltCollection conveyorBeltCollection;
-    GearsCollection gearsCollection;
-    BoardElementController boardElementController;
+    //    CheckPointCollection checkPointCollection;
+//    ConveyorBeltCollection conveyorBeltCollection;
+//    GearsCollection gearsCollection;
     public boolean won = false;
     private boolean robotInRange;
 
     public GameController(@NotNull Board board) {
         this.board = board;
-
+        board.setGameController(this);
         if (this.board.getPhase() == Phase.INITIALISATION)
             this.board.setPhase(Phase.PROGRAMMING);
 
+        /*
         checkPointCollection = new CheckPointCollection();
         conveyorBeltCollection = new ConveyorBeltCollection();
         gearsCollection = new GearsCollection();
         boardElementController = new BoardElementController(board, checkPointCollection, conveyorBeltCollection, gearsCollection);
+
+         */
     }
 
     /**
@@ -336,11 +336,11 @@ public class GameController {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
+
         boolean wallBlocks = false;
         Space playerSpace = player.getSpace();
-
-        ArrayList<String> spaceHeadings = playerSpace.getWalls();
-        ArrayList<String> targetHeadings = space.getWalls();
+        List<String> spaceHeadings = playerSpace.getWalls();
+        List<String> targetHeadings = space.getWalls();
 
         for (String s : spaceHeadings) {
             if (s.equalsIgnoreCase(heading.toString())) {
@@ -374,7 +374,6 @@ public class GameController {
                 default:
                     System.out.println("Illegal heading - player.getHeading() " + t + " in moveToSpace");
                     break;
-
             }
         }
 
@@ -383,23 +382,11 @@ public class GameController {
             throw new ImpossibleMoveException(player, space, heading);
         }
 
-        boolean isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
-        while (isConveyerBelt) {
-            space = conveyorBeltCollection.conveyerBeltAction(space);
-            isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
-        }
-
-        boolean isGear = gearsCollection.isGears(space);
-        if (isGear) {
-            player.setHeading(gearsCollection.gearAction(player, space));
-        }
-
-        boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
-        if (isCheckPoint) {
-            player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
-        }
-
         player.setSpace(space);
+        if(!space.getActions().isEmpty())
+            for (FieldAction fieldAction : space.getActions()){
+                fieldAction.doAction(board.getGameController(), space);
+            }
 
         robotInRange = false;
         int range = 3;
@@ -446,7 +433,7 @@ public class GameController {
             }
         }
         player.createWinner();
-        
+
 
     }
 
@@ -517,23 +504,23 @@ public class GameController {
     /*
     This method returns the checkPointCollection of the game
      */
-    public CheckPointCollection getCheckPointCollection() {
-        return checkPointCollection;
-    }
-
-    /*
-    This method returns the conveyorBeltCollection of the game
-     */
-    public ConveyorBeltCollection getConveyorBeltCollection() {
-        return conveyorBeltCollection;
-    }
-
-    /*
-    This method returns the gearsCollection of the game
-     */
-    public GearsCollection getGearsCollection() {
-        return gearsCollection;
-    }
+//    public CheckPointCollection getCheckPointCollection() {
+//        return checkPointCollection;
+//    }
+//
+//    /*
+//    This method returns the conveyorBeltCollection of the game
+//     */
+//    public ConveyorBeltCollection getConveyorBeltCollection() {
+//        return conveyorBeltCollection;
+//    }
+//
+//    /*
+//    This method returns the gearsCollection of the game
+//     */
+//    public GearsCollection getGearsCollection() {
+//        return gearsCollection;
+//    }
 
 
 }

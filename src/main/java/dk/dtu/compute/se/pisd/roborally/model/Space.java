@@ -22,7 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,28 +39,32 @@ public class Space extends Subject {
 
     public final int x;
     public final int y;
-    private int checkPointId = -1;
+
+    public Heading getGearHeading() {
+        return gearHeading;
+    }
+
+    public void setGearHeading(Heading gearHeading) {
+        this.gearHeading = gearHeading;
+    }
+
+    private Heading gearHeading;
 
     private Player player;
 
-    private ArrayList<String> walls;
-    private ArrayList <Heading> headings;
+    private List<String> walls;
+    private List <Heading> headings;
+    private List<FieldAction> fieldActions;
 
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
         this.y = y;
+
         player = null;
         walls = new ArrayList<String>();
         headings = new ArrayList<>();
-    }
-
-    public int getCheckPointId() {
-        return checkPointId;
-    }
-
-    public void setCheckPointId(int i) {
-        checkPointId = i;
+        fieldActions = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -90,16 +94,20 @@ public class Space extends Subject {
         notifyChange();
     }
 
-    public <E>List<E> getActions() {
-        return null;
+    public List<FieldAction> getActions() {
+        return fieldActions;
     }
 
-    public ArrayList<String> getWalls(){
+    public List<String> getWalls(){
         return walls;
     }
 
     public void addWall(String wall){
         walls.add(wall);
+    }
+
+    public void addFieldAction(dk.dtu.compute.se.pisd.roborally.controller.FieldAction fieldAction){
+        fieldActions.add(fieldAction);
     }
 
 

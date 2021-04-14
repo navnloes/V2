@@ -25,7 +25,6 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Optional;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
@@ -214,7 +213,6 @@ public class Player extends Subject {
         checkPointToken  = checkPointToken + 1;
         if (checkPointToken == 3){
             winner = true;
-            System.out.println(name + " har vundet!!!!");
         }
     }
 

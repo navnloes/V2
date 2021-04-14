@@ -22,6 +22,11 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBeltFieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction;
+import dk.dtu.compute.se.pisd.roborally.model.Direction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -35,20 +40,12 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 /**
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
@@ -56,7 +53,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_WIDTH = 75;  // 60; // 75;
 
     public final Space space;
-    ArrayList<String> headings;
+    List<String> headings;
     Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -88,18 +85,79 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         this.getChildren().clear();
 
+        //Conveyorbelt
+        if (!space.getActions().isEmpty()) {
+            FieldAction fieldAction = space.getActions().get(0);
+            if (fieldAction instanceof ConveyorBeltFieldAction) {
+                Polygon conveyorBelt = new Polygon(0.0, 0.0, 15.0, 40, 30.0, 0.0);
+                conveyorBelt.setFill(Color.LIGHTBLUE);
+                Heading heading = ((ConveyorBeltFieldAction) fieldAction).getHeading();
+                if (heading == Heading.NORTH) {
+                    conveyorBelt.setRotate(180);
+                } else if (heading == Heading.EAST) {
+                    conveyorBelt.setRotate(270);
+                } else if (heading == Heading.SOUTH) {
+                    conveyorBelt.setRotate(0);
+                } else if (heading == Heading.WEST) {
+                    conveyorBelt.setRotate(90);
+                }
+                this.getChildren().add(conveyorBelt);
+            } else if (fieldAction instanceof CheckPointFieldAction) {
+                gc.setLineWidth(1);
+                gc.setStroke(Color.BLUE);
+                gc.setFill(Color.GOLD);
+                gc.fillOval(12.5, 12.5, 49, 49);
+                gc.strokeOval(12.5, 12.5, 50, 50);
+                gc.strokeOval(12.5, 12.5, 51, 51);
+
+                Node label = new javafx.scene.control.Label(((CheckPointFieldAction) fieldAction).getCheckPointId() + 1 + "");
+                this.getChildren().add(label);
+            }
+            else if (fieldAction instanceof GearsFieldAction) {
+                Polygon gearPart1 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
+                Polygon gearPart2 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
+                Polygon gearPart3 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
+                gearPart1.setFill(Color.DARKGREY);
+                gearPart2.setFill(Color.DARKGREY);
+                gearPart3.setFill(Color.DARKGREY);
+                gearPart1.setRotate(120);
+                gearPart2.setRotate(240);
+
+                if(((GearsFieldAction) fieldAction).getDirection() == Direction.LEFT) {
+                    gc.setFill(Color.DARKRED);}
+                else {
+                    gc.setFill(Color.LIGHTGOLDENRODYELLOW);
+                }
+                gc.fillOval(17.5, 17.5, 40, 40);
+
+                Label label = new Label(((GearsFieldAction) fieldAction).getDirection().toString());
+
+                this.getChildren().add(gearPart1);
+                gearPart1.toBack();
+
+                this.getChildren().add(gearPart2);
+                gearPart2.toBack();
+
+                this.getChildren().add(gearPart3);
+                gearPart3.toBack();
+
+                this.getChildren().add(label);
+            }
+        }
+
+
         Player player = space.getPlayer();
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,
-                    20.0, 0.0 );
+                    20.0, 0.0);
             try {
                 arrow.setFill(Color.valueOf(player.getColor()));
             } catch (Exception e) {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
 
-            arrow.setRotate((90*player.getHeading().ordinal())%360);
+            arrow.setRotate((90 * player.getHeading().ordinal()) % 360);
             this.getChildren().add(arrow);
 
             Label label = new Label(Integer.toString(player.getCheckPointToken()));
@@ -109,30 +167,67 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         headings = space.getWalls();
 
+        //TODO: tegne actions
+        space.getActions();
+
         drawWalls();
-        drawCheckPoints();
+        // drawGears();
         playerAttackMove(player);
 
         this.getChildren().add(canvas);
         canvas.toBack();
 
     }
+
+    private void drawGears() {
+        if(space.getGearHeading() != null) {
+            Polygon gearPart1 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
+            Polygon gearPart2 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
+            Polygon gearPart3 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
+            gearPart1.setFill(Color.DARKGREY);
+            gearPart2.setFill(Color.DARKGREY);
+            gearPart3.setFill(Color.DARKGREY);
+
+            gearPart1.setRotate(120);
+            gearPart2.setRotate(240);
+
+
+            if (space.getGearHeading() == Heading.EAST) {
+                gc.setFill(Color.DARKRED);}
+            else {
+                gc.setFill(Color.LIGHTGOLDENRODYELLOW);
+            }
+            gc.fillOval(17.5, 17.5, 40, 40);
+
+            Label label = new Label(space.getGearHeading().toString());
+
+            this.getChildren().add(gearPart1);
+            gearPart1.toBack();
+
+            this.getChildren().add(gearPart2);
+            gearPart2.toBack();
+
+            this.getChildren().add(gearPart3);
+            gearPart3.toBack();
+
+            this.getChildren().add(label);
+        }
+    }
+
     private void drawWalls() {
-        if(!headings.isEmpty()) {
+        if (!headings.isEmpty()) {
 
             gc.setStroke(Color.DARKGREEN);
             gc.setLineWidth(10);
             gc.setLineCap(StrokeLineCap.ROUND);
-            for (String wall: headings) {
+            for (String wall : headings) {
                 if (wall.equalsIgnoreCase("SOUTH")) {
-                    gc.strokeLine(2,  SPACE_HEIGHT - 2,
-                            SPACE_WIDTH - 2, SPACE_HEIGHT -2 );
-                }
-                else if( wall.equalsIgnoreCase("NORTH") ){
+                    gc.strokeLine(2, SPACE_HEIGHT - 2,
+                            SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+                } else if (wall.equalsIgnoreCase("NORTH")) {
                     gc.strokeLine(2, 2,
                             SPACE_WIDTH - 2, 2);
-                }
-                else if (wall.equalsIgnoreCase("EAST")) {
+                } else if (wall.equalsIgnoreCase("EAST")) {
                     gc.strokeLine(SPACE_WIDTH - 2, 2,
                             SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
                 } else {
@@ -143,19 +238,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    private void drawCheckPoints() {
-        if(space.getCheckPointId() !=  -1) {
-            gc.setLineWidth(1);
-            gc.setStroke(Color.BLUE);
-            gc.setFill(Color.GOLD);
-            gc.fillOval(12.5, 12.5, 49, 49);
-            gc.strokeOval(12.5, 12.5, 50, 50);
-            gc.strokeOval(12.5, 12.5, 51, 51);
 
-            Node label = new javafx.scene.control.Label(space.getCheckPointId() +1 + "");
-            this.getChildren().add(label);
-        }
-    }
 
     //TODO: Laser hvis muligt.
     private void playerAttackMove(Player player) {
@@ -172,9 +255,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 //            } catch (Exception e) {
 //            }
 //        }
-
-
-
 
 
 //        if (!(player == null)) {
