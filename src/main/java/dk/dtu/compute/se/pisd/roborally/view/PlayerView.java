@@ -77,7 +77,7 @@ public class PlayerView extends Tab implements ViewObserver {
         this.player = player;
 
         programLabel = new Label("Program");
-        stopWatchLabel = new Label("stopwatch");
+        stopWatchLabel = new Label("Timer - 30 sec");
         programPane = new GridPane();
         programPane.setVgap(2.0);
         programPane.setHgap(2.0);
@@ -103,10 +103,10 @@ public class PlayerView extends Tab implements ViewObserver {
         stepButton = new Button("Execute Current Register");
         stepButton.setOnAction( e-> gameController.executeStep());
 
-        startButton = new Button("Start");
+        startButton = new Button("Start Timer");
         startButton.setOnAction( e -> stopwatch.startTimer());
 
-        stopButton = new Button("Stop");
+        stopButton = new Button("Stop Timer");
         stopButton.setOnAction(e ->stopwatch.stop());
 
 
