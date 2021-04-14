@@ -23,10 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.ActionField;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,30 +39,32 @@ public class Space extends Subject {
 
     public final int x;
     public final int y;
-    private int checkPointId = -1;
+
+    public Heading getGearHeading() {
+        return gearHeading;
+    }
+
+    public void setGearHeading(Heading gearHeading) {
+        this.gearHeading = gearHeading;
+    }
+
+    private Heading gearHeading;
 
     private Player player;
 
     private List<String> walls;
     private List <Heading> headings;
-    private List<FieldAction> actionFields;
+    private List<FieldAction> fieldActions;
 
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
         this.y = y;
+
         player = null;
         walls = new ArrayList<String>();
         headings = new ArrayList<>();
-        actionFields = new ArrayList<>();
-    }
-
-    public int getCheckPointId() {
-        return checkPointId;
-    }
-
-    public void setCheckPointId(int i) {
-        checkPointId = i;
+        fieldActions = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -95,8 +94,8 @@ public class Space extends Subject {
         notifyChange();
     }
 
-    public List<dk.dtu.compute.se.pisd.roborally.controller.FieldAction> getActions() {
-        return actionFields;
+    public List<FieldAction> getActions() {
+        return fieldActions;
     }
 
     public List<String> getWalls(){
@@ -108,7 +107,7 @@ public class Space extends Subject {
     }
 
     public void addFieldAction(dk.dtu.compute.se.pisd.roborally.controller.FieldAction fieldAction){
-        actionFields.add(fieldAction);
+        fieldActions.add(fieldAction);
     }
 
 

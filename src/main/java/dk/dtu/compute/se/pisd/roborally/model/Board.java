@@ -22,7 +22,8 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.ActionField.CheckPointActionField;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -38,6 +39,15 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  */
 public class Board extends Subject {
 
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
+    }
+
+    private GameController gameController;
     public final int width;
 
     public final int height;
@@ -61,7 +71,7 @@ public class Board extends Subject {
     private int step = 0;
 
     private boolean stepMode;
-    private CheckPointActionField checkPointActionField;
+    private CheckPointFieldAction checkPoint;
 
     /**
      *Constructs a game board, by initialize the width and height, as well as from a given name
@@ -263,8 +273,8 @@ public class Board extends Subject {
         }
     }
 
-    public CheckPointActionField getCheckPointActionField(){
-        return checkPointActionField;
+    public CheckPointFieldAction getCheckPoint(){
+        return checkPoint;
     }
 
     private Command userChoice = null;

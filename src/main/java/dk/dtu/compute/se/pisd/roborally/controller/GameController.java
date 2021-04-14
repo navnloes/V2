@@ -39,7 +39,7 @@ public class GameController {
      * StopWatch is going to be implemented here in GameController
      */
     final public Board board;
-//    CheckPointCollection checkPointCollection;
+    //    CheckPointCollection checkPointCollection;
 //    ConveyorBeltCollection conveyorBeltCollection;
 //    GearsCollection gearsCollection;
     public boolean won = false;
@@ -47,7 +47,7 @@ public class GameController {
 
     public GameController(@NotNull Board board) {
         this.board = board;
-
+        board.setGameController(this);
         if (this.board.getPhase() == Phase.INITIALISATION)
             this.board.setPhase(Phase.PROGRAMMING);
 
@@ -336,9 +336,9 @@ public class GameController {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
+
         boolean wallBlocks = false;
         Space playerSpace = player.getSpace();
-
         List<String> spaceHeadings = playerSpace.getWalls();
         List<String> targetHeadings = space.getWalls();
 
@@ -374,7 +374,6 @@ public class GameController {
                 default:
                     System.out.println("Illegal heading - player.getHeading() " + t + " in moveToSpace");
                     break;
-
             }
         }
 
@@ -383,26 +382,11 @@ public class GameController {
             throw new ImpossibleMoveException(player, space, heading);
         }
 
-
-//        boolean isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
-//        while (isConveyerBelt) {
-//            space = conveyorBeltCollection.conveyerBeltAction(space);
-//            isConveyerBelt = conveyorBeltCollection.isConveyorBelt(space);
-//        }
-//
-//        boolean isGear = gearsCollection.isGears(space);
-//        if (isGear) {
-//            player.setHeading(gearsCollection.gearAction(player, space));
-//        }
-//
-//        boolean isCheckPoint = checkPointCollection.isCheckPoint(space);
-//        if (isCheckPoint) {
-//            player.arrivedCheckPoint(checkPointCollection.getCheckPointId(space));
-//        }
-
-
-
         player.setSpace(space);
+        if(!space.getActions().isEmpty())
+            for (FieldAction fieldAction : space.getActions()){
+                fieldAction.doAction(board.getGameController(), space);
+            }
 
         robotInRange = false;
         int range = 3;
@@ -449,7 +433,7 @@ public class GameController {
             }
         }
         player.createWinner();
-        
+
 
     }
 
