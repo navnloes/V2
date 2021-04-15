@@ -272,9 +272,8 @@ class Repository implements IRepository {
                 return null;
             }
 
-			/* TOODO this method needs to be implemented first
-			loadCardFieldsFromDB(game);
-			*/
+			//TODO: this method needs to be implemented first
+			//loadCardFieldsFromDB(game);
 
             return game;
         } catch (SQLException e) {
@@ -306,19 +305,6 @@ class Repository implements IRepository {
             e.printStackTrace();
         }
         return result;
-    }
-
-    public void addCards(Board game, Player player, int index, int cmd) {
-        try {
-            PreparedStatement ps = getInsertCardStmtStatement();
-            ps.setInt(1, game.getGameId());
-            ps.setInt(2, player.getPlayerId());
-            ps.setInt(3, index);
-            ps.setInt(4, cmd);
-            ps.executeUpdate();
-        } catch (SQLException s) {
-            s.printStackTrace();
-        }
     }
 
     private void createPlayersInDB(Board game) throws SQLException {
@@ -400,7 +386,6 @@ class Repository implements IRepository {
     private static final String SQL_INSERT_GAME =
             "INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
 
-    private static final String SQL_INSERT_CARD = "INSERT INTO progressCard (gameId, playerId, cardIndex, cardId) VALUES (?,?,?,?)";
     private static final String SQL_SAVE_CARD = "INSERT INTO playerHandCard (gameId, playerId, cardIndex, cardId) VALUES (?,?,?,?)";
     private static final String SQL_DELETE_CARD = "DELETE from playerHandCard where gameId = ?";
 
@@ -424,20 +409,6 @@ class Repository implements IRepository {
             }
         }
         return delete_card_stmt;
-    }
-
-    private PreparedStatement getInsertCardStmtStatement() {
-        if (insert_card_stmt == null) {
-            Connection connection = connector.getConnection();
-            try {
-                insert_card_stmt = connection.prepareStatement(
-                        SQL_INSERT_CARD);
-            } catch (SQLException e) {
-                // TODO error handling
-                e.printStackTrace();
-            }
-        }
-        return insert_card_stmt;
     }
 
     private PreparedStatement getSaveCardStmtStatement() {
@@ -606,8 +577,6 @@ class Repository implements IRepository {
     }
 
     public void setProgramCards(Board board, Player player){
-
-        ArrayList<CommandCardField> programCards = new ArrayList<>();
 
         Connection connection = connector.getConnection();
         String query = "select * from playerHandCard where gameId =" + board.getGameId() + " and playerId =" + player.getPlayerId();

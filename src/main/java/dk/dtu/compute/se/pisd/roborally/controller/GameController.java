@@ -43,7 +43,6 @@ public class GameController {
 //    ConveyorBeltCollection conveyorBeltCollection;
 //    GearsCollection gearsCollection;
     public boolean won = false;
-    private boolean robotInRange;
 
     public GameController(@NotNull Board board) {
         this.board = board;
@@ -236,14 +235,6 @@ public class GameController {
                             return;
                         }
                         executeCommand(currentPlayer, command);
-
-                        //int index = currentPlayer.getCardIndex();
-                        //currentPlayer.setCardIndex(index + 1);
-                        ////in order to save each invoked command
-                        //int cmd = Command.getId(command);
-//
-                        //if (cmd != -1)
-                        //    RepositoryAccess.getRepository().addCards(board, currentPlayer, index, cmd);
                     }
                 }
 
@@ -274,7 +265,6 @@ public class GameController {
 
     /**
      * Command of specific CommandCard is executed
-     *
      * @param player  whose turn it is
      * @param command to be executed
      */
@@ -283,7 +273,6 @@ public class GameController {
             // XXX This is a very simplistic way of dealing with some basic cards and
             //     their execution. This should eventually be done in a more elegant way
             //     (this concerns the way cards are modelled as well as the way they are executed).
-
             switch (command) {
                 case FORWARD:
                     this.moveForward(player);
@@ -300,7 +289,9 @@ public class GameController {
                 default:
                     // DO NOTHING (for now)
             }
-
+        }
+        for (PlayerAction p : player.getActions()){
+            p.doAction(board.getGameController(),player);
         }
     }
 
@@ -387,28 +378,6 @@ public class GameController {
             for (FieldAction fieldAction : space.getActions()){
                 fieldAction.doAction(board.getGameController(), space);
             }
-
-        robotInRange = false;
-        int range = 3;
-        Player otherRobot = null;
-
-        for (int i = 0; i < range; i++) {
-            Space targetSpace = board.getNeighbour(space, heading);
-            otherRobot = targetSpace.getPlayer();
-            space = targetSpace;
-            if (otherRobot != null) {
-                robotInRange = true;
-                break;
-            }
-        }
-
-        if (robotInRange) {
-            otherRobot.hit();
-            if (otherRobot.isRespawn()) {
-                otherRobot.setSpace(otherRobot.getStartSpace());
-                otherRobot.setRespawn(false);
-            }
-        }
 
     }
 

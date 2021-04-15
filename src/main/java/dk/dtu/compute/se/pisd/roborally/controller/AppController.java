@@ -85,6 +85,7 @@ public class AppController implements Observer {
             for (int i = 0; i < no; i++) {
                 Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
                 board.addPlayer(player);
+                player.addPlayerAction(new LaserPlayerAction());
                 Space space = board.getSpace(i % board.width, i);
                 player.setSpace(space);
                 player.setStartSpace(space);

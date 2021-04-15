@@ -22,9 +22,14 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.PlayerAction;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
@@ -60,12 +65,14 @@ public class Player extends Subject {
 
     private Space startSpace = null;
 
-    private int life = 3;
+    private int life;
     private boolean respawn = false;
 
     public CommandCardField[] getCards() {
         return cards;
     }
+
+    private List<PlayerAction> playerActions;
 
     /**
      * Constructor which assigns a programming field and random command cars
@@ -92,6 +99,8 @@ public class Player extends Subject {
 
         checkPointToken = 0;
         winner = false;
+        life = 3;
+        this.playerActions = new ArrayList<>();
 
 
     }
@@ -230,7 +239,6 @@ public class Player extends Subject {
      * This method checks which CheckPoint the player has arrived and assigns values for checkPointArray[i]
      * it ensures that the order of the arrived CheckPoints is correct and adds CheckPointTokens to the player
      *
-     * @param id int - ID of arrived CheckPoint
      */
 
     public void createWinner() {
@@ -272,11 +280,11 @@ public class Player extends Subject {
         }
     }
 
-    public boolean isRespawn(){
+    public boolean isReboot(){
         return respawn;
     }
 
-    public void setRespawn(boolean state){
+    public void setReboot(boolean state){
         respawn = state;
     }
 
@@ -287,5 +295,18 @@ public class Player extends Subject {
     public boolean[] getCheckPointArray(){
         return checkPointArray;
     }
+
+    public List<PlayerAction> getActions() {
+        return playerActions;
+    }
+
+    public void addPlayerAction(PlayerAction playerAction){
+        playerActions.add(playerAction);
+    }
+
+    public int getLife(){
+        return life;
+    }
+
 
 }

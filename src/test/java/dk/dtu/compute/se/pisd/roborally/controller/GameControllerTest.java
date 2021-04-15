@@ -107,4 +107,36 @@ class GameControllerTest {
         });
     }
 
+    @Test
+    void executeCommand() {
+        //Lasertest WIP
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+        Player other = board.getPlayer((current.getPlayerId() + 1)%2);
+        Space startSpace = new Space(board,0,0);
+        other.setStartSpace(startSpace);
+
+        Space space = new Space(board,1,1);
+
+        current.setSpace(space);
+        current.setHeading(Heading.SOUTH);
+
+        space = new Space(board,1,3);
+        other.setSpace(space);
+        other.setHeading(Heading.SOUTH);
+
+        current.addPlayerAction(new LaserPlayerAction());
+        for (int i = 0; i < 3; i++){
+            for (PlayerAction p : current.getActions()){
+                p.doAction(gameController,current);
+            }
+        }
+
+        Assertions.assertEquals(startSpace.x,other.getSpace().x);
+        Assertions.assertEquals(startSpace.y,other.getSpace().y);
+
+
+
+    }
+
 }

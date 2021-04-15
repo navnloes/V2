@@ -179,41 +179,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     }
 
-    private void drawGears() {
-        if(space.getGearHeading() != null) {
-            Polygon gearPart1 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
-            Polygon gearPart2 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
-            Polygon gearPart3 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
-            gearPart1.setFill(Color.DARKGREY);
-            gearPart2.setFill(Color.DARKGREY);
-            gearPart3.setFill(Color.DARKGREY);
-
-            gearPart1.setRotate(120);
-            gearPart2.setRotate(240);
-
-
-            if (space.getGearHeading() == Heading.EAST) {
-                gc.setFill(Color.DARKRED);}
-            else {
-                gc.setFill(Color.LIGHTGOLDENRODYELLOW);
-            }
-            gc.fillOval(17.5, 17.5, 40, 40);
-
-            Label label = new Label(space.getGearHeading().toString());
-
-            this.getChildren().add(gearPart1);
-            gearPart1.toBack();
-
-            this.getChildren().add(gearPart2);
-            gearPart2.toBack();
-
-            this.getChildren().add(gearPart3);
-            gearPart3.toBack();
-
-            this.getChildren().add(label);
-        }
-    }
-
     private void drawWalls() {
         if (!headings.isEmpty()) {
 

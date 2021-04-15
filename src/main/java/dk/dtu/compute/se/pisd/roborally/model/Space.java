@@ -40,16 +40,6 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
-    public Heading getGearHeading() {
-        return gearHeading;
-    }
-
-    public void setGearHeading(Heading gearHeading) {
-        this.gearHeading = gearHeading;
-    }
-
-    private Heading gearHeading;
-
     private Player player;
 
     private List<Heading> walls;
@@ -104,7 +94,7 @@ public class Space extends Subject {
         walls.add(wall);
     }
 
-    public void addFieldAction(dk.dtu.compute.se.pisd.roborally.controller.FieldAction fieldAction){
+    public void addFieldAction(FieldAction fieldAction){
         fieldActions.add(fieldAction);
     }
 
