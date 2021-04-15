@@ -25,8 +25,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBeltFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import java.io.FileWriter;
@@ -164,13 +166,19 @@ public static void saveBoard(Board board, String name) {
         space.addFieldAction(conveyorBelt);
 
         space = board.getSpace(5,7);
-        /*GearsActionField gearsActionField = new GearsActionField();
-        gearsActionField.setDirection(Direction.RIGHT);
-        space.addFieldAction(gearsActionField);
+        GearsFieldAction gearsFieldAction = new GearsFieldAction();
+        gearsFieldAction.setDirection(Direction.RIGHT);
+        space.addFieldAction(gearsFieldAction);
 
+        /* since we only have 3 checkPoints
+                space = board.getSpace(1,1);
+        CheckPointFieldAction checkPointFieldAction = new CheckPointFieldAction();
+        checkPointFieldAction.setCheckPointId(3);
+        space.addFieldAction(checkPointFieldAction);
          */
 
-        space.addWall("NORTH");
+
+        space.addWall(Heading.NORTH);
 
 
         return board;

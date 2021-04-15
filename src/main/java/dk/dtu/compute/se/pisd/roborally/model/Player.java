@@ -232,38 +232,6 @@ public class Player extends Subject {
      *
      * @param id int - ID of arrived CheckPoint
      */
-    public void arrivedCheckPoint(int id){
-
-        switch (id) {
-            case 0:
-                if (!checkPointArray[0]){
-                    addCheckPointToken();
-                    checkPointArray[0] = true;
-                }
-
-                break;
-            case 1:
-                if (checkPointArray[0] && !checkPointArray[1]){
-                    addCheckPointToken();
-                    checkPointArray[1] = true;
-                }
-
-                break;
-            case 2:
-                if (checkPointArray[1] && !checkPointArray[2]){
-                    addCheckPointToken();
-                    checkPointArray[2] = true;
-
-
-                }
-
-                break;
-            default:
-                System.out.println("Illegal id - CheckPoint ID " + id + " in arrivedCheckPoint(int id)");
-
-        }
-
-    }
 
     public void createWinner() {
         if (checkPointArray[2]) {
@@ -287,8 +255,6 @@ public class Player extends Subject {
     }
 
     public boolean getCheckPointArray(int i) {return checkPointArray[i];}
-
-    public boolean[] getCheckPointArray() {return checkPointArray;}
 
     public boolean getWinner(){
         return winner;
@@ -316,6 +282,10 @@ public class Player extends Subject {
 
     public Space getStartSpace(){
         return startSpace;
+    }
+
+    public boolean[] getCheckPointArray(){
+        return checkPointArray;
     }
 
 }

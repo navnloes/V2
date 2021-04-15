@@ -339,34 +339,34 @@ public class GameController {
 
         boolean wallBlocks = false;
         Space playerSpace = player.getSpace();
-        List<String> spaceHeadings = playerSpace.getWalls();
-        List<String> targetHeadings = space.getWalls();
+        List<Heading> spaceHeadings = playerSpace.getWalls();
+        List<Heading> targetHeadings = space.getWalls();
 
-        for (String s : spaceHeadings) {
-            if (s.equalsIgnoreCase(heading.toString())) {
+        for (Heading h : spaceHeadings) {
+            if (h == heading) {
                 wallBlocks = true;
                 break;
             }
         }
 
-        for (String t : targetHeadings) {
+        for (Heading t : targetHeadings) {
             switch (t) {
-                case "SOUTH":
+                case SOUTH:
                     if (player.getHeading().equals(Heading.NORTH)) {
                         wallBlocks = true;
                     }
                     break;
-                case "NORTH":
+                case NORTH:
                     if (player.getHeading().equals(Heading.SOUTH)) {
                         wallBlocks = true;
                     }
                     break;
-                case "WEST":
+                case WEST:
                     if (player.getHeading().equals(Heading.EAST)) {
                         wallBlocks = true;
                     }
                     break;
-                case "EAST":
+                case EAST:
                     if (player.getHeading() == Heading.WEST) {
                         wallBlocks = true;
                     }
@@ -500,27 +500,5 @@ public class GameController {
     public void onZero() {
         finishProgrammingPhase();
     }
-
-    /*
-    This method returns the checkPointCollection of the game
-     */
-//    public CheckPointCollection getCheckPointCollection() {
-//        return checkPointCollection;
-//    }
-//
-//    /*
-//    This method returns the conveyorBeltCollection of the game
-//     */
-//    public ConveyorBeltCollection getConveyorBeltCollection() {
-//        return conveyorBeltCollection;
-//    }
-//
-//    /*
-//    This method returns the gearsCollection of the game
-//     */
-//    public GearsCollection getGearsCollection() {
-//        return gearsCollection;
-//    }
-
 
 }

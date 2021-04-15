@@ -52,8 +52,7 @@ public class Space extends Subject {
 
     private Player player;
 
-    private List<String> walls;
-    private List <Heading> headings;
+    private List<Heading> walls;
     private List<FieldAction> fieldActions;
 
     public Space(Board board, int x, int y) {
@@ -62,8 +61,7 @@ public class Space extends Subject {
         this.y = y;
 
         player = null;
-        walls = new ArrayList<String>();
-        headings = new ArrayList<>();
+        walls = new ArrayList<Heading>();
         fieldActions = new ArrayList<>();
     }
 
@@ -98,11 +96,11 @@ public class Space extends Subject {
         return fieldActions;
     }
 
-    public List<String> getWalls(){
+    public List<Heading> getWalls(){
         return walls;
     }
 
-    public void addWall(String wall){
+    public void addWall(Heading wall){
         walls.add(wall);
     }
 

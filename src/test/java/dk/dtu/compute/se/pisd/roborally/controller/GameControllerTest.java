@@ -99,7 +99,7 @@ class GameControllerTest {
         Player current = board.getCurrentPlayer();
         Space playerSpace = new Space(board,0,0);
         Space target = new Space(board, 0,1);
-        target.addWall("NORTH");
+        target.addWall(Heading.NORTH);
 
         Assertions.assertThrows(ImpossibleMoveException.class,() -> {
             //her er current heading SOUTH

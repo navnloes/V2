@@ -53,7 +53,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_WIDTH = 75;  // 60; // 75;
 
     public final Space space;
-    List<String> headings;
+    List<Heading> headings;
     Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -220,14 +220,14 @@ public class SpaceView extends StackPane implements ViewObserver {
             gc.setStroke(Color.DARKGREEN);
             gc.setLineWidth(10);
             gc.setLineCap(StrokeLineCap.ROUND);
-            for (String wall : headings) {
-                if (wall.equalsIgnoreCase("SOUTH")) {
+            for (Heading wall : headings) {
+                if (wall == Heading.SOUTH) {
                     gc.strokeLine(2, SPACE_HEIGHT - 2,
                             SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-                } else if (wall.equalsIgnoreCase("NORTH")) {
+                } else if (wall == Heading.NORTH) {
                     gc.strokeLine(2, 2,
                             SPACE_WIDTH - 2, 2);
-                } else if (wall.equalsIgnoreCase("EAST")) {
+                } else if (wall == Heading.EAST) {
                     gc.strokeLine(SPACE_WIDTH - 2, 2,
                             SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
                 } else {
