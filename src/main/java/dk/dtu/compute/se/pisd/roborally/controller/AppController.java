@@ -123,7 +123,7 @@ public class AppController implements Observer {
 
         ArrayList<Player> players = RepositoryAccess.getRepository().getPlayerList(board,no);
         for (Player player : players){
-            RepositoryAccess.getRepository().setProgramCards(board,player);
+            //RepositoryAccess.getRepository().setProgramCards(board,player);
             board.addPlayer(player);
             player.setSpace(board.getSpace(player.getSpace().x, player.getSpace().y));
         }

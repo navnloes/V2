@@ -118,9 +118,7 @@ class Repository implements IRepository {
                 // statement.close();
 
                 createPlayersInDB(game);
-				/* TOODO this method needs to be implemented first
-				createCardFieldsInDB(game);
-				 */
+				createCardFieldsinDB(game);
 
                 // since current player is a foreign key, it can oly be
                 // inserted after the players are created, since MySQL does
@@ -184,7 +182,6 @@ class Repository implements IRepository {
 
             updatePlayersInDB(game);
             //updateCardFieldsInDB(game);
-            createCardFieldsinDB(game);
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -280,6 +277,7 @@ class Repository implements IRepository {
 
             game.setGameId(id);
             loadPlayersFromDB(game);
+            loadCardFieldsFromDB(game);
 
             if (playerNo >= 0 && playerNo < game.getPlayersNumber()) {
                 game.setCurrentPlayer(game.getPlayer(playerNo));
@@ -288,8 +286,6 @@ class Repository implements IRepository {
                 return null;
             }
 
-			//TODO: this method needs to be implemented first
-			//loadCardFieldsFromDB(game);
 
             return game;
         } catch (SQLException e) {
@@ -661,40 +657,37 @@ class Repository implements IRepository {
         }
     }
 
-    public void createCardFieldsinDB (Board game) throws SQLException {
-        // TODO code should be more defensive
-        PreparedStatement ps = getSelectCardFieldStatement();
-        ps.setInt(1, game.getGameId());
+    private static final String SQL_INSERT_CARD_FIELDS = "INSERT INTO  CardField (gameID, playerID,type,position,visible, command) VALUES (";
 
+    private void createCardFieldsinDB (Board game) throws SQLException {
+        Connection connection = connector.getConnection();
         for (int i = 0; i < game.getPlayersNumber(); i++) {
+            String query;
             Player player = game.getPlayer(i);
+            CommandCardField[] ccf = player.getCards();
+            for (int j = 0; j < ccf.length; j++) {
+                query = SQL_INSERT_CARD_FIELDS +
+                        game.getGameId() + ", " +
+                        player.getPlayerId() + "," +
+                        FIELD_TYPE_HAND + "," + j +
+                        ", 1, " +
+                        ccf[j].getCard().getCommand().ordinal() + ")";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.executeUpdate();
+                ps.close();
 
-            ResultSet rs = ps.executeQuery();
-            for (int j = 0; j < player.getCards().length; i++) {
-                for (CommandCardField c : player.getCards()) {
-                    rs.updateInt(FIELD_PLAYERID, i);
-                    rs.updateString(FIELD_TYPE, "cards");
-                    rs.updateInt(FIELD_POS, j);
-                    rs.updateInt(FIELD_TYPE_REGISTER, 1);
-                    rs.updateBoolean(FIELD_VISIBLE, c.isVisible());
-                    rs.updateObject(FIELD_COMMAND, c.getCard().getCommand());
-                    rs.insertRow();
-                }
             }
-
-            for (int j = 0; j < player.getProgram().length; i++) {
-                for (CommandCardField c : player.getProgram()) {
-                    rs.updateInt(FIELD_PLAYERID, i);
-                    rs.updateString(FIELD_TYPE, "program");
-                    rs.updateInt(FIELD_POS, j);
-                    rs.updateInt(FIELD_TYPE_REGISTER, 1);
-                    rs.updateBoolean(FIELD_VISIBLE, c.isVisible());
-                    rs.updateObject(FIELD_COMMAND, c.getCard().getCommand());
-                    rs.insertRow();
-                }
+            for (int j = 0; j < player.getProgram().length; j++) {
+                query = SQL_INSERT_CARD_FIELDS +
+                        game.getGameId() + ", " +
+                        player.getPlayerId() + "," +
+                        FIELD_TYPE_REGISTER + ","+ j +
+                        ", 0, " +
+                        ccf[j].getCard().getCommand().ordinal() + ")";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.executeUpdate();
+                ps.close();
             }
-
-            rs.close();
         }
 
     }

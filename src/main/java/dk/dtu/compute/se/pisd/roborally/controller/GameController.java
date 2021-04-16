@@ -111,7 +111,6 @@ public class GameController {
 
             }
         }
-
     }
 
     // XXX: V2
@@ -367,7 +366,6 @@ public class GameController {
                     break;
             }
         }
-
 
         if (wallBlocks) {
             throw new ImpossibleMoveException(player, space, heading);
