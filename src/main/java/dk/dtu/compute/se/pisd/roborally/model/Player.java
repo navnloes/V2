@@ -72,6 +72,10 @@ public class Player extends Subject {
         return cards;
     }
 
+    public CommandCardField[] getProgram(){
+        return program;
+    }
+
     private List<PlayerAction> playerActions;
 
     /**

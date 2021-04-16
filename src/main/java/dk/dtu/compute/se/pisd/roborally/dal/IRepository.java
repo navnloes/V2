@@ -51,4 +51,7 @@ public interface IRepository {
 
 	void setProgramCards(Board board, Player player);
 
+	//TODO:
+	void createCardFieldsinDB (Board game) throws SQLException;
+
 }

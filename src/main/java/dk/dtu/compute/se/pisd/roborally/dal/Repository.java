@@ -62,6 +62,21 @@ class Repository implements IRepository {
 
     private static final String PLAYER_HEADING = "heading";
 
+    private static final int FIELD_TYPE_REGISTER = 0;
+
+    private static final int FIELD_TYPE_HAND = 1;
+
+    private static final String FIELD_POS = "position";
+
+    private static final String FIELD_VISIBLE = "visible";
+
+    private static final String FIELD_COMMAND = "command";
+
+    private static final String FIELD_PLAYERID = "playerID";
+
+    private static final String FIELD_TYPE = "type";
+
+
     private Connector connector;
 
     Repository(Connector connector) {
@@ -168,7 +183,8 @@ class Repository implements IRepository {
             rs.close();
 
             updatePlayersInDB(game);
-            updateCardFieldsInDB(game);
+            //updateCardFieldsInDB(game);
+            createCardFieldsinDB(game);
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -599,6 +615,90 @@ class Repository implements IRepository {
         }
 
     }
+
+    private static final String SQL_SELECT_CARD_FIELDS = "SELECT* FROM CardField WHERE gameID = ?";
+    private PreparedStatement select_card_field_stmt = null;
+
+    private PreparedStatement getSelectCardFieldStatement(){
+        if (select_card_field_stmt == null){
+            Connection connection = connector.getConnection();
+            try {
+                select_card_field_stmt = connection.prepareStatement(
+                        SQL_SELECT_CARD_FIELDS);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return select_card_field_stmt;
+    }
+
+    private void loadCardFieldsFromDB(Board game) throws SQLException {
+        PreparedStatement ps = getSelectCardFieldStatement();
+        ps.setInt(1,game.getGameId());
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            int playerId = rs.getInt(FIELD_PLAYERID);
+            Player player = game.getPlayer(playerId);
+            int type = rs.getInt(FIELD_TYPE);
+            int pos = rs.getInt(FIELD_POS);
+            CommandCardField field;
+            if (type == FIELD_TYPE_REGISTER){
+                field = player.getProgramField(pos);
+            } else if (type == FIELD_TYPE_HAND) {
+                field = player.getCardField(pos);
+            } else {
+                field = null;
+            }
+            if (field != null) {
+                field.setVisible(rs.getBoolean(FIELD_VISIBLE));
+                Object c = rs.getObject(FIELD_COMMAND);
+             if (c != null) {
+                Command card = Command.values()[rs.getInt(FIELD_COMMAND)];
+                field.setCard(new CommandCard(card));
+            }
+          }
+        }
+    }
+
+    public void createCardFieldsinDB (Board game) throws SQLException {
+        // TODO code should be more defensive
+        PreparedStatement ps = getSelectCardFieldStatement();
+        ps.setInt(1, game.getGameId());
+
+        for (int i = 0; i < game.getPlayersNumber(); i++) {
+            Player player = game.getPlayer(i);
+
+            ResultSet rs = ps.executeQuery();
+            for (int j = 0; j < player.getCards().length; i++) {
+                for (CommandCardField c : player.getCards()) {
+                    rs.updateInt(FIELD_PLAYERID, i);
+                    rs.updateString(FIELD_TYPE, "cards");
+                    rs.updateInt(FIELD_POS, j);
+                    rs.updateInt(FIELD_TYPE_REGISTER, 1);
+                    rs.updateBoolean(FIELD_VISIBLE, c.isVisible());
+                    rs.updateObject(FIELD_COMMAND, c.getCard().getCommand());
+                    rs.insertRow();
+                }
+            }
+
+            for (int j = 0; j < player.getProgram().length; i++) {
+                for (CommandCardField c : player.getProgram()) {
+                    rs.updateInt(FIELD_PLAYERID, i);
+                    rs.updateString(FIELD_TYPE, "program");
+                    rs.updateInt(FIELD_POS, j);
+                    rs.updateInt(FIELD_TYPE_REGISTER, 1);
+                    rs.updateBoolean(FIELD_VISIBLE, c.isVisible());
+                    rs.updateObject(FIELD_COMMAND, c.getCard().getCommand());
+                    rs.insertRow();
+                }
+            }
+
+            rs.close();
+        }
+
+    }
+
 
 
 }
