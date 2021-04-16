@@ -118,7 +118,9 @@ class Repository implements IRepository {
                 // statement.close();
 
                 createPlayersInDB(game);
-				createCardFieldsinDB(game);
+				/* TOODO this method needs to be implemented first
+				createCardFieldsInDB(game);
+				 */
 
                 // since current player is a foreign key, it can oly be
                 // inserted after the players are created, since MySQL does
@@ -138,6 +140,9 @@ class Repository implements IRepository {
 
                 connection.commit();
                 connection.setAutoCommit(true);
+
+                createCardFieldsinDB(game);
+
                 return true;
             } catch (SQLException e) {
                 // TODO error handling
@@ -155,6 +160,7 @@ class Repository implements IRepository {
         } else {
             System.err.println("Game cannot be created in DB, since it has a game id already!");
         }
+
         return false;
     }
 
@@ -182,6 +188,7 @@ class Repository implements IRepository {
 
             updatePlayersInDB(game);
             //updateCardFieldsInDB(game);
+            //createCardFieldsinDB(game);
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -278,7 +285,6 @@ class Repository implements IRepository {
             game.setGameId(id);
             loadPlayersFromDB(game);
             loadCardFieldsFromDB(game);
-
             if (playerNo >= 0 && playerNo < game.getPlayersNumber()) {
                 game.setCurrentPlayer(game.getPlayer(playerNo));
             } else {
@@ -286,6 +292,8 @@ class Repository implements IRepository {
                 return null;
             }
 
+            //TODO: this method needs to be implemented first
+            //loadCardFieldsFromDB(game);
 
             return game;
         } catch (SQLException e) {
@@ -591,18 +599,27 @@ class Repository implements IRepository {
     public void setProgramCards(Board board, Player player){
 
         Connection connection = connector.getConnection();
-        String query = "select * from playerHandCard where gameId =" + board.getGameId() + " and playerId =" + player.getPlayerId();
+        String query = "select * from CardField where gameId =" + board.getGameId() + " and playerId =" + player.getPlayerId();
         try {
             connection.setAutoCommit(false);
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                Command command = Command.getCommand(rs.getInt(4));
-                CommandCard commandCard = new CommandCard(command);
-                CommandCardField commandCardField = new CommandCardField(player);
-                commandCardField.setCard(commandCard);
-                player.setCardField(rs.getInt(3),commandCardField);
+                if(rs.getInt(5) == 1) {
+                    // visible
+                    if(rs.getInt(3) == 1) {
+                        //command card
+                        Command command = Command.getCommand(rs.getInt(6));
+                        CommandCard commandCard = new CommandCard(command);
+                        player.getCardField(rs.getInt(4)).setCard(commandCard);
+                    } else {
+                        //program card
+                        Command command = Command.getCommand(rs.getInt(6));
+                        CommandCard commandCard = new CommandCard(command);
+                        player.getProgramField(rs.getInt(4)).setCard(commandCard);
+                    }
 
+                }
             }
             rs.close();
         } catch (SQLException e) {
@@ -649,41 +666,36 @@ class Repository implements IRepository {
             if (field != null) {
                 field.setVisible(rs.getBoolean(FIELD_VISIBLE));
                 Object c = rs.getObject(FIELD_COMMAND);
-             if (c != null) {
-                Command card = Command.values()[rs.getInt(FIELD_COMMAND)];
-                field.setCard(new CommandCard(card));
+                if (c != null) {
+                    Command card = Command.values()[rs.getInt(FIELD_COMMAND)];
+                    field.setCard(new CommandCard(card));
+                }
             }
-          }
         }
     }
 
-    private static final String SQL_INSERT_CARD_FIELDS = "INSERT INTO  CardField (gameID, playerID,type,position,visible, command) VALUES (";
-
-    private void createCardFieldsinDB (Board game) throws SQLException {
+    public void createCardFieldsinDB (Board game) throws SQLException {
         Connection connection = connector.getConnection();
         for (int i = 0; i < game.getPlayersNumber(); i++) {
-            String query;
             Player player = game.getPlayer(i);
             CommandCardField[] ccf = player.getCards();
             for (int j = 0; j < ccf.length; j++) {
-                query = SQL_INSERT_CARD_FIELDS +
+                String query = "insert into  CardField (gameID, playerID,type,position,visible, command) values (" +
                         game.getGameId() + ", " +
-                        player.getPlayerId() + "," +
-                        FIELD_TYPE_HAND + "," + j +
-                        ", 1, " +
-                        ccf[j].getCard().getCommand().ordinal() + ")";
+                        player.getPlayerId() + ", 1, " + j + ", 1, " + ccf[j].getCard().getCommand().ordinal() + ")";
+
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.executeUpdate();
                 ps.close();
 
             }
-            for (int j = 0; j < player.getProgram().length; j++) {
-                query = SQL_INSERT_CARD_FIELDS +
+
+            CommandCardField[] ccp = player.getProgram();
+            for (int j = 0; j < 5; j++) {
+                if(ccp[j].getCard() == null) continue;
+                String query = "insert into  CardField (gameID, playerID,type,position,visible, command) values (" +
                         game.getGameId() + ", " +
-                        player.getPlayerId() + "," +
-                        FIELD_TYPE_REGISTER + ","+ j +
-                        ", 0, " +
-                        ccf[j].getCard().getCommand().ordinal() + ")";
+                        player.getPlayerId() + ", 0, " + j + ", 0, " + ccp[j].getCard().getCommand().ordinal() + ")";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.executeUpdate();
                 ps.close();
@@ -692,6 +704,53 @@ class Repository implements IRepository {
 
     }
 
+    public void updateCardFieldsinDB (Board game) {
+        if(game.getGameId() == null)
+            return;
+        Connection connection = connector.getConnection();
+        try
+        {
 
+            for (int i = 0; i < game.getPlayersNumber(); i++) {
+                Player player = game.getPlayer(i);
+
+                String deleteCmd = "delete from  CardField where gameId = " +
+                        game.getGameId() + " and playerId = " +
+                        player.getPlayerId();
+
+                System.out.println(deleteCmd);
+                PreparedStatement deletePs = connection.prepareStatement(deleteCmd);
+
+                deletePs.executeUpdate();
+                deletePs.close();
+
+                CommandCardField[] ccf = player.getCards();
+
+                for (int j = 0; j < ccf.length; j++) {
+                    if(ccf[j].getCard() == null) continue;
+                    String query = "insert into  CardField (gameID, playerID,type,position,visible, command) values (" +
+                            game.getGameId() + ", " +
+                            player.getPlayerId() + ", 1, " + j + ", 1, " + ccf[j].getCard().getCommand().ordinal() + ")";
+
+                    PreparedStatement ps = connection.prepareStatement(query);
+                    ps.executeUpdate();
+                    ps.close();
+
+                }
+
+                for (int j = 0; j < 5; j++) {
+                    if(player.getProgramField(j).getCard() == null) continue;
+                    String query = "insert into  CardField (gameID, playerID,type,position,visible, command) values (" +
+                            game.getGameId() + ", " +
+                            player.getPlayerId() + ", 0, " + j + ", 1, " + player.getProgramField(j).getCard().getCommand().ordinal() + ")";
+                    PreparedStatement ps = connection.prepareStatement(query);
+                    ps.executeUpdate();
+                    ps.close();
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
 }

@@ -111,6 +111,7 @@ public class GameController {
 
             }
         }
+
     }
 
     // XXX: V2
@@ -137,6 +138,7 @@ public class GameController {
         board.setPhase(Phase.ACTIVATION);
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
+        RepositoryAccess.getRepository().updateCardFieldsinDB(board);
     }
 
     // XXX: V2
@@ -366,6 +368,7 @@ public class GameController {
                     break;
             }
         }
+
 
         if (wallBlocks) {
             throw new ImpossibleMoveException(player, space, heading);

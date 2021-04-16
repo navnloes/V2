@@ -28,10 +28,8 @@ import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
-import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -119,20 +117,26 @@ public class AppController implements Observer {
         Optional<Integer> result = dialog.showAndWait();
         int no = result.get();
         board.setGameId(no);
-
-
+        RepositoryAccess.getRepository().loadGameFromDB(no);
         ArrayList<Player> players = RepositoryAccess.getRepository().getPlayerList(board,no);
+
+
         for (Player player : players){
-            //RepositoryAccess.getRepository().setProgramCards(board,player);
+            RepositoryAccess.getRepository().setProgramCards(board,player);
             board.addPlayer(player);
             player.setSpace(board.getSpace(player.getSpace().x, player.getSpace().y));
         }
-        //TODO: ændres til reel currentPlayer
+
+        board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
+        board.setStep(0);
 
-        gameController.startProgrammingPhase();
+
+        //gameController.startProgrammingPhase();
+
+
+
         roboRally.createBoardView(gameController);
-
     }
 
     /**

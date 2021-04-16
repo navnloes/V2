@@ -36,13 +36,13 @@ import java.util.List;
  *
  */
 public interface IRepository {
-	
- 	boolean createGameInDB(Board game);
-	
+
+	boolean createGameInDB(Board game);
+
 	boolean updateGameInDB(Board game);
-	
+
 	Board loadGameFromDB(int id);
-	
+
 	List<GameInDB> getGames();
 
 	ArrayList<Integer> getGameIds();
@@ -50,4 +50,8 @@ public interface IRepository {
 	ArrayList<Player> getPlayerList(Board board, int gameId);
 
 	void setProgramCards(Board board, Player player);
+
+	//TODO:
+	void createCardFieldsinDB(Board game) throws SQLException;
+	void updateCardFieldsinDB(Board game);
 }
