@@ -187,8 +187,7 @@ class Repository implements IRepository {
             rs.close();
 
             updatePlayersInDB(game);
-            //updateCardFieldsInDB(game);
-            //createCardFieldsinDB(game);
+            updateCardFieldsinDB(game);
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -251,12 +250,12 @@ class Repository implements IRepository {
     }
 
     @Override
-    public Board loadGameFromDB(int id) {
-        Board game;
+    public Board loadGameFromDB(Board game) {
         try {
             // TODO here, we could actually use a simpler statement
             //      which is not updatable, but reuse the one from
             //      above for the pupose
+            int id = game.getGameId();
             PreparedStatement ps = getSelectGameStatementU();
             ps.setInt(1, id);
 
@@ -269,9 +268,7 @@ class Repository implements IRepository {
                 //game = new Board(width,height);
                 // TODO and we should also store the used game board in the database
                 //      for now, we use the default game board
-                game = LoadBoard.loadBoard(null);
-                if (game == null) {
-                }
+
                 playerNo = rs.getInt(GAME_CURRENTPLAYER);
                 // TODO currently we do not set the games name (needs to be added)
                 game.setPhase(Phase.values()[rs.getInt(GAME_PHASE)]);
@@ -582,6 +579,9 @@ class Repository implements IRepository {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 Player player = new Player(board,rs.getString(4),rs.getString(3));
+
+                System.out.println("----- getPlayerList " + player.toString());
+
                 player.setPlayerId(rs.getInt(2));
                 player.setHeading(Heading.getHeading(rs.getInt(7)));
                 player.setSpace(new Space (board, rs.getInt(5),rs.getInt(6)));
@@ -678,11 +678,12 @@ class Repository implements IRepository {
         Connection connection = connector.getConnection();
         for (int i = 0; i < game.getPlayersNumber(); i++) {
             Player player = game.getPlayer(i);
-            CommandCardField[] ccf = player.getCards();
-            for (int j = 0; j < ccf.length; j++) {
-                String query = "insert into  CardField (gameID, playerID,type,position,visible, command) values (" +
+            CommandCardField[] cards = player.getCards();
+            for (int j = 0; j < cards.length; j++) {
+                if(cards[j].getCard() == null) continue;
+                String query = INSERT_INTO_CARDFIELD +
                         game.getGameId() + ", " +
-                        player.getPlayerId() + ", 1, " + j + ", 1, " + ccf[j].getCard().getCommand().ordinal() + ")";
+                        player.getPlayerId() + "," + FIELD_TYPE_HAND + "," + j + "," + cards[j].isVisible() + ", " + cards[j].getCard().getCommand().ordinal() + ")";
 
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.executeUpdate();
@@ -690,12 +691,12 @@ class Repository implements IRepository {
 
             }
 
-            CommandCardField[] ccp = player.getProgram();
-            for (int j = 0; j < 5; j++) {
-                if(ccp[j].getCard() == null) continue;
-                String query = "insert into  CardField (gameID, playerID,type,position,visible, command) values (" +
+            CommandCardField[] program = player.getProgram();
+            for (int j = 0; j < program.length; j++) {
+                if(program[j].getCard() == null) continue;
+                String query = INSERT_INTO_CARDFIELD +
                         game.getGameId() + ", " +
-                        player.getPlayerId() + ", 0, " + j + ", 0, " + ccp[j].getCard().getCommand().ordinal() + ")";
+                        player.getPlayerId() + "," + FIELD_TYPE_REGISTER + ", " + j + "," + program[j].isVisible() + ", " + program[j].getCard().getCommand().ordinal() + ")";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.executeUpdate();
                 ps.close();
@@ -704,53 +705,38 @@ class Repository implements IRepository {
 
     }
 
-    public void updateCardFieldsinDB (Board game) {
-        if(game.getGameId() == null)
+    private static String DELETE_FROM_CARDFIELD_WHERE = "delete from  CardField where ";
+    private static String INSERT_INTO_CARDFIELD = "INSERT INTO CardField (gameID, playerID,type,position,visible, command) VALUES (";
+
+    private void deleteFromCardFieldsinDB(Board game) {
+        if (game.getGameId() == null)
             return;
         Connection connection = connector.getConnection();
-        try
-        {
+        try {
 
             for (int i = 0; i < game.getPlayersNumber(); i++) {
                 Player player = game.getPlayer(i);
 
-                String deleteCmd = "delete from  CardField where gameId = " +
+                String deleteCmd = DELETE_FROM_CARDFIELD_WHERE + "gameId =" +
                         game.getGameId() + " and playerId = " +
                         player.getPlayerId();
 
-                System.out.println(deleteCmd);
                 PreparedStatement deletePs = connection.prepareStatement(deleteCmd);
 
                 deletePs.executeUpdate();
                 deletePs.close();
-
-                CommandCardField[] ccf = player.getCards();
-
-                for (int j = 0; j < ccf.length; j++) {
-                    if(ccf[j].getCard() == null) continue;
-                    String query = "insert into  CardField (gameID, playerID,type,position,visible, command) values (" +
-                            game.getGameId() + ", " +
-                            player.getPlayerId() + ", 1, " + j + ", 1, " + ccf[j].getCard().getCommand().ordinal() + ")";
-
-                    PreparedStatement ps = connection.prepareStatement(query);
-                    ps.executeUpdate();
-                    ps.close();
-
-                }
-
-                for (int j = 0; j < 5; j++) {
-                    if(player.getProgramField(j).getCard() == null) continue;
-                    String query = "insert into  CardField (gameID, playerID,type,position,visible, command) values (" +
-                            game.getGameId() + ", " +
-                            player.getPlayerId() + ", 0, " + j + ", 1, " + player.getProgramField(j).getCard().getCommand().ordinal() + ")";
-                    PreparedStatement ps = connection.prepareStatement(query);
-                    ps.executeUpdate();
-                    ps.close();
-                }
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+    }
+
+    private void updateCardFieldsinDB (Board game) throws SQLException {
+    deleteFromCardFieldsinDB(game);
+    createCardFieldsinDB(game);
+
     }
 
 }

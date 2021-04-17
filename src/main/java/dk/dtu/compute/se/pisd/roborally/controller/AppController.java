@@ -117,24 +117,10 @@ public class AppController implements Observer {
         Optional<Integer> result = dialog.showAndWait();
         int no = result.get();
         board.setGameId(no);
-        RepositoryAccess.getRepository().loadGameFromDB(no);
-        ArrayList<Player> players = RepositoryAccess.getRepository().getPlayerList(board,no);
-
-
-        for (Player player : players){
-            RepositoryAccess.getRepository().setProgramCards(board,player);
-            board.addPlayer(player);
-            player.setSpace(board.getSpace(player.getSpace().x, player.getSpace().y));
-        }
-
+        RepositoryAccess.getRepository().loadGameFromDB(board);
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
-
-
-        //gameController.startProgrammingPhase();
-
-
 
         roboRally.createBoardView(gameController);
     }

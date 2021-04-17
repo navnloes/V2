@@ -41,7 +41,7 @@ public interface IRepository {
 
 	boolean updateGameInDB(Board game);
 
-	Board loadGameFromDB(int id);
+	Board loadGameFromDB(Board game);
 
 	List<GameInDB> getGames();
 
@@ -53,5 +53,4 @@ public interface IRepository {
 
 	//TODO:
 	void createCardFieldsinDB(Board game) throws SQLException;
-	void updateCardFieldsinDB(Board game);
 }
