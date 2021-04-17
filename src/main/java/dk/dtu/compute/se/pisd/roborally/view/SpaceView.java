@@ -105,6 +105,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                     conveyorBelt.setRotate(90);
                 }
                 this.getChildren().add(conveyorBelt);
+
             } else if (fieldAction instanceof CheckPointFieldAction) {
                 gc.setLineWidth(1);
                 gc.setStroke(Color.BLUE);
@@ -112,6 +113,8 @@ public class SpaceView extends StackPane implements ViewObserver {
                 gc.fillOval(12.5, 12.5, 49, 49);
                 gc.strokeOval(12.5, 12.5, 50, 50);
                 gc.strokeOval(12.5, 12.5, 51, 51);
+                Node label = new Label(((CheckPointFieldAction) fieldAction).getCheckPointId() + 1 + "");
+                this.getChildren().add(label);
 
             }
             else if (fieldAction instanceof GearsFieldAction) {
