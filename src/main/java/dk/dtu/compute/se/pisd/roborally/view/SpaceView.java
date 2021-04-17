@@ -30,10 +30,13 @@ import dk.dtu.compute.se.pisd.roborally.model.Direction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -110,8 +113,6 @@ public class SpaceView extends StackPane implements ViewObserver {
                 gc.strokeOval(12.5, 12.5, 50, 50);
                 gc.strokeOval(12.5, 12.5, 51, 51);
 
-                Node label = new javafx.scene.control.Label(((CheckPointFieldAction) fieldAction).getCheckPointId() + 1 + "");
-                this.getChildren().add(label);
             }
             else if (fieldAction instanceof GearsFieldAction) {
                 Polygon gearPart1 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
@@ -163,16 +164,19 @@ public class SpaceView extends StackPane implements ViewObserver {
             Label label = new Label(Integer.toString(player.getCheckPointToken()));
             this.getChildren().add(label);
             label.toFront();
+            //TODO: skal rykkes til venstre
+            label = new Label(Integer.toString(player.getLife()));
+            this.getChildren().add(label);
+            label.toFront();
+
+
         }
 
         headings = space.getWalls();
 
-        //TODO: tegne actions
-        space.getActions();
-
         drawWalls();
         // drawGears();
-        playerAttackMove(player);
+        //playerAttackMove(player);
 
         this.getChildren().add(canvas);
         canvas.toBack();
