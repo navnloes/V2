@@ -137,6 +137,7 @@ public class AppController implements Observer {
     public boolean stopGame() {
         if (gameController != null) {
 
+            //TODO: Hvorfor
             // here we save the game (without asking the user).
             saveGame();
 

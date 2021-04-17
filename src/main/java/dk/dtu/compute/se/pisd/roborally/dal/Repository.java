@@ -512,39 +512,6 @@ class Repository implements IRepository {
         return players;
     }
 
-    public void setProgramCards(Board board, Player player){
-
-        Connection connection = connector.getConnection();
-        String query = "select * from CardField where gameId =" + board.getGameId() + " and playerId =" + player.getPlayerId();
-        try {
-            connection.setAutoCommit(false);
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                if(rs.getInt(5) == 1) {
-                    // visible
-                    if(rs.getInt(3) == 1) {
-                        //command card
-                        Command command = Command.getCommand(rs.getInt(6));
-                        CommandCard commandCard = new CommandCard(command);
-                        player.getCardField(rs.getInt(4)).setCard(commandCard);
-                    } else {
-                        //program card
-                        Command command = Command.getCommand(rs.getInt(6));
-                        CommandCard commandCard = new CommandCard(command);
-                        player.getProgramField(rs.getInt(4)).setCard(commandCard);
-                    }
-
-                }
-            }
-            rs.close();
-        } catch (SQLException e) {
-            // TODO error handling
-            e.printStackTrace();
-        }
-
-    }
-
     private static final String SQL_SELECT_CARD_FIELDS = "SELECT* FROM CardField WHERE gameID = ?";
     private PreparedStatement select_card_field_stmt = null;
 
