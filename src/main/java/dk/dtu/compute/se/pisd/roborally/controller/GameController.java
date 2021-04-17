@@ -49,14 +49,6 @@ public class GameController {
         board.setGameController(this);
         if (this.board.getPhase() == Phase.INITIALISATION)
             this.board.setPhase(Phase.PROGRAMMING);
-
-        /*
-        checkPointCollection = new CheckPointCollection();
-        conveyorBeltCollection = new ConveyorBeltCollection();
-        gearsCollection = new GearsCollection();
-        boardElementController = new BoardElementController(board, checkPointCollection, conveyorBeltCollection, gearsCollection);
-
-         */
     }
 
     /**
@@ -265,7 +257,7 @@ public class GameController {
 
     /**
      * Command of specific CommandCard is executed
-     *
+     * Robot lasers are activated afterwards
      * @param player  whose turn it is
      * @param command to be executed
      */
@@ -292,7 +284,10 @@ public class GameController {
             }
         }
         for (PlayerAction p : player.getActions()) {
+            Space space = player.getSpace();
+            if (!wallBlocks(player,space))
             p.doAction(board.getGameController(), player);
+
         }
     }
 
@@ -428,6 +423,13 @@ public class GameController {
         finishProgrammingPhase();
     }
 
+    /**
+     * This method checks if the space, that a given player is about to move to, is blocked by a wall
+     * The space of the player is compared to the given space
+     * @param player Player player who wants to move
+     * @param space Space space that player wants to move to
+     * @return Boolean true if there is a wall blocking
+     */
     public boolean wallBlocks(Player player, Space space) {
         boolean blocks = false;
         Space playerSpace = player.getSpace();
