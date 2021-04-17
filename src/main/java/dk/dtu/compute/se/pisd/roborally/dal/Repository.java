@@ -557,6 +557,8 @@ class Repository implements IRepository {
         }
     }
 
+    private static String INSERT_INTO_CARDFIELD = "INSERT INTO CardField (gameID, playerID,type,position,visible, command) VALUES (";
+
     public void createCardFieldsinDB (Board game) throws SQLException {
         Connection connection = connector.getConnection();
         for (int i = 0; i < game.getPlayersNumber(); i++) {
@@ -588,9 +590,8 @@ class Repository implements IRepository {
 
     }
 
+    //TODO: prepared statement
     private static String DELETE_FROM_CARDFIELD_WHERE = "delete from  CardField where ";
-    private static String INSERT_INTO_CARDFIELD = "INSERT INTO CardField (gameID, playerID,type,position,visible, command) VALUES (";
-
     private void deleteFromCardFieldsinDB(Board game) {
         if (game.getGameId() == null)
             return;
@@ -616,10 +617,53 @@ class Repository implements IRepository {
 
     }
 
+
     private void updateCardFieldsinDB (Board game) throws SQLException {
     deleteFromCardFieldsinDB(game);
     createCardFieldsinDB(game);
-
     }
 
+    private void updateCardFieldsinDB2(Board game){
+        Connection connection = connector.getConnection();
+        try {
+            connection.setAutoCommit(false);
+
+            PreparedStatement ps = getSelectCardFieldStatement();
+            ps.setInt(1, game.getGameId());
+
+            ResultSet rs = ps.executeQuery();
+
+            // TODO should be more defensive
+
+            if (rs.next()) {
+                int playerId = rs.getInt(FIELD_PLAYERID);
+                Player player = game.getPlayer(playerId);
+
+                CommandCardField[] cards = player.getCards();
+                for (int i = 0; i < cards.length; i++){
+                    rs.updateInt(FIELD_TYPE,FIELD_TYPE_HAND);
+                    rs.updateInt(FIELD_POS,i);
+                    rs.updateBoolean(FIELD_VISIBLE,cards[i].isVisible());
+                    rs.updateObject(FIELD_COMMAND,cards[i].getCard().getCommand().ordinal());
+                    rs.updateRow();
+                }
+                CommandCardField[] program = player.getProgram();
+                for (int i = 0; i < program.length; i++){
+                    rs.updateInt(FIELD_TYPE,FIELD_TYPE_REGISTER);
+                    rs.updateInt(FIELD_POS,i);
+                    rs.updateBoolean(FIELD_VISIBLE,program[i].isVisible());
+                    rs.updateObject(FIELD_COMMAND,program[i].getCard().getCommand().ordinal());
+                    rs.updateRow();
+                }
+
+            } else {
+                // TODO error handling
+            }
+            rs.close();
+
+} catch (SQLException e){
+            e.printStackTrace();
+        }
+
+}
 }
