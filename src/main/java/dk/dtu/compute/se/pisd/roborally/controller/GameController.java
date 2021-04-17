@@ -265,6 +265,7 @@ public class GameController {
 
     /**
      * Command of specific CommandCard is executed
+     *
      * @param player  whose turn it is
      * @param command to be executed
      */
@@ -290,8 +291,8 @@ public class GameController {
                     // DO NOTHING (for now)
             }
         }
-        for (PlayerAction p : player.getActions()){
-            p.doAction(board.getGameController(),player);
+        for (PlayerAction p : player.getActions()) {
+            p.doAction(board.getGameController(), player);
         }
     }
 
@@ -327,58 +328,15 @@ public class GameController {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
-
-        boolean wallBlocks = false;
-        Space playerSpace = player.getSpace();
-        List<Heading> spaceHeadings = playerSpace.getWalls();
-        List<Heading> targetHeadings = space.getWalls();
-
-        for (Heading h : spaceHeadings) {
-            if (h == heading) {
-                wallBlocks = true;
-                break;
-            }
-        }
-
-        for (Heading t : targetHeadings) {
-            switch (t) {
-                case SOUTH:
-                    if (player.getHeading().equals(Heading.NORTH)) {
-                        wallBlocks = true;
-                    }
-                    break;
-                case NORTH:
-                    if (player.getHeading().equals(Heading.SOUTH)) {
-                        wallBlocks = true;
-                    }
-                    break;
-                case WEST:
-                    if (player.getHeading().equals(Heading.EAST)) {
-                        wallBlocks = true;
-                    }
-                    break;
-                case EAST:
-                    if (player.getHeading() == Heading.WEST) {
-                        wallBlocks = true;
-                    }
-                    break;
-                default:
-                    System.out.println("Illegal heading - player.getHeading() " + t + " in moveToSpace");
-                    break;
-            }
-        }
-
-
-        if (wallBlocks) {
+        if (wallBlocks(player, space)) {
             throw new ImpossibleMoveException(player, space, heading);
         }
 
         player.setSpace(space);
-        if(!space.getActions().isEmpty())
-            for (FieldAction fieldAction : space.getActions()){
+        if (!space.getActions().isEmpty())
+            for (FieldAction fieldAction : space.getActions()) {
                 fieldAction.doAction(board.getGameController(), space);
             }
-
     }
 
     /**
@@ -468,6 +426,50 @@ public class GameController {
 
     public void onZero() {
         finishProgrammingPhase();
+    }
+
+    public boolean wallBlocks(Player player, Space space) {
+        boolean blocks = false;
+        Space playerSpace = player.getSpace();
+        Heading heading = player.getHeading();
+        List<Heading> spaceHeadings = playerSpace.getWalls();
+        List<Heading> targetHeadings = space.getWalls();
+
+        for (Heading h : spaceHeadings) {
+            if (h == heading) {
+                blocks = true;
+                break;
+            }
+        }
+
+        for (Heading t : targetHeadings) {
+            switch (t) {
+                case SOUTH:
+                    if (player.getHeading().equals(Heading.NORTH)) {
+                        blocks = true;
+                    }
+                    break;
+                case NORTH:
+                    if (player.getHeading().equals(Heading.SOUTH)) {
+                        blocks = true;
+                    }
+                    break;
+                case WEST:
+                    if (player.getHeading().equals(Heading.EAST)) {
+                        blocks = true;
+                    }
+                    break;
+                case EAST:
+                    if (player.getHeading() == Heading.WEST) {
+                        blocks = true;
+                    }
+                    break;
+                default:
+                    System.out.println("Illegal heading - player.getHeading() " + t + " in moveToSpace");
+                    break;
+            }
+        }
+        return blocks;
     }
 
 }
