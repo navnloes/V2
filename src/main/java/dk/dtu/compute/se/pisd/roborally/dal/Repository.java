@@ -20,10 +20,6 @@
  *
  */
 package dk.dtu.compute.se.pisd.roborally.dal;
-
-import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
-import dk.dtu.compute.se.pisd.roborally.controller.AppController;
-import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import java.sql.*;
@@ -209,46 +205,6 @@ class Repository implements IRepository {
         return false;
     }
 
-    /*
-    This method deletes and inserts the commandCard fields on the playermat into the database
-    This method is invoked when player chooses "Save Game"
-    //TODO: new cards need to be added here
-     */
-    private void updateCardFieldsInDB(Board game) {
-        assert game.getGameId() != null;
-        int gid = game.getGameId().intValue();
-        Connection connection = connector.getConnection();
-        try {
-            PreparedStatement ps = getDeleteCardStmtStatement();
-            ps.setInt(1, gid);
-            ps.executeUpdate();
-            connection.commit();
-            for (Player p : game.getPlayers()) {
-                int pId = p.getPlayerId();
-                CommandCardField[] commandCardFieldArray = p.getCards();
-
-                for (int i = 0; i < commandCardFieldArray.length; i++) {
-                    int cId = -1;
-
-                    Command commandCard = commandCardFieldArray[i].getCard().getCommand();
-
-                    cId = Command.getId(commandCard);
-
-                    if (cId != -1) {
-                        ps = getSaveCardStmtStatement();
-                        ps.setInt(1, gid);
-                        ps.setInt(2, pId);
-                        ps.setInt(3, i);
-                        ps.setInt(4, cId);
-                        ps.executeUpdate();
-                    }
-                }
-            }
-        } catch (SQLException s) {
-            s.printStackTrace();
-        }
-    }
-
     @Override
     public Board loadGameFromDB(Board game) {
         try {
@@ -260,7 +216,7 @@ class Repository implements IRepository {
             ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
-            int playerNo = -1;
+            int playerNo;
             if (rs.next()) {
                 // TODO the width and height could eventually come from the database
                 //int width = AppController.BOARD_WIDTH;
@@ -402,46 +358,6 @@ class Repository implements IRepository {
 
     private static final String SQL_INSERT_GAME =
             "INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
-
-    private static final String SQL_SAVE_CARD = "INSERT INTO playerHandCard (gameId, playerId, cardIndex, cardId) VALUES (?,?,?,?)";
-    private static final String SQL_DELETE_CARD = "DELETE from playerHandCard where gameId = ?";
-
-    private PreparedStatement insert_card_stmt = null;
-    private PreparedStatement save_card_stmt = null;
-    private PreparedStatement delete_card_stmt = null;
-
-    /*
-    This prepared statement deletes the saved cards for the given gameID
-    - this is useful because players can save the same game more than once
-     */
-    private PreparedStatement getDeleteCardStmtStatement() {
-        if (delete_card_stmt == null) {
-            Connection connection = connector.getConnection();
-            try {
-                delete_card_stmt = connection.prepareStatement(
-                        SQL_DELETE_CARD);
-            } catch (SQLException e) {
-                // TODO error handling
-                e.printStackTrace();
-            }
-        }
-        return delete_card_stmt;
-    }
-
-    private PreparedStatement getSaveCardStmtStatement() {
-        if (save_card_stmt == null) {
-            Connection connection = connector.getConnection();
-            try {
-                save_card_stmt = connection.prepareStatement(
-                        SQL_SAVE_CARD);
-            } catch (SQLException e) {
-                // TODO error handling
-                e.printStackTrace();
-            }
-        }
-        return save_card_stmt;
-    }
-
     private PreparedStatement insert_game_stmt = null;
 
     private PreparedStatement getInsertGameStatementRGK() {
