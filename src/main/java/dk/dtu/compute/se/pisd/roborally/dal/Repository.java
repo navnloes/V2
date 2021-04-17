@@ -623,6 +623,7 @@ class Repository implements IRepository {
     createCardFieldsinDB(game);
     }
 
+    //TODO: se på
     private void updateCardFieldsinDB2(Board game){
         Connection connection = connector.getConnection();
         try {
