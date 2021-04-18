@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ...
+ * This class will using an x and y coordinate to determine if af space on the board has a player on it currently
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

@@ -25,7 +25,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * This class converts the commands from the enum Command to an CommandCard and gives it a name as a string
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
