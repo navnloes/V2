@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 /**
- * ...
+ * This is the whole view for the board that includes all various parts
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
