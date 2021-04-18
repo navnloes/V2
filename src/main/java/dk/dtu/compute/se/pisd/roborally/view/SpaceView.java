@@ -106,6 +106,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 }
                 this.getChildren().add(conveyorBelt);
 
+        //CheckPoint
             } else if (fieldAction instanceof CheckPointFieldAction) {
                 gc.setLineWidth(1);
                 gc.setStroke(Color.BLUE);
@@ -115,7 +116,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 gc.strokeOval(12.5, 12.5, 51, 51);
                 Node label = new Label(((CheckPointFieldAction) fieldAction).getCheckPointId() + 1 + "");
                 this.getChildren().add(label);
-
+        //Gears
             }
             else if (fieldAction instanceof GearsFieldAction) {
                 Polygon gearPart1 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
@@ -149,7 +150,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
 
-
+        //Player Sprite
         Player player = space.getPlayer();
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
@@ -168,12 +169,14 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(label);
             label.toFront();
             //TODO: skal rykkes til venstre
-            label = new Label("HP: "+player.getLife() + "             ");
+            String LifeString = Integer.toString(player.getLife());
+            label = new Label("HP: "+ LifeString + "             ");
             this.getChildren().add(label);
             label.toFront();
 
         }
 
+        //Walls
         headings = space.getWalls();
 
         drawWalls();
