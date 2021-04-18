@@ -131,11 +131,21 @@ public class SpaceView extends StackPane implements ViewObserver {
                 if(((GearsFieldAction) fieldAction).getDirection() == Direction.LEFT) {
                     gc.setFill(Color.DARKRED);}
                 else {
-                    gc.setFill(Color.LIGHTGOLDENRODYELLOW);
+                    gc.setFill(Color.DARKGREEN);
                 }
                 gc.fillOval(17.5, 17.5, 40, 40);
 
                 Label label = new Label(((GearsFieldAction) fieldAction).getDirection().toString());
+
+                try {
+                    this.getChildren().add(canvas);
+                    canvas.toBack();
+                }
+                catch (Exception e) {
+                    System.out.println("Gears GC Error");
+                }
+
+
 
                 this.getChildren().add(gearPart1);
                 gearPart1.toBack();
@@ -147,6 +157,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 gearPart3.toBack();
 
                 this.getChildren().add(label);
+
             }
         }
 
@@ -173,7 +184,6 @@ public class SpaceView extends StackPane implements ViewObserver {
             label = new Label("HP: "+ LifeString + "             ");
             this.getChildren().add(label);
             label.toFront();
-
         }
 
         //Walls
@@ -183,8 +193,15 @@ public class SpaceView extends StackPane implements ViewObserver {
         // drawGears();
         //playerAttackMove(player);
 
-        this.getChildren().add(canvas);
-        canvas.toBack();
+        try {
+
+            this.getChildren().add(canvas);
+            canvas.toBack();
+
+        }
+        catch (Exception e) {
+            System.out.println("Unable to create multi Canvas");
+        }
 
     }
 

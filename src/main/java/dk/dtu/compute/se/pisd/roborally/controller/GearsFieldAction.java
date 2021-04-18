@@ -10,7 +10,7 @@ public class GearsFieldAction extends FieldAction{
     Direction direction;
 
     /**
-     * @author S201192 & S205354
+     * @author S205354 & S201192
      *  This method constructs a GearsActionfield.
      */
     public GearsFieldAction(){
