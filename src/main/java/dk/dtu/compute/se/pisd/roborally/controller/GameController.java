@@ -35,9 +35,7 @@ import java.util.List;
  * @author Ekkart Kindler, ekki@dtu.dk
  */
 public class GameController {
-    /**
-     * StopWatch is going to be implemented here in GameController
-     */
+
     final public Board board;
     //    CheckPointCollection checkPointCollection;
 //    ConveyorBeltCollection conveyorBeltCollection;

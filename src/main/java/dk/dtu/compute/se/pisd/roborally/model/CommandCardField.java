@@ -24,7 +24,8 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 /**
- * ...
+ * This class extends Subject(including observer) because it handles the card fields on the board
+ * and there will be notified to the view (GUI) when it is changed by the observer
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

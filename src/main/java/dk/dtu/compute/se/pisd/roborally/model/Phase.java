@@ -22,7 +22,8 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 /**
- * ...
+ * Each player is going through different phases in one turn
+ * so this enum is a list of it
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
