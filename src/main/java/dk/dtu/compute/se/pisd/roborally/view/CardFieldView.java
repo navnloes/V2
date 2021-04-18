@@ -38,7 +38,7 @@ import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * The card fields looks in the view (GUI) will be defined in this class
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
