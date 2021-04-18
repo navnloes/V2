@@ -168,10 +168,9 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(label);
             label.toFront();
             //TODO: skal rykkes til venstre
-            label = new Label(Integer.toString(player.getLife()));
+            label = new Label("HP: "+player.getLife() + "             ");
             this.getChildren().add(label);
             label.toFront();
-
 
         }
 
