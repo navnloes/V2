@@ -36,18 +36,3 @@ public class CheckPointView extends SpaceView {
     }
 
 }
-
-/* DO NOT DELETE. THIS IS FOR GREYING OUT. Tal med Kris, hvis der er spørgsmål.
-
-        for (int i = 0; i >= space.getPlayer().getCheckPointArray().length; i++) {
-
-            CheckPointView checkPointView = new CheckPointView(space,i);
-
-            if (space.getPlayer().getCheckPointArray(i)) {
-                checkPointView.deactivateCP();
-            }
-            else if (!space.getPlayer().getCheckPointArray(i)) {
-                checkPointView.activateCP();
-            }
-        }
- */
