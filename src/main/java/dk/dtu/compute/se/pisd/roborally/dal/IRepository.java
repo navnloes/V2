@@ -49,6 +49,4 @@ public interface IRepository {
 
 	ArrayList<Player> getPlayerList(Board board, int gameId);
 
-	//TODO:
-	void createCardFieldsinDB(Board game) throws SQLException;
 }

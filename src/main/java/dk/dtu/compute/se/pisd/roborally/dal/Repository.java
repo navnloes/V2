@@ -557,7 +557,12 @@ class Repository implements IRepository {
         }
     }
 
-    public void createCardFieldsinDB (Board game) throws SQLException {
+    /**
+     * This method creates the cardFields in the database
+     * @param game
+     * @throws SQLException
+     */
+    private void createCardFieldsinDB (Board game) throws SQLException {
         PreparedStatement ps = getSelectCardFieldStatement();
         ps.setInt(1, game.getGameId());
         ResultSet rs = ps.executeQuery();
@@ -595,33 +600,10 @@ class Repository implements IRepository {
         rs.close();
     }
 
-    //TODO: prepared statement
-    private static String DELETE_FROM_CARDFIELD_WHERE = "delete from  CardField where ";
-    private void deleteFromCardFieldsinDB(Board game) {
-        if (game.getGameId() == null)
-            return;
-        Connection connection = connector.getConnection();
-        try {
-
-            for (int i = 0; i < game.getPlayersNumber(); i++) {
-                Player player = game.getPlayer(i);
-
-                String deleteCmd = DELETE_FROM_CARDFIELD_WHERE + "gameId =" +
-                        game.getGameId() + " and playerId = " +
-                        player.getPlayerId();
-
-                PreparedStatement deletePs = connection.prepareStatement(deleteCmd);
-
-                deletePs.executeUpdate();
-                deletePs.close();
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    //TODO: se på
+    /**
+     * This method updates the cardFields in the databases
+     * @param game which cards need to be saved
+     */
     private void updateCardFieldsinDB(Board game){
         Connection connection = connector.getConnection();
         try {
