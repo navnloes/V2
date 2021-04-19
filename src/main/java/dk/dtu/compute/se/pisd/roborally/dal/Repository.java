@@ -593,7 +593,6 @@ class Repository implements IRepository {
             }
         }
         rs.close();
-
     }
 
     //TODO: prepared statement
@@ -662,6 +661,5 @@ class Repository implements IRepository {
         } catch (SQLException e){
             e.printStackTrace();
         }
-
     }
 }

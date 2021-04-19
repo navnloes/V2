@@ -137,16 +137,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 Label label = new Label(((GearsFieldAction) fieldAction).getDirection().toString());
 
-                try {
-                    this.getChildren().add(canvas);
-                    canvas.toBack();
-                }
-                catch (Exception e) {
-                    System.out.println("Gears GC Error");
-                }
-
-
-
                 this.getChildren().add(gearPart1);
                 gearPart1.toBack();
 
