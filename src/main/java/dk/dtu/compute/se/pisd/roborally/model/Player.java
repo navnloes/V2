@@ -220,10 +220,12 @@ public class Player extends Subject {
 
     public void setCardField(int i, CommandCardField commandCardField){
         cards[i] = commandCardField;
+        notifyChange();
     }
 
     public void addCheckPointToken(){
         checkPointToken  = checkPointToken + 1;
+        notifyChange();
         if (checkPointToken == 3){
             winner = true;
         }
@@ -232,12 +234,16 @@ public class Player extends Subject {
 
     public int getCardIndex() { return cardIndex; }
 
-    public void setCardIndex(int index) { cardIndex = index; }
+    public void setCardIndex(int index){
+        cardIndex = index;
+        notifyChange();
+    }
 
     public int getPlayerId() { return playerId; }
 
     public void setPlayerId(int id) {
         playerId = id;
+        notifyChange();
     }
     /**
      * This method checks which CheckPoint the player has arrived and assigns values for checkPointArray[i]
@@ -264,6 +270,9 @@ public class Player extends Subject {
 
     public void setCheckPointToken(int i){
         checkPointToken = i;
+        notifyChange();
+        if (space != null)
+        space.playerChanged();
     }
 
     public boolean getCheckPointArray(int i) {return checkPointArray[i];}
@@ -274,13 +283,18 @@ public class Player extends Subject {
 
     public void setStartSpace(Space space){
         startSpace = space;
+        notifyChange();
     }
 
     public void hit(){
         life--;
+        notifyChange();
+        if (space != null)
+        space.playerChanged();
         if (life == 0){
             respawn = true;
             life = 3;
+            notifyChange();
         }
     }
 
@@ -290,6 +304,7 @@ public class Player extends Subject {
 
     public void setReboot(boolean state){
         respawn = state;
+        notifyChange();
     }
 
     public Space getStartSpace(){

@@ -232,6 +232,14 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
+                    for (Player player : board.getPlayers()){
+                        Space space = player.getSpace();
+                        if (!space.getActions().isEmpty()){
+                            for (FieldAction fieldAction : space.getActions()) {
+                                fieldAction.doAction(board.getGameController(), space);
+                            }
+                        }
+                    }
                     step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
@@ -280,12 +288,13 @@ public class GameController {
                 default:
                     // DO NOTHING (for now)
             }
-        }
-        for (PlayerAction p : player.getActions()) {
-            Space space = player.getSpace();
-            if (!wallBlocks(player,space))
-            p.doAction(board.getGameController(), player);
-
+            if (!player.getActions().isEmpty()){
+                Space space = player.getSpace();
+                for (PlayerAction p : player.getActions()) {
+                    if (!wallBlocks(player,space))
+                        p.doAction(board.getGameController(), player);
+                }
+            }
         }
     }
 
@@ -326,10 +335,6 @@ public class GameController {
         }
 
         player.setSpace(space);
-        if (!space.getActions().isEmpty())
-            for (FieldAction fieldAction : space.getActions()) {
-                fieldAction.doAction(board.getGameController(), space);
-            }
     }
 
     /**
