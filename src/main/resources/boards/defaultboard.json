@@ -225,6 +225,20 @@
       ],
       "x": 7,
       "y": 7
+    },
+    {
+      "walls": [
+        "EAST"
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Pit",
+          "INSTANCE": {
+          }
+        }
+      ],
+      "x": 2,
+      "y": 0
     }
   ]
 }
