@@ -241,9 +241,6 @@
       "y": 2
     },
     {
-      "walls": [
-        "EAST"
-      ],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Pit",
