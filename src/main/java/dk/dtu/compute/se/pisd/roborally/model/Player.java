@@ -22,7 +22,6 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.PlayerAction;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -66,7 +65,7 @@ public class Player extends Subject {
     private Space startSpace = null;
 
     private int life;
-    private boolean respawn = false;
+    private boolean reboot = false;
 
     public CommandCardField[] getCards() {
         return cards;
@@ -292,18 +291,22 @@ public class Player extends Subject {
         if (space != null)
         space.playerChanged();
         if (life == 0){
-            respawn = true;
+            setReboot(true);
             life = 3;
             notifyChange();
         }
     }
 
-    public boolean isReboot(){
-        return respawn;
+    public boolean getReboot(){
+        return reboot;
     }
 
     public void setReboot(boolean state){
-        respawn = state;
+        reboot = state;
+        if (reboot){
+            this.setSpace(this.getStartSpace());
+            notifyChange();
+        }
         notifyChange();
     }
 
@@ -325,6 +328,11 @@ public class Player extends Subject {
 
     public int getLife(){
         return life;
+    }
+
+    public void setCardInvisible(int i){
+        cards[i].setVisible(false);
+        notifyChange();
     }
 
 
