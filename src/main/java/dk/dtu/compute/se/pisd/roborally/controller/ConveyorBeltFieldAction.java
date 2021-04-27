@@ -6,6 +6,11 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 public class ConveyorBeltFieldAction extends FieldAction{
 
+    /*
+    *
+    * @Author S205354, S205353
+    * */
+
     Heading heading;
 
     public ConveyorBeltFieldAction(){
@@ -23,7 +28,10 @@ public class ConveyorBeltFieldAction extends FieldAction{
     @Override
     public boolean doAction(GameController gameController, Space space) {
         Player player = space.getPlayer();
+        Heading heading = player.getHeading();
         player.setHeading(this.heading);
+        gameController.moveForward(player);
+        player.setHeading(heading);
         return false;
     }
 }
