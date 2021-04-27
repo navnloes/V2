@@ -22,10 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBeltFieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.*;
 import dk.dtu.compute.se.pisd.roborally.model.Direction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
@@ -106,7 +103,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 }
                 this.getChildren().add(conveyorBelt);
 
-        //CheckPoint
+                //CheckPoint
             } else if (fieldAction instanceof CheckPointFieldAction) {
                 gc.setLineWidth(1);
                 gc.setStroke(Color.BLUE);
@@ -116,9 +113,8 @@ public class SpaceView extends StackPane implements ViewObserver {
                 gc.strokeOval(12.5, 12.5, 51, 51);
                 Node label = new Label(((CheckPointFieldAction) fieldAction).getCheckPointId() + 1 + "");
                 this.getChildren().add(label);
-        //Gears
-            }
-            else if (fieldAction instanceof GearsFieldAction) {
+                //Gears
+            } else if (fieldAction instanceof GearsFieldAction) {
                 Polygon gearPart1 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
                 Polygon gearPart2 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
                 Polygon gearPart3 = new Polygon(0.0, 0.0, 25.0, 50, 50.0, 0.0);
@@ -128,9 +124,9 @@ public class SpaceView extends StackPane implements ViewObserver {
                 gearPart1.setRotate(120);
                 gearPart2.setRotate(240);
 
-                if(((GearsFieldAction) fieldAction).getDirection() == Direction.LEFT) {
-                    gc.setFill(Color.DARKRED);}
-                else {
+                if (((GearsFieldAction) fieldAction).getDirection() == Direction.LEFT) {
+                    gc.setFill(Color.DARKRED);
+                } else {
                     gc.setFill(Color.DARKGREEN);
                 }
                 gc.fillOval(17.5, 17.5, 40, 40);
@@ -148,6 +144,15 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 this.getChildren().add(label);
 
+            } else if (fieldAction instanceof Pit) {
+                gc.setLineWidth(1);
+                gc.setStroke(Color.BROWN);
+                gc.setFill(Color.BLACK);
+                gc.fillOval(12.5, 12.5, 49, 49);
+                gc.strokeOval(12.5, 12.5, 50, 50);
+                gc.strokeOval(12.5, 12.5, 51, 51);
+                Node label = new Label("Brad Pitt");
+                this.getChildren().add(label);
             }
         }
 

@@ -11,17 +11,14 @@ public class Pit extends FieldAction {
         Player player = space.getPlayer();
 
         if (player != null){
+            CommandCardField[] cards = player.getCards();
             CommandCardField[] program = player.getProgram();
-            CommandCardField[] commandCards = player.getCards();
             player.setReboot(true);
 
-            for (int i = 0;i < commandCards.length; i++){
-                commandCards[i].setVisible(false);
+            for (int i = 0; i < cards.length; i++){
+                player.setCardInvisible(i);
             }
-
-            for (int i = 0;i < program.length; i++){
-                program[i].setVisible(false);
-            }
+            //TODO: eksekver ikke programmeringskort
 
             return true;
         }

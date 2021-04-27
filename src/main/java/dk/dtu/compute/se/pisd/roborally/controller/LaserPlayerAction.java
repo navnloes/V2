@@ -40,8 +40,7 @@ public class LaserPlayerAction extends PlayerAction {
             }
             if (robotInRange) {
                 otherRobot.hit();
-                if (otherRobot.isReboot()) {
-                    otherRobot.setSpace(otherRobot.getStartSpace());
+                if (otherRobot.getReboot()) {
                     otherRobot.setReboot(false);
                 }
             }
