@@ -25,12 +25,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBeltFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import javafx.scene.layout.Priority;
 
 import java.io.FileWriter;
 import java.io.IOException;
