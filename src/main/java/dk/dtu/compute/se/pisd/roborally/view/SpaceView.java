@@ -23,10 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.*;
-import dk.dtu.compute.se.pisd.roborally.model.Direction;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -183,7 +180,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         //Walls
         headings = space.getWalls();
-
         drawWalls();
         // drawGears();
         //playerAttackMove(player);

@@ -29,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -67,10 +68,6 @@ public class BoardView extends VBox implements ViewObserver {
         this.getChildren().add(statusLabel);
 
         spaces = new SpaceView[board.width][board.height];
-//        for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
-//            Space space = board.getSpace(c.x(), c.y());
-//            space.setCheckPointId(c.id());
-//        }
 
         spaceEventHandler = new SpaceEventHandler(gameController);
 
@@ -84,34 +81,18 @@ public class BoardView extends VBox implements ViewObserver {
             }
         }
 
+
+
         board.attach(this);
         update(board);
     }
 
     @Override
     public void updateView(Subject subject) {
+
         if (subject == board) {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
-
-//            //TODO GetMyCollection må ikke ske over gameController.
-//            for (CheckPointActionField c : gameController.getCheckPointCollection().getMyCollection()){
-//                Space space = board.getSpace(c.x(), c.y());
-//                CheckPointView cpv = new CheckPointView(space,c.id());
-//                mainBoardPane.add(cpv, c.x(), c.y());
-//            }
-//
-//            for (ConveyorBeltActionField c : gameController.getConveyorBeltCollection().getMyCollection()){
-//                Space space = board.getSpace(c.x(), c.y());
-//                ConveyorBeltView cbv = new ConveyorBeltView(space,c.getHeading());
-//                mainBoardPane.add(cbv, c.x(), c.y());
-//            }
-//
-//            for (GearsActionField c : gameController.getGearsCollection().getMyCollection()){
-//                Space space = board.getSpace(c.x(), c.y());
-//                GearsView gv = new GearsView(space,c.getDirection());
-//                mainBoardPane.add(gv, c.x(), c.y());
-//            }
         }
     }
 

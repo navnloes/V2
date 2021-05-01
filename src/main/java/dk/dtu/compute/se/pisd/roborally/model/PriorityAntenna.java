@@ -64,4 +64,8 @@ public class PriorityAntenna {
         }
         System.out.println("\n");
     }
+
+    public Space getSpace(){
+        return space;
+    }
 }
