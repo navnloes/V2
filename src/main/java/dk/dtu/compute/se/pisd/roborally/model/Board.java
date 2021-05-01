@@ -71,7 +71,8 @@ public class Board extends Subject {
     private int step = 0;
 
     private boolean stepMode;
-    private CheckPointFieldAction checkPoint;
+
+    private PriorityAntenna priorityAntenna;
 
     /**
      *Constructs a game board, by initialize the width and height, as well as from a given name
@@ -273,10 +274,6 @@ public class Board extends Subject {
         }
     }
 
-    public CheckPointFieldAction getCheckPoint(){
-        return checkPoint;
-    }
-
     private Command userChoice = null;
 
     public Command getUserChoice() {
@@ -290,6 +287,13 @@ public class Board extends Subject {
         }
     }
 
+    public PriorityAntenna getPriorityAntenna(){
+        return priorityAntenna;
+    }
+
+    public void addPriorityAntenna(PriorityAntenna priorityAntenna){
+        this.priorityAntenna = priorityAntenna;
+    }
 
 
 }

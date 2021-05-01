@@ -30,6 +30,7 @@ import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBeltFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.scene.layout.Priority;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -177,8 +178,13 @@ public static void saveBoard(Board board, String name) {
         space.addFieldAction(checkPointFieldAction);
          */
 
+        space = board.getSpace(4,3);
+        PriorityAntenna priorityAntenna = new PriorityAntenna();
+        priorityAntenna.setSpace(space);
+        board.addPriorityAntenna(priorityAntenna);
 
         space.addWall(Heading.NORTH);
+
 
 
         return board;

@@ -53,7 +53,6 @@ public class GameController {
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space) {
 
-
         if (space.getPlayer() == null) {
             Player currentPlayer = board.getCurrentPlayer();
             currentPlayer.setSpace(space);
@@ -74,7 +73,7 @@ public class GameController {
      */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
-        board.setCurrentPlayer(board.getPlayer(0));
+        board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
         board.setStep(0);
 
         for (int i = 0; i < board.getPlayersNumber(); i++) {

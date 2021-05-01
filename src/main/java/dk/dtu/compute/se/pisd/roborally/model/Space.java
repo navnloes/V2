@@ -98,5 +98,4 @@ public class Space extends Subject {
         fieldActions.add(fieldAction);
     }
 
-
 }
