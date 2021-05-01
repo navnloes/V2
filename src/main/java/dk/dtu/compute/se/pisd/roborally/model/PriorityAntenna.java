@@ -45,6 +45,7 @@ public class PriorityAntenna {
             setPlayerPriorityDistance(player);
             ranking.add(player.getDistance());
 
+            //TODO: quicksort ranking
             if (player.getDistance() == ranking.get(0))
             rankedplayers.add(player);
         }
