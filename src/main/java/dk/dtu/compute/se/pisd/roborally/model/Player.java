@@ -50,6 +50,7 @@ public class Player extends Subject {
     private String color;
     private int playerId;
     private int cardIndex = 0;
+    private int distance;
 
     private Space space;
     private Heading heading = SOUTH;
@@ -333,6 +334,14 @@ public class Player extends Subject {
     public void setCardInvisible(int i){
         cards[i].setVisible(false);
         notifyChange();
+    }
+
+    public void setDistance(int i){
+        distance = i;
+    }
+
+    public int getDistance(){
+        return distance;
     }
 
 

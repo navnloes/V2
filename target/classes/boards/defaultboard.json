@@ -228,8 +228,19 @@
     },
     {
       "walls": [
-        "EAST"
+        "NORTH"
       ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Pit",
+          "INSTANCE": {
+          }
+        }
+      ],
+      "x": 5,
+      "y": 2
+    },
+    {
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Pit",
@@ -239,6 +250,17 @@
       ],
       "x": 2,
       "y": 0
+    },
+    {
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Pit",
+          "INSTANCE": {
+          }
+        }
+      ],
+      "x": 4,
+      "y": 6
     }
   ]
 }
