@@ -338,6 +338,7 @@ public class Player extends Subject {
 
     public void setDistance(int i){
         distance = i;
+        notifyChange();
     }
 
     public int getDistance(){

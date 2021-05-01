@@ -1,5 +1,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+
 import java.util.*;
 
 /**
@@ -8,7 +10,7 @@ import java.util.*;
 
 //TODO: MVC??
 
-public class PriorityAntenna {
+public class PriorityAntenna extends Subject {
 
     private Space space;
 
@@ -17,6 +19,8 @@ public class PriorityAntenna {
 
     public void setSpace(Space space) {
         this.space = space;
+        space.setPriorityAntenna(true);
+        notifyChange();
     }
 
     public Player[] getPlayerTurns(Board board) {

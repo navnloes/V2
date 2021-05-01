@@ -153,6 +153,14 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
 
+        if (space.hasPriorityAntenna()){
+            gc.setLineWidth(1);
+            gc.setFill(Color.GREENYELLOW);
+            gc.fillOval(28, 28, 20, 20);
+            Node label = new Label("PRIORITY");
+            this.getChildren().add(label);
+        }
+
         //Player Sprite
         Player player = space.getPlayer();
         if (player != null) {
