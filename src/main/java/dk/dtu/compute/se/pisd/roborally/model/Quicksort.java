@@ -6,6 +6,10 @@ public class Quicksort {
      * @author https://www.programcreek.com/2012/11/quicksort-array-in-java/
      *
      * Altered by S205354 & S205353
+     *
+     * @param arrStart er start placeringen på arrayet.
+     *
+     * @param arrEnd er den sidste plads i array (x.length - 1)
      */
 
     public void doQuickSort(int[] arr, int arrStart, int arrEnd) {
@@ -40,11 +44,11 @@ public class Quicksort {
 
         // recursively sort two sub parts
 
-        //Hvis j er større end low
+        //Hvis j er større end arrStart
         if (arrStart < j)
             doQuickSort(arr, arrStart, j);
 
-        //Hvis high er større end i
+        //Hvis arrEnd er større end i
         if (arrEnd > i)
             doQuickSort(arr, i, arrEnd);
     }
