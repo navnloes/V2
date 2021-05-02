@@ -5,7 +5,7 @@ public class Quicksort {
     /**
      * @author https://www.programcreek.com/2012/11/quicksort-array-in-java/
      *
-     * Altered by S205354 & S205353
+     * Altered by S205354
      *
      * @param arrStart er start placeringen på arrayet.
      *
