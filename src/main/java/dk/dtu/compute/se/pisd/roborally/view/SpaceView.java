@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.*;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -30,13 +31,15 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -48,7 +51,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     final public static int SPACE_HEIGHT = 75; // 60; // 75;
     final public static int SPACE_WIDTH = 75;  // 60; // 75;
-
+    private static final String BOARDSFOLDER = "boards";
     public final Space space;
     List<Heading> headings;
     Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
@@ -66,12 +69,18 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
-        if ((space.x + space.y) % 2 == 0) {
-            this.setStyle("-fx-background-color: white;");
-        } else {
-            this.setStyle("-fx-background-color: #ff69b4;");
+
+        //TODO: finde ud af om dette kan undgås
+        if(!space.hasPriorityAntenna()) {
+            if ((space.x + space.y) % 2 == 0) {
+                this.setStyle("-fx-background-color: white;");
+            } else {
+                this.setStyle("-fx-background-color: #ff69b4;");
+            }
         }
-        // updatePlayer();
+
+
+        updatePlayer();
 
         // This space view should listen to changes of the space
         space.attach(this);
@@ -153,13 +162,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
 
-        if (space.hasPriorityAntenna()){
-            gc.setLineWidth(1);
-            gc.setFill(Color.GREENYELLOW);
-            gc.fillOval(28, 28, 20, 20);
-            Node label = new Label("PRIORITY");
-            this.getChildren().add(label);
-        }
+
 
         //Player Sprite
         Player player = space.getPlayer();
@@ -191,6 +194,26 @@ public class SpaceView extends StackPane implements ViewObserver {
         drawWalls();
         // drawGears();
         //playerAttackMove(player);
+
+        if (space.hasPriorityAntenna()){
+            FileInputStream input = null;
+            try {
+                ClassLoader classLoader = SpaceView.class.getClassLoader();
+                String filename =
+                        classLoader.getResource(BOARDSFOLDER).getPath() + "/antenna.jpg";
+
+                input = new FileInputStream(filename);
+                Image image2 = new Image(input);
+
+                this.setBackground(new Background(new BackgroundImage(image2,  BackgroundRepeat.NO_REPEAT,
+                        BackgroundRepeat.NO_REPEAT,
+                        BackgroundPosition.DEFAULT,
+                        new BackgroundSize(SPACE_WIDTH - 12.5, SPACE_HEIGHT - 5, false, false, false, false))));
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
 
         try {
 

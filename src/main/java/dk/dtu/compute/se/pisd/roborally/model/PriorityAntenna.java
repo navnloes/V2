@@ -26,7 +26,7 @@ public class PriorityAntenna extends Subject {
     public Player[] getPlayerTurns(Board board) {
         Map players = new HashMap();
         Player player;
-        for (int i = 0; i < board.getPlayers().size(); i++) {
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
             player = board.getPlayer(i);
             setPlayerPriorityDistance(player);
             players.put(player, player.getDistance());

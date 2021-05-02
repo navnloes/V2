@@ -86,6 +86,7 @@ public class AppController implements Observer {
                 player.addPlayerAction(new LaserPlayerAction());
                 Space space = board.getSpace(i % board.width, i);
                 player.setSpace(space);
+                player.setPlayerId(i);
                 player.setStartSpace(space);
             }
 
@@ -119,7 +120,7 @@ public class AppController implements Observer {
         board.setGameId(no);
         RepositoryAccess.getRepository().loadGameFromDB(board);
         board.setPhase(Phase.PROGRAMMING);
-        board.setCurrentPlayer(board.getPlayer(0));
+        board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
         board.setStep(0);
 
         roboRally.createBoardView(gameController);
