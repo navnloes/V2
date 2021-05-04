@@ -3,9 +3,9 @@ package dk.dtu.compute.se.pisd.roborally.model;
 public class Quicksort {
 
     /**
-     * @author https://www.programcreek.com/2012/11/quicksort-array-in-java/
+     * @author S205354
      *
-     * Altered by S205354
+     * @source https://www.programcreek.com/2012/11/quicksort-array-in-java/
      *
      * @param arrStart er start placeringen på arrayet.
      *
@@ -26,12 +26,10 @@ public class Quicksort {
             while (arr[i] < pivot) {
                 i++;
             }
-
             //Hvis arr[j] er større end omdrejningspunktet, så nedsætter den j indtil at dette ikke er sandt.
             while (arr[j] > pivot) {
                 j--;
             }
-
             //Her bytter den rundt på der hvor i er større end pivot, og der hvor j er mindre end pivot.
             if (i <= j) {
                 int temp = arr[i];
@@ -41,9 +39,7 @@ public class Quicksort {
                 j--;
             }
         }
-
         // recursively sort two sub parts
-
         //Hvis j er større end arrStart
         if (arrStart < j)
             doQuickSort(arr, arrStart, j);
