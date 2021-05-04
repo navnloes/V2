@@ -4,7 +4,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 /**
- * @author s205353, @s205354
+ * @author  @s205354, s205353
  * This class is the specialized FieldAction class for CheckPointsActions
  */
 

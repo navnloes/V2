@@ -6,7 +6,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 public class ConveyorBeltFieldAction extends FieldAction{
 
-    /*
+    /**
     *
     * @Author S205354, S205353
     * */
