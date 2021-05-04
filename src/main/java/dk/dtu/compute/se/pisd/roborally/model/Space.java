@@ -41,6 +41,7 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
+    private boolean hasPriorityAntenna;
 
     private List<Heading> walls;
     private List<FieldAction> fieldActions;
@@ -53,6 +54,7 @@ public class Space extends Subject {
         player = null;
         walls = new ArrayList<Heading>();
         fieldActions = new ArrayList<>();
+        hasPriorityAntenna = false;
     }
 
     public Player getPlayer() {
@@ -98,5 +100,12 @@ public class Space extends Subject {
         fieldActions.add(fieldAction);
     }
 
+    public void setPriorityAntenna(boolean has){
+        hasPriorityAntenna = has;
+    }
+
+    public boolean hasPriorityAntenna(){
+        return hasPriorityAntenna;
+    }
 
 }

@@ -23,7 +23,6 @@ package dk.dtu.compute.se.pisd.roborally.dal;
 
 import com.mysql.cj.util.StringUtils;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.IOUtil;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -41,7 +40,7 @@ public class Connector {
     private static final int    PORT     = 3306;
     private static final String DATABASE = "pisu";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "root";
 
     private static final String DELIMITER = ";;";
     

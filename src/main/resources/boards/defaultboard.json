@@ -1,6 +1,8 @@
 {
   "width": 8,
   "height": 8,
+  "antennaX": 5,
+  "antennaY": 3,
   "spaces": [
     {
       "walls": [

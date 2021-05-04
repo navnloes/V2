@@ -25,7 +25,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBeltFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction;
@@ -55,7 +54,7 @@ public class LoadBoard {
         InputStream inputStream = classLoader.getResourceAsStream(BOARDSFOLDER + "/" + boardname + "." + JSON_EXT);
         if (inputStream == null) {
             // TODO these constants should be defined somewhere
-            return createBoard();
+            return createBoard(8, 8, false);
         }
 
         // In simple cases, we can create a Gson object with new Gson():
@@ -71,14 +70,21 @@ public class LoadBoard {
             reader = gson.newJsonReader(new InputStreamReader(inputStream));
             BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
 
-            result = createBoard();
+            result = createBoard(8, 8, true);
+
+            Space space = result.getSpace(template.antennaX, template.antennaY);
+            PriorityAntenna priorityAntenna = new PriorityAntenna();
+            priorityAntenna.setSpace(space);
+            result.addPriorityAntenna(priorityAntenna);
+
             for (SpaceTemplate spaceTemplate : template.spaces) {
-                Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
+                space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
                 if (space != null) {
                     space.getActions().addAll(spaceTemplate.actions);
                     space.getWalls().addAll(spaceTemplate.walls);
                 }
             }
+
             reader.close();
             return result;
         }  catch (IOException e1) {
@@ -97,78 +103,80 @@ public class LoadBoard {
         return null;
     }
 
-public static void saveBoard(Board board, String name) {
-    BoardTemplate template = new BoardTemplate();
-    template.width = board.width;
-    template.height = board.height;
+    public static void saveBoard(Board board, String name) {
+        BoardTemplate template = new BoardTemplate();
+        template.width = board.width;
+        template.height = board.height;
 
-    for (int i=0; i<board.width; i++) {
-        for (int j=0; j<board.height; j++) {
-            Space space = board.getSpace(i,j);
-            if (!space.getWalls().isEmpty() || !space.getActions().isEmpty()) {
-                SpaceTemplate spaceTemplate = new SpaceTemplate();
-                spaceTemplate.x = space.x;
-                spaceTemplate.y = space.y;
-                spaceTemplate.actions.addAll(space.getActions());
-                //TODO:spaceTemplate.walls.addAll(space.getWalls());
-                template.spaces.add(spaceTemplate);
+        for (int i=0; i<board.width; i++) {
+            for (int j=0; j<board.height; j++) {
+                Space space = board.getSpace(i,j);
+                if (!space.getWalls().isEmpty() || !space.getActions().isEmpty()) {
+                    SpaceTemplate spaceTemplate = new SpaceTemplate();
+                    spaceTemplate.x = space.x;
+                    spaceTemplate.y = space.y;
+                    spaceTemplate.actions.addAll(space.getActions());
+                    //TODO:spaceTemplate.walls.addAll(space.getWalls());
+                    template.spaces.add(spaceTemplate);
+                }
+            }
+        }
+
+        ClassLoader classLoader = LoadBoard.class.getClassLoader();
+        // TODO: this is not very defensive, and will result in a NullPointerException
+        //       when the folder "resources" does not exist! But, it does not need
+        //       the file "simpleCards.json" to exist!
+        String filename =
+                classLoader.getResource(BOARDSFOLDER).getPath() + "/" + name + "." + JSON_EXT;
+
+        // In simple cases, we can create a Gson object with new:
+        //
+        //   Gson gson = new Gson();
+        //
+        // But, if you need to configure it, it is better to create it from
+        // a builder (here, we want to configure the JSON serialisation with
+        // a pretty printer):
+        GsonBuilder simpleBuilder = new GsonBuilder().
+                registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>()).
+                setPrettyPrinting();
+        Gson gson = simpleBuilder.create();
+
+        FileWriter fileWriter = null;
+        JsonWriter writer = null;
+        try {
+            fileWriter = new FileWriter(filename);
+            writer = gson.newJsonWriter(fileWriter);
+            gson.toJson(template, template.getClass(), writer);
+            writer.close();
+        } catch (IOException e1) {
+            if (writer != null) {
+                try {
+                    writer.close();
+                    fileWriter = null;
+                } catch (IOException e2) {}
+            }
+            if (fileWriter != null) {
+                try {
+                    fileWriter.close();
+                } catch (IOException e2) {}
             }
         }
     }
 
-    ClassLoader classLoader = LoadBoard.class.getClassLoader();
-    // TODO: this is not very defensive, and will result in a NullPointerException
-    //       when the folder "resources" does not exist! But, it does not need
-    //       the file "simpleCards.json" to exist!
-    String filename =
-            classLoader.getResource(BOARDSFOLDER).getPath() + "/" + name + "." + JSON_EXT;
+    private static Board createBoard(int x, int y, boolean json){
+        Board board = new Board(x,y);
 
-    // In simple cases, we can create a Gson object with new:
-    //
-    //   Gson gson = new Gson();
-    //
-    // But, if you need to configure it, it is better to create it from
-    // a builder (here, we want to configure the JSON serialisation with
-    // a pretty printer):
-    GsonBuilder simpleBuilder = new GsonBuilder().
-            registerTypeAdapter(FieldAction.class, new Adapter<FieldAction>()).
-            setPrettyPrinting();
-    Gson gson = simpleBuilder.create();
+        if(!json) {
+            Space space = board.getSpace(5, 5);
 
-    FileWriter fileWriter = null;
-    JsonWriter writer = null;
-    try {
-        fileWriter = new FileWriter(filename);
-        writer = gson.newJsonWriter(fileWriter);
-        gson.toJson(template, template.getClass(), writer);
-        writer.close();
-    } catch (IOException e1) {
-        if (writer != null) {
-            try {
-                writer.close();
-                fileWriter = null;
-            } catch (IOException e2) {}
-        }
-        if (fileWriter != null) {
-            try {
-                fileWriter.close();
-            } catch (IOException e2) {}
-        }
-    }
-}
+            ConveyorBeltFieldAction conveyorBelt = new ConveyorBeltFieldAction();
+            conveyorBelt.setHeading(Heading.NORTH);
+            space.addFieldAction(conveyorBelt);
 
-    private static Board createBoard(){
-        Board board = new Board(8,8);
-        Space space = board.getSpace(5,5);
-
-        ConveyorBeltFieldAction conveyorBelt = new ConveyorBeltFieldAction();
-        conveyorBelt.setHeading(Heading.NORTH);
-        space.addFieldAction(conveyorBelt);
-
-        space = board.getSpace(5,7);
-        GearsFieldAction gearsFieldAction = new GearsFieldAction();
-        gearsFieldAction.setDirection(Direction.RIGHT);
-        space.addFieldAction(gearsFieldAction);
+            space = board.getSpace(5, 7);
+            GearsFieldAction gearsFieldAction = new GearsFieldAction();
+            gearsFieldAction.setDirection(Direction.RIGHT);
+            space.addFieldAction(gearsFieldAction);
 
         /* since we only have 3 checkPoints
                 space = board.getSpace(1,1);
@@ -177,9 +185,17 @@ public static void saveBoard(Board board, String name) {
         space.addFieldAction(checkPointFieldAction);
          */
 
+            /*
+            space = board.getSpace(4, 3);
+            PriorityAntenna priorityAntenna = new PriorityAntenna();
+            priorityAntenna.setSpace(space);
+            board.addPriorityAntenna(priorityAntenna);
 
-        space.addWall(Heading.NORTH);
+             */
 
+            space.addWall(Heading.NORTH);
+
+        }
 
         return board;
     }

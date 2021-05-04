@@ -53,7 +53,6 @@ public class GameController {
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space) {
 
-
         if (space.getPlayer() == null) {
             Player currentPlayer = board.getCurrentPlayer();
             currentPlayer.setSpace(space);
@@ -74,7 +73,7 @@ public class GameController {
      */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
-        board.setCurrentPlayer(board.getPlayer(0));
+        board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
         board.setStep(0);
 
         for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -122,7 +121,7 @@ public class GameController {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
-        board.setCurrentPlayer(board.getPlayer(0));
+        //board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
         board.setStep(0);
     }
 
@@ -201,7 +200,16 @@ public class GameController {
      * Then, the turn goes on to the next player, whose Command Card is activated
      */
     private void executeNextStep() {
+        int orderIndex = 0;
         Player currentPlayer = board.getCurrentPlayer();
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            if(currentPlayer.getPlayerId() == board.getPriorityAntenna().getPlayerTurns(board)[i].getPlayerId()) {
+                System.out.println("++++ current player " + currentPlayer.getPlayerId()+ " order index " + i);
+                orderIndex = i;
+                break;
+            }
+        }
+
         if ((board.getPhase() == Phase.ACTIVATION) ||
                 (board.getPhase() == Phase.PLAYER_INTERACTION && board.getUserChoice() != null)
                         && currentPlayer != null) {
@@ -224,8 +232,8 @@ public class GameController {
                     }
                 }
 
-                int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
-                if (nextPlayerNumber < board.getPlayersNumber()) {
+                if (orderIndex + 1 < board.getPlayersNumber()) {
+                    int nextPlayerNumber = board.getPriorityAntenna().getPlayerTurns(board)[orderIndex + 1].getPlayerId();
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     for (Player player : board.getPlayers()){
@@ -240,7 +248,7 @@ public class GameController {
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
-                        board.setCurrentPlayer(board.getPlayer(0));
+                        board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
                     } else {
                         startProgrammingPhase();
                     }
