@@ -33,6 +33,8 @@ import java.sql.Statement;
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
+ * 
+ * @Altered by S205354 (Map select changes)
  */
 public class Connector {
 	
