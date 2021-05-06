@@ -8,7 +8,7 @@ public class DoubleConveyorBeltFieldAction extends FieldAction{
 
     /**
      *
-     * @Author S205354, S205353
+     * @Author S205354
      * */
 
     Heading heading;
