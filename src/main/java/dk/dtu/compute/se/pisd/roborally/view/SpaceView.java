@@ -107,10 +107,28 @@ public class SpaceView extends StackPane implements ViewObserver {
                 } else if (heading == Heading.WEST) {
                     conveyorBelt.setRotate(90);
                 }
+
                 this.getChildren().add(conveyorBelt);
 
-                //CheckPoint
-            } else if (fieldAction instanceof CheckPointFieldAction) {
+
+            }
+            else if (fieldAction instanceof DoubleConveyorBeltFieldAction) {
+                Polygon conveyorBelt = new Polygon(0.0, 0.0, 15.0, 40, 30.0, 0.0);
+                conveyorBelt.setFill(Color.DARKORANGE);
+                Heading heading = ((DoubleConveyorBeltFieldAction) fieldAction).getHeading();
+                if (heading == Heading.NORTH) {
+                    conveyorBelt.setRotate(180);
+                } else if (heading == Heading.EAST) {
+                    conveyorBelt.setRotate(270);
+                } else if (heading == Heading.SOUTH) {
+                    conveyorBelt.setRotate(0);
+                } else if (heading == Heading.WEST) {
+                    conveyorBelt.setRotate(90);
+                }
+
+                this.getChildren().add(conveyorBelt);}
+            //CheckPoint
+                else if (fieldAction instanceof CheckPointFieldAction) {
                 gc.setLineWidth(1);
                 gc.setStroke(Color.BLUE);
                 gc.setFill(Color.GOLD);

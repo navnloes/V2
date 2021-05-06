@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBeltFieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.DoubleConveyorBeltFieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.*;
@@ -172,6 +173,11 @@ public class LoadBoard {
             ConveyorBeltFieldAction conveyorBelt = new ConveyorBeltFieldAction();
             conveyorBelt.setHeading(Heading.NORTH);
             space.addFieldAction(conveyorBelt);
+
+            space = board.getSpace(3, 1);
+            DoubleConveyorBeltFieldAction doubleConveyorBelt = new DoubleConveyorBeltFieldAction();
+            conveyorBelt.setHeading(Heading.NORTH);
+            space.addFieldAction(doubleConveyorBelt);
 
             space = board.getSpace(5, 7);
             GearsFieldAction gearsFieldAction = new GearsFieldAction();
