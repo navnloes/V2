@@ -53,6 +53,7 @@ public class GameController {
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space) {
 
+
         if (space.getPlayer() == null) {
             Player currentPlayer = board.getCurrentPlayer();
             currentPlayer.setSpace(space);
@@ -73,7 +74,7 @@ public class GameController {
      */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
-        board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
+        board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
 
         for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -84,12 +85,26 @@ public class GameController {
                     field.setCard(null);
                     field.setVisible(true);
                 }
-                for (int j = 0; j < Player.NO_CARDS; j++) {
+//TODO: skal fjernes når vi er done
+                System.out.println("Player "  + player.getPlayerId() + " penalty sum " +  player.getPenaltySum());
+
+                for (int j = 0; j < Player.NO_CARDS - player.getPenaltySum(); j++) {
                     CommandCardField field = player.getCardField(j);
 
                     if (field.getCard() == null) {
-                        field.setCard(generateRandomCommandCard());
+                        CommandCard cmdCard = player.getNewProgramCard();
+                        if(cmdCard != null)
+                            field.setCard(cmdCard);
+                        else
+                            System.out.println("Player "  + player.getPlayerId() + " programStack underflow");
                     }
+
+                    field.setVisible(true);
+                }
+                for (int j = Player.NO_CARDS - player.getPenaltySum(); j < Player.NO_CARDS; j++) {
+                    CommandCardField field = player.getCardField(j);
+                    CommandCard cmdCard = new CommandCard(Command.DAMAGE_CARD);
+                    field.setCard(cmdCard);
 
                     field.setVisible(true);
                 }
@@ -121,7 +136,7 @@ public class GameController {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
-        //board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
+        board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
     }
 
@@ -200,16 +215,7 @@ public class GameController {
      * Then, the turn goes on to the next player, whose Command Card is activated
      */
     private void executeNextStep() {
-        int orderIndex = 0;
         Player currentPlayer = board.getCurrentPlayer();
-        for (int i = 0; i < board.getPlayersNumber(); i++) {
-            if(currentPlayer.getPlayerId() == board.getPriorityAntenna().getPlayerTurns(board)[i].getPlayerId()) {
-                System.out.println("++++ current player " + currentPlayer.getPlayerId()+ " order index " + i);
-                orderIndex = i;
-                break;
-            }
-        }
-
         if ((board.getPhase() == Phase.ACTIVATION) ||
                 (board.getPhase() == Phase.PLAYER_INTERACTION && board.getUserChoice() != null)
                         && currentPlayer != null) {
@@ -220,6 +226,7 @@ public class GameController {
                     board.setUserChoice(null);
                     board.setPhase(Phase.ACTIVATION);
                     executeCommand(currentPlayer, userChoice);
+                    currentPlayer.addDiscardCard(new CommandCard(userChoice));
                 } else {
                     CommandCard card = currentPlayer.getProgramField(step).getCard();
                     if (card != null) {
@@ -229,11 +236,12 @@ public class GameController {
                             return;
                         }
                         executeCommand(currentPlayer, command);
+                        currentPlayer.addDiscardCard(new CommandCard(command));
                     }
                 }
 
-                if (orderIndex + 1 < board.getPlayersNumber()) {
-                    int nextPlayerNumber = board.getPriorityAntenna().getPlayerTurns(board)[orderIndex + 1].getPlayerId();
+                int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
+                if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     for (Player player : board.getPlayers()){
@@ -248,7 +256,7 @@ public class GameController {
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
-                        board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
+                        board.setCurrentPlayer(board.getPlayer(0));
                     } else {
                         startProgrammingPhase();
                     }

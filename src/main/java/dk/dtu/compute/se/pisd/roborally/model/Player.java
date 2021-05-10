@@ -27,9 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
@@ -43,6 +41,7 @@ public class Player extends Subject {
 
     final public static int NO_REGISTERS = 5;
     final public static int NO_CARDS = 8;
+    final public static int NO_DECK_SIZE = 40;
 
     final public Board board;
 
@@ -57,7 +56,12 @@ public class Player extends Subject {
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
+    private Stack<CommandCard> deck;
+    private Stack<CommandCard> discardpile;
+
     private int checkPointToken;
+
+    private int penaltySum = 0;
 
     private boolean[] checkPointArray = {false, false, false};
 
@@ -105,6 +109,15 @@ public class Player extends Subject {
         winner = false;
         life = 3;
         this.playerActions = new ArrayList<>();
+
+        deck = new Stack<>();
+        discardpile = new Stack<>();
+        for(int i=0; i<NO_DECK_SIZE; i++) {
+            Command[] commands = Command.values();
+            // random commands not include penalty command
+            int random = (int) (Math.random() * commands.length - 1);
+            deck.push(new CommandCard(commands[random]));
+        }
 
 
     }
@@ -344,6 +357,42 @@ public class Player extends Subject {
     public int getDistance(){
         return distance;
     }
+
+    public CommandCard getNewProgramCard() {
+        CommandCard newCard = null;
+        if(!deck.empty() && deck.size() > 8) {
+            newCard = deck.pop();
+        }
+        else {
+            if(!discardpile.empty()) {
+                Collections.shuffle(discardpile);
+                newCard = deck.pop();
+                deck.push(discardpile.pop());
+            } else {
+                System.out.println("Player " + this.playerId + " discardpile underflow");
+            }
+        }
+
+        //TODO: skal fjernes når vi er done
+        //System.out.println("Player " + this.playerId + " program stack size " + deck.size() + " discardStack size " + deck.size());
+        return newCard;
+    }
+
+    public void addDiscardCard(CommandCard card) {
+        discardpile.push(card);
+    }
+
+
+    public int getPenaltySum() {
+        return penaltySum;
+    }
+
+    public void setPenaltySum(int penaltySum) {
+        this.penaltySum = penaltySum;
+        notifyChange();
+    }
+
+
 
 
 }
