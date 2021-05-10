@@ -604,6 +604,7 @@ class Repository implements IRepository {
     /**
      * This method updates the cardFields in the databases
      * @param game which cards need to be saved
+     * @author s205353
      */
     private void updateCardFieldsinDB(Board game){
         Connection connection = connector.getConnection();

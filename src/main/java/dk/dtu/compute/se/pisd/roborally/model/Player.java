@@ -236,6 +236,10 @@ public class Player extends Subject {
         notifyChange();
     }
 
+    /**
+     * This method adds a checkPoint token to the player
+     * When a player has all 3 checkPoint tokens, he/she becomes the winner of the game
+     */
     public void addCheckPointToken(){
         checkPointToken  = checkPointToken + 1;
         notifyChange();
@@ -245,25 +249,41 @@ public class Player extends Subject {
     }
 
 
+    /**
+     * This method returns the cardindex
+     * @return int CardIndex
+     */
     public int getCardIndex() { return cardIndex; }
 
+    /**
+     * This method sets the cardIndex to the given int
+     * @param index int index
+     */
     public void setCardIndex(int index){
         cardIndex = index;
         notifyChange();
     }
 
+    /**
+     * This method returns the playerId of this player
+     * @return int playerId
+     */
     public int getPlayerId() { return playerId; }
 
+    /**
+     * This method sets the playerId of this player to the given int
+     * @param id
+     */
     public void setPlayerId(int id) {
         playerId = id;
         notifyChange();
     }
-    /**
-     * This method checks which CheckPoint the player has arrived and assigns values for checkPointArray[i]
-     * it ensures that the order of the arrived CheckPoints is correct and adds CheckPointTokens to the player
-     *
-     */
 
+    /**
+     * @author s205353
+     * This method crowns a player the winner of the game, when the third value of the checkPoint array is true
+     * checkPointArray[2] is true, when the robot has collected all three checkPoints
+     */
     public void createWinner() {
         if (checkPointArray[2]) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -277,10 +297,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * This method returns the value of acquirred checkPoint tokens that a player has
+     * @return int checKPoint tokens
+     */
     public int getCheckPointToken(){
         return checkPointToken;
     }
 
+    /**
+     * This method sets the number of checkPoint tokens for a player
+     * @param i int i is the number of checkPoint tokens
+     */
     public void setCheckPointToken(int i){
         checkPointToken = i;
         notifyChange();
@@ -290,15 +318,28 @@ public class Player extends Subject {
 
     public boolean getCheckPointArray(int i) {return checkPointArray[i];}
 
+    /**
+     * This getter returns whether or not, the given player is the winner of the game
+     * @return boolean winner
+     */
     public boolean getWinner(){
         return winner;
     }
 
+    /**
+     * This method sets the player's robot's startSpace to a given field on the map
+     * @param space
+     */
     public void setStartSpace(Space space){
         startSpace = space;
         notifyChange();
     }
 
+    /**
+     * This method is called when a robot is hit by a laser
+     * The robot's life gets updated, and if the robot has lost all of its 3 lives, then it is rebooted
+     * @auhtor s205353, s205339, s201192
+     */
     public void hit(){
         life--;
         notifyChange();
@@ -311,10 +352,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * This method returns the reboot state of the robot in order to determine if the robot should be rebooted
+     * @return boolean reboot
+     */
     public boolean getReboot(){
         return reboot;
     }
 
+    /**
+     * @auhtor s205353, s205339, s201192
+     * @param state state of reboot - true: robot should be rebooted and false: if robot isn't in reboot mode
+     */
     public void setReboot(boolean state){
         reboot = state;
         if (reboot){
@@ -349,15 +398,30 @@ public class Player extends Subject {
         notifyChange();
     }
 
+    /**
+     * @author s205353
+     * @param i int distance in number of spaces from priority antenna
+     */
     public void setDistance(int i){
         distance = i;
         notifyChange();
     }
 
+    /**
+     * @author
+     * This method returns the player's distance from the priority antenna
+     * @return int distance
+     */
     public int getDistance(){
         return distance;
     }
 
+    /**
+     * This method returns the top programcard from the deck
+     * if the deck is empty, it shuffles the discardpile and draws from that
+     * @return newCard CommandCard
+     */
+    //TODO: lige gennemse
     public CommandCard getNewProgramCard() {
         CommandCard newCard = null;
         if(!deck.empty() && deck.size() > 8) {
@@ -378,15 +442,26 @@ public class Player extends Subject {
         return newCard;
     }
 
+    /**
+     * This method adds a CommandCard (program card) to the discard pile, when it has been programmed
+     * @param card CommandCard
+     */
     public void addDiscardCard(CommandCard card) {
         discardpile.push(card);
     }
 
-
+    /**
+     *  @author s205353
+     * @return int penaltySum
+     */
     public int getPenaltySum() {
         return penaltySum;
     }
 
+    /**
+     * @author s205353
+     * @param penaltySum
+     */
     public void setPenaltySum(int penaltySum) {
         this.penaltySum = penaltySum;
         notifyChange();
