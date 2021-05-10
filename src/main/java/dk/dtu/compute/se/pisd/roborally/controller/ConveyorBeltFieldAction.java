@@ -4,12 +4,11 @@ import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
+/**
+ *
+ * @author S205354, S205353
+ * */
 public class ConveyorBeltFieldAction extends FieldAction{
-
-    /**
-    *
-    * @Author S205354, S205353
-    * */
 
     Heading heading;
 
