@@ -492,6 +492,12 @@ public class GameController {
         return blocks;
     }
 
+    /**
+     * @author s205353
+     * This method displays an alert that informs the player of what commandCard that has been programmed for Spam Damage Card
+     * @param player player with spam damage card
+     * @param command of spam damage card
+     */
     private void displaySpamAlert(Player player, Command command){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("THIS IS A SPAM DAMAGE CARD");
