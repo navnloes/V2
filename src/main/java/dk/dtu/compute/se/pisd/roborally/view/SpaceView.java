@@ -226,7 +226,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 this.setBackground(new Background(new BackgroundImage(image2,  BackgroundRepeat.NO_REPEAT,
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.DEFAULT,
-                        new BackgroundSize(SPACE_WIDTH - 12.5, SPACE_HEIGHT - 5, false, false, false, false))));
+                        new BackgroundSize(SPACE_WIDTH, SPACE_HEIGHT, false, false, false, false))));
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
