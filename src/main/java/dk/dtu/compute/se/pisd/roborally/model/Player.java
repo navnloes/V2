@@ -243,9 +243,10 @@ public class Player extends Subject {
     public void addCheckPointToken(){
         checkPointToken  = checkPointToken + 1;
         notifyChange();
-        if (checkPointToken == 3){
-            winner = true;
-        }
+    }
+
+    public void setWinner(boolean state){
+        winner = state;
     }
 
 
@@ -285,7 +286,7 @@ public class Player extends Subject {
      * checkPointArray[2] is true, when the robot has collected all three checkPoints
      */
     public void createWinner() {
-        if (checkPointArray[2]) {
+        if (winner) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle(name + " (" + color + ")" +" has won the game");
             alert.setContentText(name + " (" + color + ")" +" has won the game" + "\n Start new game by going to file -> new game");
@@ -424,7 +425,7 @@ public class Player extends Subject {
     //TODO: lige gennemse
     public CommandCard getNewProgramCard() {
         CommandCard newCard = null;
-        if(!deck.empty() && deck.size() > 8) {
+        if(!deck.empty() && deck.size() > 7) {
             newCard = deck.pop();
         }
         else {
