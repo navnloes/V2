@@ -74,6 +74,7 @@ public class CheckPointFieldAction extends FieldAction{
                 if (checkPointArray[1] && !checkPointArray[2]){
                     player.addCheckPointToken();
                     checkPointArray[2] = true;
+                    player.setWinner(true);
                 }
 
                 break;

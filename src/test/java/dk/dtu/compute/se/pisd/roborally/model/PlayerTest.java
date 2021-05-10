@@ -1,5 +1,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPointFieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,67 +46,75 @@ class PlayerTest {
     }
 
     @Test
-    void winnerWithThreeTokens() {
+ void arrivedDifferentCheckPoints() {
+        Space space = gameController.board.getSpace(0,0);
+        Player player = gameController.board.getPlayer(0);
+        player.setSpace(space);
 
-        Player player = new Player(gameController.board, "blue", "Blue");
+       space = gameController.board.getSpace(3,3);
+       CheckPointFieldAction c1 = new CheckPointFieldAction();
+       c1.setCheckPointId(0);
+       space.addFieldAction(c1);
 
-        player.addCheckPointToken();
-        player.addCheckPointToken();
-        player.addCheckPointToken();
+       player.setSpace(space);
+       for (FieldAction fieldAction : space.getActions()){
+           fieldAction.doAction(gameController,space);
+       }
+
+       space = new Space(gameController.board,6,1);
+
+       CheckPointFieldAction c2 = new CheckPointFieldAction();
+       c2.setCheckPointId(1);
+       space.addFieldAction(c2);
+
+        player.setSpace(space);
+        for (FieldAction fieldAction : space.getActions()){
+            fieldAction.doAction(gameController,space);
+        }
+
+        space = new Space(gameController.board,8,0);
+       CheckPointFieldAction c3 = new CheckPointFieldAction();
+       c3.setCheckPointId(2);
+       space.addFieldAction(c3);
+
+        player.setSpace(space);
+        for (FieldAction fieldAction : space.getActions()){
+            fieldAction.doAction(gameController,space);
+        }
+
 
         assertTrue(player.getWinner());
 
     }
 
     @Test
-    void arrivedDifferentsCheckPoints() {
-//        Player player = new Player(gameController.board, "blue", "Blue");
-//
-//        Space s1 = new Space(gameController.board, 3,3);
-//        Space s2 = new Space(gameController.board, 1,6);
-//        Space s3 = new Space(gameController.board, 0,8);
-//
-//        CheckPointActionField c1 = new CheckPointActionField();
-//        CheckPointActionField c2 = new CheckPointActionField();
-//        CheckPointActionField c3 = new CheckPointActionField();
-//
-//        CheckPointCollection c = new CheckPointCollection();
-//        c.addActionField(c1);
-//        c.addActionField(c2);
-//        c.addActionField(c3);
-//
-//
-//        player.arrivedCheckPoint(c.getCheckPointId(s1));
-//        player.arrivedCheckPoint(c.getCheckPointId(s2));
-//        player.arrivedCheckPoint(c.getCheckPointId(s3));
-//
-//        assertTrue(player.getWinner());
+   void arrivedSameCheckPoints() {
+        Space space = gameController.board.getSpace(0,0);
+        Player player = new Player(gameController.board, "blue", "Blue");
+        player.setSpace(space);
 
-    }
+        space = gameController.board.getSpace(3,3);
+        CheckPointFieldAction c1 = new CheckPointFieldAction();
+        c1.setCheckPointId(0);
+        space.addFieldAction(c1);
 
-    @Test
-    void arrivedSameCheckPoints() {
-//        Player player = new Player(gameController.board, "blue", "Blue");
-//
-//        Space s1 = new Space(gameController.board, 3,3);
-//        Space s2 = new Space(gameController.board, 1,6);
-//        Space s3 = new Space(gameController.board, 0,8);
-//
-//        CheckPointActionField c1 = new CheckPointActionField();
-//        CheckPointActionField c2 = new CheckPointActionField();
-//        CheckPointActionField c3 = new CheckPointActionField();
-//
-//        CheckPointCollection c = new CheckPointCollection();
-//        c.addActionField(c1);
-//        c.addActionField(c2);
-//        c.addActionField(c3);
-//
-//
-//        player.arrivedCheckPoint(c.getCheckPointId(s1));
-//        player.arrivedCheckPoint(c.getCheckPointId(s1));
-//        player.arrivedCheckPoint(c.getCheckPointId(s1));
-//
-//        assertFalse(player.getWinner());
+        player.setSpace(space);
+        for (FieldAction fieldAction : space.getActions()){
+            fieldAction.doAction(gameController,space);
+        }
+
+        player.setSpace(space);
+        for (FieldAction fieldAction : space.getActions()){
+            fieldAction.doAction(gameController,space);
+        }
+
+        player.setSpace(space);
+        for (FieldAction fieldAction : space.getActions()){
+            fieldAction.doAction(gameController,space);
+        }
+
+
+        assertFalse(player.getWinner());
 
     }
 

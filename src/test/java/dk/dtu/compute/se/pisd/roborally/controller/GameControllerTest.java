@@ -135,6 +135,30 @@ class GameControllerTest {
         //Assertions.assertEquals(startSpace.x,other.getSpace().x);
         //Assertions.assertEquals(startSpace.y,other.getSpace().y);
 
+    }
+
+    @Test
+    void pushingRobot(){
+        Board board = gameController.board;
+        Player player1 = board.getPlayer(0);
+        Space space = gameController.board.getSpace(0,0);
+        player1.setHeading(Heading.SOUTH);
+        player1.setSpace(space);
+        Player player2 = board.getPlayer(1);
+        space = gameController.board.getSpace(0,1);
+        player2.setHeading(Heading.SOUTH);
+        player2.setSpace(space);
+
+        //player 2 rykker til felt (0,2)
+        gameController.moveForward(player2);
+        //player 1 rykker til felt (0,2)
+        gameController.fastForward(player1);
+
+        Assertions.assertEquals(player1.getSpace().x,0);
+        Assertions.assertEquals(player1.getSpace().y,2);
+
+        Assertions.assertEquals(player2.getSpace().x,0);
+        Assertions.assertEquals(player2.getSpace().y,3);
 
 
     }
