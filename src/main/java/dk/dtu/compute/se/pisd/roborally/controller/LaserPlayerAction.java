@@ -38,13 +38,9 @@ public class LaserPlayerAction extends PlayerAction {
                     break;
                 }
             }
-            if (robotInRange) {
-                otherRobot.hit();
-                if (otherRobot.getReboot()) {
-                    otherRobot.setReboot(false);
-                }
-                otherRobot.setPenaltySum(otherRobot.getPenaltySum() + 1);
-            }
+            if (robotInRange)
+                otherRobot.spamDamage(1);
+
             return true;
         } else {
             return false;

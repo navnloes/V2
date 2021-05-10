@@ -1,5 +1,4 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
-import dk.dtu.compute.se.pisd.roborally.model.CommandCard;
 import dk.dtu.compute.se.pisd.roborally.model.CommandCardField;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -14,11 +13,16 @@ public class Pit extends FieldAction {
             CommandCardField[] cards = player.getCards();
             CommandCardField[] program = player.getProgram();
             player.setReboot(true);
+            player.spamDamage(2);
 
             for (int i = 0; i < cards.length; i++){
                 player.setCardInvisible(i);
             }
-            //TODO: eksekver ikke programmeringskort
+            for (int i = 0; i < program.length; i++){
+                player.addDiscardCard(program[i].getCard());
+                program[i].setCard(null);
+            }
+
 
             return true;
         }

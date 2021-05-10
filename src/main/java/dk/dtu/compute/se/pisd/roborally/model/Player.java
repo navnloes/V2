@@ -27,7 +27,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
 
-import javax.lang.model.element.Element;
 import java.util.*;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
@@ -61,15 +60,12 @@ public class Player extends Subject {
 
     private int checkPointToken;
 
-    private int penaltySum = 0;
-
     private boolean[] checkPointArray = {false, false, false};
 
     private boolean winner;
 
     private Space startSpace = null;
 
-    private int life;
     private boolean reboot = false;
 
     public CommandCardField[] getCards() {
@@ -108,7 +104,6 @@ public class Player extends Subject {
 
         checkPointToken = 0;
         winner = false;
-        life = 3;
         this.playerActions = new ArrayList<>();
 
         deck = new Stack<>();
@@ -367,16 +362,12 @@ public class Player extends Subject {
      *
      * @auhtor s205353, s205339, s201192
      */
-    public void hit() {
-        life--;
+    public void spamDamage(int damageCards) {
+        for (int i = 0; i < damageCards; i++)
+            discardpile.add(new CommandCard(Command.SPAM));
         notifyChange();
         if (space != null)
             space.playerChanged();
-        if (life == 0) {
-            setReboot(true);
-            life = 3;
-            notifyChange();
-        }
     }
 
     /**
@@ -417,12 +408,17 @@ public class Player extends Subject {
         playerActions.add(playerAction);
     }
 
-    public int getLife() {
-        return life;
-    }
-
     public void setCardInvisible(int i) {
         cards[i].setVisible(false);
+        notifyChange();
+    }
+
+    /**
+     * This method sets program cards invisible
+     * @param i
+     */
+    public void setProgramInvisible(int i) {
+        program[i].setVisible(false);
         notifyChange();
     }
 
@@ -468,23 +464,6 @@ public class Player extends Subject {
      */
     public void addDiscardCard(CommandCard card) {
         discardpile.push(card);
-    }
-
-    /**
-     * @return int penaltySum
-     * @author s205353
-     */
-    public int getPenaltySum() {
-        return penaltySum;
-    }
-
-    /**
-     * @param penaltySum
-     * @author s205353
-     */
-    public void setPenaltySum(int penaltySum) {
-        this.penaltySum = penaltySum;
-        notifyChange();
     }
 
 

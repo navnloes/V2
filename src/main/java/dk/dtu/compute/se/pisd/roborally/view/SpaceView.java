@@ -201,11 +201,6 @@ public class SpaceView extends StackPane implements ViewObserver {
             Label label = new Label(Integer.toString(player.getCheckPointToken()));
             this.getChildren().add(label);
             label.toFront();
-            //TODO: skal rykkes til venstre
-            String LifeString = Integer.toString(player.getLife());
-            label = new Label("HP: "+ LifeString + "             ");
-            this.getChildren().add(label);
-            label.toFront();
         }
 
         //Walls

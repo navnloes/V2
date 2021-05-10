@@ -42,7 +42,7 @@ public enum Command {
 
     // XXX Assignment V3
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT),
-    DAMAGE_CARD("Damage Card");
+    SPAM("Damage Card");
 
     final public String displayName;
 
@@ -79,7 +79,7 @@ public enum Command {
             case OPTION_LEFT_RIGHT:
                 cId = 4;
                 break;
-            case DAMAGE_CARD:
+            case SPAM:
                 cId = 5;
                 break;
             default:
@@ -108,7 +108,7 @@ public enum Command {
                 command = OPTION_LEFT_RIGHT;
                 break;
             case 5:
-                command = DAMAGE_CARD;
+                command = SPAM;
                 break;
             default:
                 System.out.println("Illegal cardIndex - int index " + index + " in Command.getCommand");

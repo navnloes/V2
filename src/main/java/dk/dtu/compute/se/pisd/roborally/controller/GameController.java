@@ -85,10 +85,8 @@ public class GameController {
                     field.setCard(null);
                     field.setVisible(true);
                 }
-//TODO: skal fjernes når vi er done
-                System.out.println("Player "  + player.getPlayerId() + " penalty sum " +  player.getPenaltySum());
 
-                for (int j = 0; j < Player.NO_CARDS - player.getPenaltySum(); j++) {
+                for (int j = 0; j < Player.NO_CARDS; j++) {
                     CommandCardField field = player.getCardField(j);
 
                     if (field.getCard() == null) {
@@ -101,13 +99,13 @@ public class GameController {
 
                     field.setVisible(true);
                 }
-                for (int j = Player.NO_CARDS - player.getPenaltySum(); j < Player.NO_CARDS; j++) {
+/*                for (int j = Player.NO_CARDS - player.getPenaltySum(); j < Player.NO_CARDS; j++) {
                     CommandCardField field = player.getCardField(j);
                     CommandCard cmdCard = new CommandCard(Command.DAMAGE_CARD);
                     field.setCard(cmdCard);
 
                     field.setVisible(true);
-                }
+                }*/
 
             }
         }
@@ -254,9 +252,11 @@ public class GameController {
                     }
                     step++;
                     if (step < Player.NO_REGISTERS) {
-                        makeProgramFieldsVisible(step);
-                        board.setStep(step);
-                        board.setCurrentPlayer(board.getPlayer(0));
+                        if (currentPlayer.getReboot() != true){
+                            makeProgramFieldsVisible(step);
+                            board.setStep(step);
+                            board.setCurrentPlayer(board.getPlayer(0));
+                        }
                     } else {
                         startProgrammingPhase();
                     }
