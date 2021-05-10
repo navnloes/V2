@@ -48,6 +48,8 @@ import java.util.Optional;
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
+ * @Altered by S205354 (Map select changes)
+ *
  */
 public class AppController implements Observer {
 

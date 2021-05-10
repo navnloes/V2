@@ -32,17 +32,16 @@ import java.sql.Statement;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @Altered by s205354, s205353
  *
- * 
- * @Altered by S205354 (Map select changes)
  */
 public class Connector {
 	
     private static final String HOST     = "localhost";
     private static final int    PORT     = 3306;
-    private static final String DATABASE = "pisu";
+    //private static final String DATABASE = "pisu";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "root";
 
     private static final String DELIMITER = ";;";
     
@@ -51,15 +50,10 @@ public class Connector {
     public Connector() {
         try {
 
-			String url = "jdbc:mysql://" + HOST + ":" + PORT;
+			String url = "jdbc:mysql://" + HOST + ":" + PORT + "?serverTimezone=UTC";
 			//String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
 			connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
 			createDatabaseSchema("schemas/createdatabase.sql");
-			/* TODO: spørge hvad forskel de to urls gør
-			url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
-			connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
-
-			 */
 			createDatabaseSchema("schemas/createschema.sql");
 		} catch (SQLException e) {
 			// TODO we should try to diagnose and fix some problems here and
