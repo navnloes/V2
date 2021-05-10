@@ -14,7 +14,6 @@ public class ConveyorBeltFieldAction extends FieldAction{
     Heading heading;
 
     public ConveyorBeltFieldAction(){
-        //TODO:
     }
 
     public Heading getHeading(){
@@ -31,9 +30,9 @@ public class ConveyorBeltFieldAction extends FieldAction{
         if (space != null && heading != null){
             Player player = space.getPlayer();
             Heading heading = player.getHeading();
-            if (heading != this.heading)
-                player.setHeading(this.heading);
+            player.setHeading(this.heading);
             gameController.moveForward(player);
+            player.setHeading(heading);
             return true;
         } else {
             return false;

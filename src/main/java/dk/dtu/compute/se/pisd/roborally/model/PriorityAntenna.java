@@ -5,7 +5,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import java.util.*;
 
 /**
- * @author s205352, s205353, s205354
+ * @author s205353, s205354,  s205352
  */
 
 //TODO: MVC??

@@ -14,7 +14,6 @@ public class DoubleConveyorBeltFieldAction extends FieldAction{
     Heading heading;
 
     public DoubleConveyorBeltFieldAction(){
-        //TODO:
     }
 
     public Heading getHeading(){
@@ -27,12 +26,16 @@ public class DoubleConveyorBeltFieldAction extends FieldAction{
 
     @Override
     public boolean doAction(GameController gameController, Space space) {
-        Player player = space.getPlayer();
-        Heading heading = player.getHeading();
-        player.setHeading(this.heading);
-        gameController.moveForward(player);
-        gameController.moveForward(player);
-        player.setHeading(heading);
-        return false;
+        if (space != null && heading != null) {
+            Player player = space.getPlayer();
+            if (player != null) {
+            Heading heading = player.getHeading();
+            player.setHeading(this.heading);
+            gameController.fastForward(player);
+            player.setHeading(heading);}
+            return true;
+        } else {
+            return false;
+        }
     }
 }
