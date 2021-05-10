@@ -42,7 +42,7 @@ public enum Command {
 
     // XXX Assignment V3
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT),
-    SPAM("Damage Card");
+    SPAM("Spam Damage");
 
     final public String displayName;
 

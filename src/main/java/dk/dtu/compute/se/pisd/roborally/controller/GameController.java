@@ -22,8 +22,11 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.model.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * ...
@@ -33,9 +36,6 @@ import java.util.List;
 public class GameController {
 
     final public Board board;
-    //    CheckPointCollection checkPointCollection;
-//    ConveyorBeltCollection conveyorBeltCollection;
-//    GearsCollection gearsCollection;
     public boolean won = false;
 
     public GameController(@NotNull Board board) {
@@ -74,7 +74,7 @@ public class GameController {
      */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
-        board.setCurrentPlayer(board.getPlayer(0));
+        board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
         board.setStep(0);
 
         for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -99,14 +99,6 @@ public class GameController {
 
                     field.setVisible(true);
                 }
-/*                for (int j = Player.NO_CARDS - player.getPenaltySum(); j < Player.NO_CARDS; j++) {
-                    CommandCardField field = player.getCardField(j);
-                    CommandCard cmdCard = new CommandCard(Command.DAMAGE_CARD);
-                    field.setCard(cmdCard);
-
-                    field.setVisible(true);
-                }*/
-
             }
         }
 
@@ -134,7 +126,6 @@ public class GameController {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
-        board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
     }
 
@@ -213,7 +204,16 @@ public class GameController {
      * Then, the turn goes on to the next player, whose Command Card is activated
      */
     private void executeNextStep() {
+        int orderIndex = 0;
         Player currentPlayer = board.getCurrentPlayer();
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            if(currentPlayer.getPlayerId() == board.getPriorityAntenna().getPlayerTurns(board)[i].getPlayerId()) {
+                System.out.println("++++ current player " + currentPlayer.getPlayerId()+ " order index " + i);
+                orderIndex = i;
+                break;
+            }
+        }
+
         if ((board.getPhase() == Phase.ACTIVATION) ||
                 (board.getPhase() == Phase.PLAYER_INTERACTION && board.getUserChoice() != null)
                         && currentPlayer != null) {
@@ -237,9 +237,8 @@ public class GameController {
                         currentPlayer.addDiscardCard(new CommandCard(command));
                     }
                 }
-
-                int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
-                if (nextPlayerNumber < board.getPlayersNumber()) {
+                if (orderIndex + 1 < board.getPlayersNumber()) {
+                    int nextPlayerNumber = board.getPriorityAntenna().getPlayerTurns(board)[orderIndex + 1].getPlayerId();
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     for (Player player : board.getPlayers()){
@@ -255,7 +254,7 @@ public class GameController {
                         if (currentPlayer.getReboot() != true){
                             makeProgramFieldsVisible(step);
                             board.setStep(step);
-                            board.setCurrentPlayer(board.getPlayer(0));
+                            board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
                         }
                     } else {
                         startProgrammingPhase();
@@ -297,6 +296,10 @@ public class GameController {
                 case FAST_FORWARD:
                     this.fastForward(player);
                     break;
+                case SPAM:
+                    Command spam = player.fetchFromCardDeck().getCommand();
+                    displaySpamAlert(player,spam);
+                    executeCommand(player, spam);
                 default:
                     // DO NOTHING (for now)
             }
@@ -487,6 +490,15 @@ public class GameController {
             }
         }
         return blocks;
+    }
+
+    private void displaySpamAlert(Player player, Command command){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("THIS IS A SPAM DAMAGE CARD");
+        alert.setContentText("The top card of your deck is programmed \nThe programmed command is: " + command.displayName);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (!result.isPresent() || result.get() != ButtonType.OK) {
+        }
     }
 
 }
