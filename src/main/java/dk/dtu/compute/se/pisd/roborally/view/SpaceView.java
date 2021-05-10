@@ -46,6 +46,8 @@ import java.util.List;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ *
+ * @Altered by S205354, S205353
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
@@ -244,6 +246,10 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
 
     }
+
+    /**
+     * @author S205354, S205353
+     */
 
     private void drawWalls() {
         if (!headings.isEmpty()) {
