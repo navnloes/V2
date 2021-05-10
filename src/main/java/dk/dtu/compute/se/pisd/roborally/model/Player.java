@@ -27,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
 
+import javax.lang.model.element.Element;
 import java.util.*;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
@@ -35,7 +36,6 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
 public class Player extends Subject {
 
@@ -76,7 +76,7 @@ public class Player extends Subject {
         return cards;
     }
 
-    public CommandCardField[] getProgram(){
+    public CommandCardField[] getProgram() {
         return program;
     }
 
@@ -84,9 +84,10 @@ public class Player extends Subject {
 
     /**
      * Constructor which assigns a programming field and random command cars
+     *
      * @param board
      * @param color of player's robot
-     * @param name of player
+     * @param name  of player
      */
     public Player(@NotNull Board board, String color, @NotNull String name) {
         this.board = board;
@@ -112,7 +113,7 @@ public class Player extends Subject {
 
         deck = new Stack<>();
         discardpile = new Stack<>();
-        for(int i=0; i<NO_DECK_SIZE; i++) {
+        for (int i = 0; i < NO_DECK_SIZE; i++) {
             Command[] commands = Command.values();
             // random commands not include penalty command
             int random = (int) (Math.random() * commands.length - 1);
@@ -124,6 +125,7 @@ public class Player extends Subject {
 
     /**
      * getter to return name
+     *
      * @return name of player
      */
     public String getName() {
@@ -132,6 +134,7 @@ public class Player extends Subject {
 
     /**
      * setter to set name
+     *
      * @param name of player
      */
     public void setName(String name) {
@@ -146,6 +149,7 @@ public class Player extends Subject {
 
     /**
      * getter that returns color
+     *
      * @return color of player
      */
     public String getColor() {
@@ -154,6 +158,7 @@ public class Player extends Subject {
 
     /**
      * setter that returns color
+     *
      * @param color of player
      */
     public void setColor(String color) {
@@ -166,6 +171,7 @@ public class Player extends Subject {
 
     /**
      * getter that returns the player's current space
+     *
      * @return space that the player's robot is occupying
      */
     public Space getSpace() {
@@ -174,6 +180,7 @@ public class Player extends Subject {
 
     /**
      * setter that places robot on a space
+     *
      * @param space / target space
      */
     public void setSpace(Space space) {
@@ -193,6 +200,7 @@ public class Player extends Subject {
 
     /**
      * getter that returns the heading of player's robot
+     *
      * @return 'Heading' / facing direction
      */
     public Heading getHeading() {
@@ -201,6 +209,7 @@ public class Player extends Subject {
 
     /**
      * setter that sets the heading of player's robot
+     *
      * @param heading / target heading direction
      */
     public void setHeading(@NotNull Heading heading) {
@@ -215,6 +224,7 @@ public class Player extends Subject {
 
     /**
      * getter to return a specific programming field register
+     *
      * @param i no. that register has
      * @return programming register number i
      */
@@ -224,6 +234,7 @@ public class Player extends Subject {
 
     /**
      * getter to return a specific Command Card
+     *
      * @param i no. of Command Card
      * @return Command Card no. i
      */
@@ -231,7 +242,7 @@ public class Player extends Subject {
         return cards[i];
     }
 
-    public void setCardField(int i, CommandCardField commandCardField){
+    public void setCardField(int i, CommandCardField commandCardField) {
         cards[i] = commandCardField;
         notifyChange();
     }
@@ -240,39 +251,47 @@ public class Player extends Subject {
      * This method adds a checkPoint token to the player
      * When a player has all 3 checkPoint tokens, he/she becomes the winner of the game
      */
-    public void addCheckPointToken(){
-        checkPointToken  = checkPointToken + 1;
+    public void addCheckPointToken() {
+        checkPointToken = checkPointToken + 1;
         notifyChange();
     }
 
-    public void setWinner(boolean state){
+    public void setWinner(boolean state) {
         winner = state;
     }
 
 
     /**
      * This method returns the cardindex
+     *
      * @return int CardIndex
      */
-    public int getCardIndex() { return cardIndex; }
+    public int getCardIndex() {
+        return cardIndex;
+    }
 
     /**
      * This method sets the cardIndex to the given int
+     *
      * @param index int index
      */
-    public void setCardIndex(int index){
+    public void setCardIndex(int index) {
         cardIndex = index;
         notifyChange();
     }
 
     /**
      * This method returns the playerId of this player
+     *
      * @return int playerId
      */
-    public int getPlayerId() { return playerId; }
+    public int getPlayerId() {
+        return playerId;
+    }
 
     /**
      * This method sets the playerId of this player to the given int
+     *
      * @param id
      */
     public void setPlayerId(int id) {
@@ -288,8 +307,8 @@ public class Player extends Subject {
     public void createWinner() {
         if (winner) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle(name + " (" + color + ")" +" has won the game");
-            alert.setContentText(name + " (" + color + ")" +" has won the game" + "\n Start new game by going to file -> new game");
+            alert.setTitle(name + " (" + color + ")" + " has won the game");
+            alert.setContentText(name + " (" + color + ")" + " has won the game" + "\n Start new game by going to file -> new game");
             Optional<ButtonType> result = alert.showAndWait();
 
             if (!result.isPresent() || result.get() != ButtonType.OK) {
@@ -300,38 +319,44 @@ public class Player extends Subject {
 
     /**
      * This method returns the value of acquirred checkPoint tokens that a player has
+     *
      * @return int checKPoint tokens
      */
-    public int getCheckPointToken(){
+    public int getCheckPointToken() {
         return checkPointToken;
     }
 
     /**
      * This method sets the number of checkPoint tokens for a player
+     *
      * @param i int i is the number of checkPoint tokens
      */
-    public void setCheckPointToken(int i){
+    public void setCheckPointToken(int i) {
         checkPointToken = i;
         notifyChange();
         if (space != null)
-        space.playerChanged();
+            space.playerChanged();
     }
 
-    public boolean getCheckPointArray(int i) {return checkPointArray[i];}
+    public boolean getCheckPointArray(int i) {
+        return checkPointArray[i];
+    }
 
     /**
      * This getter returns whether or not, the given player is the winner of the game
+     *
      * @return boolean winner
      */
-    public boolean getWinner(){
+    public boolean getWinner() {
         return winner;
     }
 
     /**
      * This method sets the player's robot's startSpace to a given field on the map
+     *
      * @param space
      */
-    public void setStartSpace(Space space){
+    public void setStartSpace(Space space) {
         startSpace = space;
         notifyChange();
     }
@@ -339,14 +364,15 @@ public class Player extends Subject {
     /**
      * This method is called when a robot is hit by a laser
      * The robot's life gets updated, and if the robot has lost all of its 3 lives, then it is rebooted
+     *
      * @auhtor s205353, s205339, s201192
      */
-    public void hit(){
+    public void hit() {
         life--;
         notifyChange();
         if (space != null)
-        space.playerChanged();
-        if (life == 0){
+            space.playerChanged();
+        if (life == 0) {
             setReboot(true);
             life = 3;
             notifyChange();
@@ -355,30 +381,31 @@ public class Player extends Subject {
 
     /**
      * This method returns the reboot state of the robot in order to determine if the robot should be rebooted
+     *
      * @return boolean reboot
      */
-    public boolean getReboot(){
+    public boolean getReboot() {
         return reboot;
     }
 
     /**
-     * @auhtor s205353, s205339, s201192
      * @param state state of reboot - true: robot should be rebooted and false: if robot isn't in reboot mode
+     * @auhtor s205353, s205339, s201192
      */
-    public void setReboot(boolean state){
+    public void setReboot(boolean state) {
         reboot = state;
-        if (reboot){
+        if (reboot) {
             this.setSpace(this.getStartSpace());
             notifyChange();
         }
         notifyChange();
     }
 
-    public Space getStartSpace(){
+    public Space getStartSpace() {
         return startSpace;
     }
 
-    public boolean[] getCheckPointArray(){
+    public boolean[] getCheckPointArray() {
         return checkPointArray;
     }
 
@@ -386,65 +413,57 @@ public class Player extends Subject {
         return playerActions;
     }
 
-    public void addPlayerAction(PlayerAction playerAction){
+    public void addPlayerAction(PlayerAction playerAction) {
         playerActions.add(playerAction);
     }
 
-    public int getLife(){
+    public int getLife() {
         return life;
     }
 
-    public void setCardInvisible(int i){
+    public void setCardInvisible(int i) {
         cards[i].setVisible(false);
         notifyChange();
     }
 
     /**
-     * @author s205353
      * @param i int distance in number of spaces from priority antenna
+     * @author s205353
      */
-    public void setDistance(int i){
+    public void setDistance(int i) {
         distance = i;
         notifyChange();
     }
 
     /**
-     * @author
-     * This method returns the player's distance from the priority antenna
      * @return int distance
+     * @author This method returns the player's distance from the priority antenna
      */
-    public int getDistance(){
+    public int getDistance() {
         return distance;
     }
 
     /**
      * This method returns the top programcard from the deck
-     * if the deck is empty, it shuffles the discardpile and draws from that
+     * if the deck has 8 or less cards, the discardpile is shuffled, and these cards are inserted into the deck
+     *
      * @return newCard CommandCard
      */
-    //TODO: lige gennemse
-    public CommandCard getNewProgramCard() {
+    public CommandCard fetchFromCardDeck() {
         CommandCard newCard = null;
-        if(!deck.empty() && deck.size() > 7) {
-            newCard = deck.pop();
+        if (!discardpile.empty() && deck.size() <= NO_CARDS) {
+            Collections.shuffle(discardpile);
+            deck.addAll(discardpile);
+            discardpile.clear();
         }
-        else {
-            if(!discardpile.empty()) {
-                Collections.shuffle(discardpile);
-                newCard = deck.pop();
-                deck.push(discardpile.pop());
-            } else {
-                System.out.println("Player " + this.playerId + " discardpile underflow");
-            }
-        }
+        newCard = deck.pop();
 
-        //TODO: skal fjernes når vi er done
-        //System.out.println("Player " + this.playerId + " program stack size " + deck.size() + " discardStack size " + deck.size());
         return newCard;
     }
 
     /**
      * This method adds a CommandCard (program card) to the discard pile, when it has been programmed
+     *
      * @param card CommandCard
      */
     public void addDiscardCard(CommandCard card) {
@@ -452,23 +471,21 @@ public class Player extends Subject {
     }
 
     /**
-     *  @author s205353
      * @return int penaltySum
+     * @author s205353
      */
     public int getPenaltySum() {
         return penaltySum;
     }
 
     /**
-     * @author s205353
      * @param penaltySum
+     * @author s205353
      */
     public void setPenaltySum(int penaltySum) {
         this.penaltySum = penaltySum;
         notifyChange();
     }
-
-
 
 
 }

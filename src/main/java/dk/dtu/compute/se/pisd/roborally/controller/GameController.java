@@ -92,7 +92,7 @@ public class GameController {
                     CommandCardField field = player.getCardField(j);
 
                     if (field.getCard() == null) {
-                        CommandCard cmdCard = player.getNewProgramCard();
+                        CommandCard cmdCard = player.fetchFromCardDeck();
                         if(cmdCard != null)
                             field.setCard(cmdCard);
                         else
