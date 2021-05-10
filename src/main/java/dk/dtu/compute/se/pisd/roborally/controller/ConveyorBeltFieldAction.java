@@ -21,6 +21,7 @@ public class ConveyorBeltFieldAction extends FieldAction{
         return heading;
     }
 
+
     public void setHeading(Heading heading){
         this.heading = heading;
     }

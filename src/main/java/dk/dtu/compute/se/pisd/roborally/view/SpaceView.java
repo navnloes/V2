@@ -110,7 +110,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 this.getChildren().add(conveyorBelt);
 
-
             }
             else if (fieldAction instanceof DoubleConveyorBeltFieldAction) {
                 Polygon conveyorBelt = new Polygon(0.0, 0.0, 15.0, 40, 30.0, 0.0);
@@ -219,6 +218,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 ClassLoader classLoader = SpaceView.class.getClassLoader();
                 String filename =
                         classLoader.getResource(BOARDSFOLDER).getPath() + "/antenna.jpg";
+
 
                 input = new FileInputStream(filename);
                 Image image2 = new Image(input);

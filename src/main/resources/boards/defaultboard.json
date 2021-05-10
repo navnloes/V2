@@ -12,7 +12,8 @@
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.ConveyorBeltFieldAction",
           "INSTANCE": {
-            "heading": "WEST"
+            "heading": "WEST",
+            "type": "double"
           }
         }
       ],
