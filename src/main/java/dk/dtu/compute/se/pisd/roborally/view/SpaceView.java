@@ -114,7 +114,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             }
             else if (fieldAction instanceof DoubleConveyorBeltFieldAction) {
-                Polygon conveyorBelt = new Polygon(0.0, 0.0, 15.0, 40, 30.0, 0.0);
+                Polygon conveyorBelt = new Polygon(0.0, 0.0, 20.0, 60, 40.0, 0.0);
                 conveyorBelt.setFill(Color.DARKORANGE);
                 Heading heading = ((DoubleConveyorBeltFieldAction) fieldAction).getHeading();
                 if (heading == Heading.NORTH) {

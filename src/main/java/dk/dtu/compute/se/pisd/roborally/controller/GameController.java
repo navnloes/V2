@@ -384,7 +384,6 @@ public class GameController {
      */
     public void fastForward(@NotNull Player player) {
 
-        //røv grimt men fungere 5head
         moveForward(player);
         moveForward(player);
     }
