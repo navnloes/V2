@@ -20,6 +20,7 @@
  *
  */
 package dk.dtu.compute.se.pisd.roborally.dal;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import java.sql.*;
@@ -37,6 +38,8 @@ class Repository implements IRepository {
     private static final String GAME_GAMEID = "gameID";
 
     private static final String GAME_NAME = "name";
+
+    private static final String GAME_BOARDNAME = "boardName";
 
     private static final String GAME_CURRENTPLAYER = "currentPlayer";
 
@@ -91,9 +94,10 @@ class Repository implements IRepository {
                 //       for the game and should be then used
                 //       game.getName();
                 ps.setString(1, "Date: " + new Date()); // instead of name
-                ps.setNull(2, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
-                ps.setInt(3, game.getPhase().ordinal());
-                ps.setInt(4, game.getStep());
+                ps.setString(2, game.boardName);
+                ps.setNull(3, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
+                ps.setInt(4, game.getPhase().ordinal());
+                ps.setInt(5, game.getStep());
 
                 // If you have a foreign key constraint for current players,
                 // the check would need to be temporarily disabled, since
@@ -206,27 +210,26 @@ class Repository implements IRepository {
     }
 
     @Override
-    public Board loadGameFromDB(Board game) {
+    public Board loadGameFromDB(int id) {
         try {
             // TODO here, we could actually use a simpler statement
             //      which is not updatable, but reuse the one from
             //      above for the pupose
-            int id = game.getGameId();
+            //int id = game.getGameId();
+
             PreparedStatement ps = getSelectGameStatementU();
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
+            Board game;
             int playerNo;
             if (rs.next()) {
-                // TODO the width and height could eventually come from the database
-                //int width = AppController.BOARD_WIDTH;
-                //int height = AppController.BOARD_HEIGHT;
-                //game = new Board(width,height);
+                String boardName = rs.getString(GAME_BOARDNAME);
+                // TODO currently we do not set the games name (needs to be added)
+                 game = LoadBoard.loadBoard(boardName);
                 // TODO and we should also store the used game board in the database
                 //      for now, we use the default game board
 
                 playerNo = rs.getInt(GAME_CURRENTPLAYER);
-                // TODO currently we do not set the games name (needs to be added)
                 game.setPhase(Phase.values()[rs.getInt(GAME_PHASE)]);
                 game.setStep(rs.getInt(GAME_STEP));
             } else {
@@ -358,7 +361,7 @@ class Repository implements IRepository {
 
 
     private static final String SQL_INSERT_GAME =
-            "INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
+            "INSERT INTO Game(name, boardName, currentPlayer, phase, step) VALUES (?, ?, ?, ?, ?)";
     private PreparedStatement insert_game_stmt = null;
 
     private PreparedStatement getInsertGameStatementRGK() {

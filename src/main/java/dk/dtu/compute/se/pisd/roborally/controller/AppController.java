@@ -130,23 +130,20 @@ public class AppController implements Observer {
      * This method loads the chosen game and players from the database to the board
      */
     public void loadGame() {
-        Board board = LoadBoard.loadBoard(null);
-        gameController = new GameController(board);
-
         ArrayList<Integer> gameIds = RepositoryAccess.getRepository().getGameIds();
 
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(gameIds.get(0), gameIds);
         dialog.setTitle("Saved games");
         dialog.setHeaderText("Select saved game no.");
         Optional<Integer> result = dialog.showAndWait();
-        int no = result.get();
-        board.setGameId(no);
-        RepositoryAccess.getRepository().loadGameFromDB(board);
-        board.setPhase(Phase.PROGRAMMING);
-        board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
-        board.setStep(0);
+        if (!result.isEmpty()){
+            int no = result.get();
+            Board board = RepositoryAccess.getRepository().loadGameFromDB(no);
+            gameController = new GameController(board);
+            roboRally.createBoardView(gameController);
+        }
 
-        roboRally.createBoardView(gameController);
+
     }
 
     /**
