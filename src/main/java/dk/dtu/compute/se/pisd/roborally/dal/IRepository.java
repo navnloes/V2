@@ -41,7 +41,7 @@ public interface IRepository {
 
 	boolean updateGameInDB(Board game);
 
-	Board loadGameFromDB(Board game);
+	Board loadGameFromDB(int id);
 
 	List<GameInDB> getGames();
 
