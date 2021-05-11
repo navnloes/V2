@@ -214,7 +214,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             try {
                 ClassLoader classLoader = SpaceView.class.getClassLoader();
                 String filename =
-                        classLoader.getResource(BOARDSFOLDER).getPath() + "/antenna.jpg";
+                        classLoader.getResource(BOARDSFOLDER).getPath() + "/antennaV2.jpg";
 
 
                 input = new FileInputStream(filename);
