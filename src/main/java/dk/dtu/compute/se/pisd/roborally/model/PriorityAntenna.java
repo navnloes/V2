@@ -35,7 +35,7 @@ public class PriorityAntenna extends Subject {
      * @return Player[] playerTurns - sorted playerArray which is sorted by distance to priorityAntenna
      */
     public Player[] getPlayerTurns(Board board) {
-        Map players = new HashMap();
+        Map players = new HashMap<>();
         Player player;
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             player = board.getPlayer(i);

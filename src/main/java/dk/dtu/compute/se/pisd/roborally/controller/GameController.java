@@ -104,8 +104,6 @@ public class GameController {
 
     }
 
-    // XXX: V2
-
     /**
      * Method generates a random Command Card
      *
@@ -208,12 +206,10 @@ public class GameController {
         Player currentPlayer = board.getCurrentPlayer();
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             if(currentPlayer.getPlayerId() == board.getPriorityAntenna().getPlayerTurns(board)[i].getPlayerId()) {
-                System.out.println("++++ current player " + currentPlayer.getPlayerId()+ " order index " + i);
                 orderIndex = i;
                 break;
             }
         }
-
         if ((board.getPhase() == Phase.ACTIVATION) ||
                 (board.getPhase() == Phase.PLAYER_INTERACTION && board.getUserChoice() != null)
                         && currentPlayer != null) {
@@ -251,7 +247,7 @@ public class GameController {
                     }
                     step++;
                     if (step < Player.NO_REGISTERS) {
-                        if (currentPlayer.getReboot() != true){
+                        if (!currentPlayer.getReboot()){
                             makeProgramFieldsVisible(step);
                             board.setStep(step);
                             board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns(board)[0]);
@@ -270,8 +266,6 @@ public class GameController {
         }
     }
 
-    // XXX: V2
-
     /**
      * Command of specific CommandCard is executed
      * Robot lasers are activated afterwards
@@ -280,9 +274,6 @@ public class GameController {
      */
     public void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
-            // XXX This is a very simplistic way of dealing with some basic cards and
-            //     their execution. This should eventually be done in a more elegant way
-            //     (this concerns the way cards are modelled as well as the way they are executed).
             switch (command) {
                 case FORWARD:
                     this.moveForward(player);
@@ -298,7 +289,7 @@ public class GameController {
                     break;
                 case SPAM:
                     Command spam = player.fetchFromCardDeck().getCommand();
-                    displaySpamAlert(player,spam);
+                    displaySpamAlert(spam);
                     executeCommand(player, spam);
                 default:
                     // DO NOTHING (for now)
@@ -488,19 +479,22 @@ public class GameController {
                     break;
             }
         }
+
+        if (space.hasPriorityAntenna())
+            blocks = true;
+
         return blocks;
     }
 
     /**
      * @author s205353
      * This method displays an alert that informs the player of what commandCard that has been programmed for Spam Damage Card
-     * @param player player with spam damage card
-     * @param command of spam damage card
+     * @param command of card which is drawn from deck due to SPAM damage card
      */
-    private void displaySpamAlert(Player player, Command command){
+    private void displaySpamAlert(Command command){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("THIS IS A SPAM DAMAGE CARD");
-        alert.setContentText("The top card of your deck is programmed \nThe programmed command is: " + command.displayName);
+        alert.setContentText("The top card of your deck has been programmed \nThe programmed command is: " + command.displayName);
         Optional<ButtonType> result = alert.showAndWait();
         if (!result.isPresent() || result.get() != ButtonType.OK) {
         }
