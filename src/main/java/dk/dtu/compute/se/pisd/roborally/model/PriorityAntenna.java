@@ -47,7 +47,15 @@ public class PriorityAntenna extends Subject {
 
         Collections.sort(list, new Comparator<Map.Entry<Player, Integer>>() {
             public int compare(Map.Entry<Player, Integer> o1, Map.Entry<Player, Integer> o2) {
-                return o1.getValue().compareTo(o2.getValue());
+                int result =  o1.getValue().compareTo(o2.getValue());
+                if (result == 0){
+                    if (o1.getKey().getSpace().x == o2.getKey().getSpace().x){
+                        result = o1.getKey().getSpace().y - o2.getKey().getSpace().y;
+                    } else {
+                        result = o1.getKey().getSpace().x - o2.getKey().getSpace().x;
+                    }
+                }
+                return result;
             }
         });
 
@@ -63,7 +71,7 @@ public class PriorityAntenna extends Subject {
     //TODO: fjerne når alt er fikset
     public void printMap(Map<Player, Integer> map) {
         for (Map.Entry<Player, Integer> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + "\t" + entry.getValue());
+            System.out.println(entry.getKey().getPlayerId() + "\t" + entry.getValue());
         }
         System.out.println("\n");
     }
