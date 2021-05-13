@@ -389,6 +389,7 @@ public class Player extends Subject {
             this.setSpace(this.getStartSpace());
             notifyChange();
         }
+        reboot = false;
         notifyChange();
     }
 
