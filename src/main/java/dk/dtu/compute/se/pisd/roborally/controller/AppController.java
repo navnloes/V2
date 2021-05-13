@@ -56,7 +56,7 @@ public class AppController implements Observer {
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
-    final private List<String> PLAYER_BOARDS= Arrays.asList("Standard", "funboard");
+    final private List<String> PLAYER_BOARDS= Arrays.asList("Standard", "funboard","morefunboard");
 
     final private RoboRally roboRally;
 
@@ -95,6 +95,8 @@ public class AppController implements Observer {
 
                 else if (boardChoice.getResult() == PLAYER_BOARDS.get(1)) {
                     board = LoadBoard.loadBoard(PLAYER_BOARDS.get(1));}
+                else if (boardChoice.getResult() == PLAYER_BOARDS.get(2)) {
+                   board = LoadBoard.loadBoard(PLAYER_BOARDS.get(2));}
             }
 
             //Så den ikke crasher når man canceller når man skal vælge board
