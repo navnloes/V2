@@ -341,6 +341,7 @@ public class GameController {
 
             if (target != null) {
                 moveToSpace(other, target, heading);
+
             } else {
                 throw new ImpossibleMoveException(player, space, heading);
             }
