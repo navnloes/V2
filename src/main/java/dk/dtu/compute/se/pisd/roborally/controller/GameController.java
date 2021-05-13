@@ -370,8 +370,10 @@ public class GameController {
                 try {
                     moveToSpace(player, target, heading);
                 } catch (ImpossibleMoveException e) {
-                    //
+
                 }
+            } else {
+                System.out.println("target is null");
             }
         }
         player.createWinner();

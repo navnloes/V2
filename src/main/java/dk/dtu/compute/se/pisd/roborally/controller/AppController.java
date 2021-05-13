@@ -47,16 +47,14 @@ import java.util.Optional;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  * @Altered by S205354 (Map select changes)
- *
  */
 public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
 
-    final private List<String> PLAYER_BOARDS= Arrays.asList("Standard", "funboard","morefunboard");
+    final private List<String> PLAYER_BOARDS = Arrays.asList("Standard", "funboard", "morefunboard");
 
     final private RoboRally roboRally;
 
@@ -90,17 +88,19 @@ public class AppController implements Observer {
 
             if (boardResult.isPresent()) {
 
-               if (boardChoice.getResult() == PLAYER_BOARDS.get(0)) {
-                 board = LoadBoard.loadBoard(null);}
-
-                else if (boardChoice.getResult() == PLAYER_BOARDS.get(1)) {
-                    board = LoadBoard.loadBoard(PLAYER_BOARDS.get(1));}
-                else if (boardChoice.getResult() == PLAYER_BOARDS.get(2)) {
-                   board = LoadBoard.loadBoard(PLAYER_BOARDS.get(2));}
+                if (boardChoice.getResult() == PLAYER_BOARDS.get(0)) {
+                    board = LoadBoard.loadBoard(null);
+                } else if (boardChoice.getResult() == PLAYER_BOARDS.get(1)) {
+                    board = LoadBoard.loadBoard(PLAYER_BOARDS.get(1));
+                } else if (boardChoice.getResult() == PLAYER_BOARDS.get(2)) {
+                    board = LoadBoard.loadBoard(PLAYER_BOARDS.get(2));
+                }
             }
 
             //Så den ikke crasher når man canceller når man skal vælge board
-            else {return;}
+            else {
+                return;
+            }
 
 
             gameController = new GameController(board);
@@ -138,7 +138,7 @@ public class AppController implements Observer {
         dialog.setTitle("Saved games");
         dialog.setHeaderText("Select saved game no.");
         Optional<Integer> result = dialog.showAndWait();
-        if (!result.isEmpty()){
+        if (!result.isEmpty()) {
             int no = result.get();
             Board board = RepositoryAccess.getRepository().loadGameFromDB(no);
             gameController = new GameController(board);
