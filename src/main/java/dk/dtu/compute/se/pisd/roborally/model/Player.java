@@ -111,7 +111,6 @@ public class Player extends Subject {
         discardpile = new Stack<>();
         cardsEach = 8;
         for (int i = 0; i < cardsEach; i++) {
-            Command[] commands = Command.values();
             // random commands not include penalty command
             for (int j = 0; j < Command.SPAM.ordinal(); j++){
                 deck.push(new CommandCard(Command.getCommand(j)));
