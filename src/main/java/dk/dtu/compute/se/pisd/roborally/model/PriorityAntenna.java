@@ -13,6 +13,7 @@ import java.util.*;
 public class PriorityAntenna extends Subject {
 
     private Space space;
+    Map<Player, Integer> sortedMap;
 
     public PriorityAntenna() {
     }
@@ -52,19 +53,21 @@ public class PriorityAntenna extends Subject {
             }
         });
 
-        Map<Player, Integer> sortedMap = new LinkedHashMap<>();
+        sortedMap = new LinkedHashMap<>();
         for (Map.Entry<Player, Integer> entry : list) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
-        printMap(sortedMap);
         Player[] sortedplayers = sortedMap.keySet().toArray(new Player[sortedMap.size()]);
         return sortedplayers;
     }
 
-    //TODO: fjerne når alt er fikset
-    public void printMap(Map<Player, Integer> map) {
-        for (Map.Entry<Player, Integer> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + "\t" + entry.getValue());
+    /**
+     *
+     * @param
+     */
+    public void printMap() {
+        for (Map.Entry<Player, Integer> entry : sortedMap.entrySet()) {
+            System.out.println(entry.getKey().getName() + "\t" + entry.getValue());
         }
         System.out.println("\n");
     }
@@ -72,4 +75,5 @@ public class PriorityAntenna extends Subject {
     public Space getSpace(){
         return space;
     }
+
 }
