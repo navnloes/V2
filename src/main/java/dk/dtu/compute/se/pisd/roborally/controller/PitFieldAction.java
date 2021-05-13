@@ -3,7 +3,7 @@ import dk.dtu.compute.se.pisd.roborally.model.CommandCardField;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
-public class Pit extends FieldAction {
+public class PitFieldAction extends FieldAction {
 
     @Override
     public boolean doAction(GameController gameController, Space space){

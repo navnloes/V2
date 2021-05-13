@@ -34,7 +34,7 @@ class PitTest {
     @Test
     void doAction() {
         Space space = new Space(gameController.board, 3,3);
-        Pit pit = new Pit();
+        PitFieldAction pit = new PitFieldAction();
         space.addFieldAction(pit);
         Player player = gameController.board.getCurrentPlayer();
 

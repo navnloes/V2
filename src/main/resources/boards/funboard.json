@@ -254,7 +254,7 @@
       ],
       "actions": [
         {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Pit",
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.PitFieldAction",
           "INSTANCE": {
           }
         }
@@ -265,7 +265,7 @@
     {
       "actions": [
         {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Pit",
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.PitFieldAction",
           "INSTANCE": {
           }
         }
@@ -276,7 +276,7 @@
     {
       "actions": [
         {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.Pit",
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.PitFieldAction",
           "INSTANCE": {
           }
         }
