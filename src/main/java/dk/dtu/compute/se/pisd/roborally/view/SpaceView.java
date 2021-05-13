@@ -93,6 +93,8 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         this.getChildren().clear();
 
+        drawStartPosition();
+
         //Conveyorbelt
         if (!space.getActions().isEmpty()) {
             FieldAction fieldAction = space.getActions().get(0);
@@ -176,7 +178,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 gc.fillOval(12.5, 12.5, 49, 49);
                 gc.strokeOval(12.5, 12.5, 50, 50);
                 gc.strokeOval(12.5, 12.5, 51, 51);
-                Node label = new Label("Brad Pitt");
+                Node label = new Label("Pit ");
                 this.getChildren().add(label);
             }
         }
@@ -246,6 +248,7 @@ public class SpaceView extends StackPane implements ViewObserver {
      * @author S205354, S205353
      */
 
+
     private void drawWalls() {
         if (!headings.isEmpty()) {
 
@@ -270,6 +273,47 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    /**
+     * drawStartPosition @author s205354
+     */
+
+    private void drawStartPosition () {
+
+        Player player = space.getPlayer();
+
+        if (player != null && space == player.getStartSpace()) {
+
+
+            switch (player.getColor()) {
+                case "red":
+                    gc.setStroke(Color.RED);
+                    break;
+                case "green":
+                    gc.setStroke(Color.GREEN);
+                    break;
+                case "blue":
+                    gc.setStroke(Color.BLUE);
+                    break;
+                case "orange":
+                    gc.setStroke(Color.ORANGE);
+                    break;
+                case "grey":
+                    gc.setStroke(Color.GREY);
+                    break;
+                case "magenta":
+                    gc.setStroke(Color.MAGENTA);
+                    break;
+            }
+
+            gc.setLineWidth(2);
+
+            gc.strokeOval(12.5, 12.5, 50, 50);
+
+            this.getChildren().add(canvas);
+            canvas.toBack();
+        }
+
+    }
 
 
     //TODO: Laser hvis muligt.
