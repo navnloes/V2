@@ -59,6 +59,7 @@ public class Player extends Subject {
     private Stack<CommandCard> discardpile;
 
     private int checkPointToken;
+    private int cardsEach;
 
     private boolean[] checkPointArray = {false, false, false};
 
@@ -108,14 +109,14 @@ public class Player extends Subject {
 
         deck = new Stack<>();
         discardpile = new Stack<>();
-        for (int i = 0; i < NO_DECK_SIZE; i++) {
+        cardsEach = 8;
+        for (int i = 0; i < cardsEach; i++) {
             Command[] commands = Command.values();
             // random commands not include penalty command
-            int random = (int) (Math.random() * commands.length - 1);
-            deck.push(new CommandCard(commands[random]));
+            for (int j = 0; j < Command.SPAM.ordinal(); j++){
+                deck.push(new CommandCard(Command.getCommand(j)));
+            }
         }
-
-
     }
 
     /**
