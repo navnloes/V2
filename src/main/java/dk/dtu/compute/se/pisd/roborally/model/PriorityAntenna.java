@@ -8,22 +8,33 @@ import java.util.*;
  * @author s205353, s205354,  s205352
  */
 
-//TODO: MVC??
 
 public class PriorityAntenna extends Subject {
 
     private Space space;
     private Player[] playerTurns;
+    private Map<Player, Integer> sortedMap;
 
+    /**
+     * This is the constructor
+     */
     public PriorityAntenna() {
     }
 
+    /**
+     * This method sets the priorityAntenna on a given space
+     * @param space
+     */
     public void setSpace(Space space) {
         this.space = space;
         space.setPriorityAntenna(true);
         notifyChange();
     }
 
+    /**
+     * This method sorts the players on the board into Player[] playerTurns
+     * @param board Board board parameter that is used to collect all players on the board in order to sort them
+     */
     public void sortPlayerArray(Board board) {
         Map players = new HashMap();
         Player player;
@@ -35,6 +46,10 @@ public class PriorityAntenna extends Subject {
         playerTurns = sortByValue(players);
     }
 
+    /**
+     * This setter sets a given player's distance to the priorityAntenna
+     * @param player Player player
+     */
     private void setPlayerPriorityDistance(Player player) {
         int x = player.getSpace().x;
         int y = player.getSpace().y;
@@ -42,6 +57,14 @@ public class PriorityAntenna extends Subject {
         player.setDistance(distance);
     }
 
+    /**
+     * This method takes a parameter map and sorts it
+     * The map is sorted in ascending order by values
+     * if two players have the same values (distance to antenna) the player with the smallest space.x value is first
+     * if both of these players have the same space.x-value, the player with the smaller space.y-value is first
+     * @param map Map<Player, Integer> map - this map contains the players on the board, and their Integer distance to the antenna
+     * @return Player[] sortedPlayers
+     */
     private Player[] sortByValue(Map<Player, Integer> map) {
         List<Map.Entry<Player, Integer>> list = new LinkedList<>(map.entrySet());
 
@@ -59,27 +82,37 @@ public class PriorityAntenna extends Subject {
             }
         });
 
-        Map<Player, Integer> sortedMap = new LinkedHashMap<>();
+        sortedMap = new LinkedHashMap<>();
         for (Map.Entry<Player, Integer> entry : list) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
-        printMap(sortedMap);
         Player[] sortedplayers = sortedMap.keySet().toArray(new Player[sortedMap.size()]);
         return sortedplayers;
     }
 
-    //TODO: fjerne når alt er fikset
-    public void printMap(Map<Player, Integer> map) {
-        for (Map.Entry<Player, Integer> entry : map.entrySet()) {
-            System.out.println(entry.getKey().getPlayerId() + "\t" + entry.getValue());
+    /**
+     * This method prints the sorted hashmap
+     * used for testing : PriorityAntennaTest
+     */
+    public void printMap() {
+        for (Map.Entry<Player, Integer> entry : sortedMap.entrySet()) {
+            System.out.println(entry.getKey().getName() + "\t" + entry.getValue());
         }
         System.out.println("\n");
     }
 
+    /**
+     * This getter returns the space that the antenna has
+     * @return Space space
+     */
     public Space getSpace(){
         return space;
     }
 
+    /**
+     * This getter returns the playerTurns array where the players are sorted into order
+     * @return Player[] playerTurns
+     */
     public Player[] getPlayerTurns(){
         return playerTurns;
     }
