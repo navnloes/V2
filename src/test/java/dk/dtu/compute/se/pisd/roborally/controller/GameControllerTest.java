@@ -163,4 +163,28 @@ class GameControllerTest {
 
     }
 
+    //TODO:
+    @Test
+    void programDamageCard(){
+        Board board = gameController.board;
+        Player player1 = board.getPlayer(0);
+        Space space = new Space(gameController.board, 0,0);
+        player1.setSpace(space);
+        player1.setHeading(Heading.SOUTH);
+        CommandCard spam = new CommandCard(Command.SPAM);
+        CommandCard topCard = new CommandCard(Command.FORWARD);
+
+        player1.getDeck().clear();
+        player1.getDeck().push(topCard);
+        gameController.executeCommand(player1,spam.command);
+        Space newSpace = board.getSpace(space.x, space.y + 1);
+
+        Assertions.assertEquals(player1.getSpace().x,newSpace.x);
+        Assertions.assertEquals(player1.getSpace().y,newSpace.y);
+
+
+
+
+    }
+
 }

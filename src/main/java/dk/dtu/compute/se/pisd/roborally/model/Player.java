@@ -466,5 +466,11 @@ public class Player extends Subject {
         discardpile.push(card);
     }
 
+    /**
+     * This method is used for testing GameControllerTest: void programDamageCard()
+     */
+    public Stack<CommandCard> getDeck(){
+        return deck;
+    }
 
 }
