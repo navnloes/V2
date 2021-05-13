@@ -299,7 +299,7 @@ public class GameController {
                     break;
                 case SPAM:
                     Command spam = player.fetchFromCardDeck().getCommand();
-                    displaySpamAlert(player,spam);
+                    displaySpamAlert(spam);
                     executeCommand(player, spam);
                 default:
                     // DO NOTHING (for now)
@@ -496,10 +496,9 @@ public class GameController {
     /**
      * @author s205353
      * This method displays an alert that informs the player of what commandCard that has been programmed for Spam Damage Card
-     * @param player player with spam damage card
-     * @param command of spam damage card
+     * @param command of card on top of the deck, which is programmed due to SPAM card
      */
-    private void displaySpamAlert(Player player, Command command){
+    private void displaySpamAlert(Command command){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("THIS IS A SPAM DAMAGE CARD");
         alert.setContentText("The top card of your deck is programmed \nThe programmed command is: " + command.displayName);
