@@ -170,6 +170,9 @@ public class Player extends Subject {
      * @return space that the player's robot is occupying
      */
     public Space getSpace() {
+        if (space == null){
+            space = startSpace;
+        }
         return space;
     }
 
