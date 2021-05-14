@@ -253,11 +253,9 @@ public class GameController {
                     }
                     step++;
                     if (step < Player.NO_REGISTERS) {
-                        if (currentPlayer.getReboot() != true){
                             makeProgramFieldsVisible(step);
                             board.setStep(step);
                             board.setCurrentPlayer(board.getPriorityAntenna().getPlayerTurns()[0]);
-                        }
                     } else {
                         startProgrammingPhase();
                     }

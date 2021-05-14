@@ -114,6 +114,9 @@ public class PriorityAntenna extends Subject {
      * @return Player[] playerTurns
      */
     public Player[] getPlayerTurns(){
+        if (playerTurns == null){
+            sortPlayerArray(space.board);
+        }
         return playerTurns;
     }
 }
