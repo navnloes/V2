@@ -467,5 +467,13 @@ public class Player extends Subject {
         discardpile.push(card);
     }
 
+    public Stack<CommandCard> getCardDeck(){
+        return deck;
+    }
+
+    public Stack<CommandCard> getDiscardpile(){
+        return discardpile;
+    }
+
 
 }

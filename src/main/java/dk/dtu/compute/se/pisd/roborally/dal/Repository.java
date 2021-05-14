@@ -27,6 +27,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * ...
@@ -64,6 +65,10 @@ class Repository implements IRepository {
     private static final int FIELD_TYPE_REGISTER = 0;
 
     private static final int FIELD_TYPE_HAND = 1;
+
+    private static final int FIELD_TYPE_DECK = 0;
+
+    private static final int FIELD_TYPE_DISCARD = 1;
 
     private static final String FIELD_POS = "position";
 
@@ -121,6 +126,7 @@ class Repository implements IRepository {
                 connection.setAutoCommit(true);
 
                 createCardFieldsinDB(game);
+                createCardStackInDB(game);
 
                 return true;
             } catch (SQLException e) {
@@ -585,5 +591,62 @@ class Repository implements IRepository {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    private static final String SQL_SELECT_CARDSTACK = "SELECT* FROM CardStack WHERE gameID = ?";
+    private PreparedStatement select_cardstack_stmt = null;
+
+    private PreparedStatement getSelectCardStackStatement(){
+        if (select_cardstack_stmt == null){
+            Connection connection = connector.getConnection();
+            try {
+                select_cardstack_stmt = connection.prepareStatement(
+                        SQL_SELECT_CARDSTACK, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return select_cardstack_stmt;
+    }
+
+    /**
+     * This method inserts each player's deck cards and discard cards into the table
+     * @param game
+     * @throws SQLException
+     */
+    private void createCardStackInDB (Board game) throws SQLException {
+        PreparedStatement ps = getSelectCardStackStatement();
+        ps.setInt(1, game.getGameId());
+        ResultSet rs = ps.executeQuery();
+
+        for (int i = 0; i < game.getPlayersNumber(); i++) {
+            Player player = game.getPlayer(i);
+            Stack<CommandCard> deck = player.getCardDeck();
+            Stack<CommandCard> discards = player.getDiscardpile();
+            int deckpos = 0;
+            for (CommandCard c : deck){
+                rs.moveToInsertRow();
+                rs.updateInt("gameID", game.getGameId());
+                rs.updateInt(FIELD_PLAYERID, player.getPlayerId());
+                rs.updateInt(FIELD_TYPE, FIELD_TYPE_DECK);
+                rs.updateInt(FIELD_POS, deckpos);
+                rs.updateObject(FIELD_COMMAND, c.getCommand().ordinal());
+                rs.insertRow();
+                deckpos++;
+            }
+
+            deckpos = 0;
+            for (CommandCard c : discards){
+                rs.moveToInsertRow();
+                rs.updateInt("gameID", game.getGameId());
+                rs.updateInt(FIELD_PLAYERID, player.getPlayerId());
+                rs.updateInt(FIELD_TYPE, FIELD_TYPE_DISCARD);
+                rs.updateInt(FIELD_POS, deckpos);
+                rs.updateObject(FIELD_COMMAND, c.getCommand().ordinal());
+                rs.insertRow();
+                deckpos++;
+            }
+        }
+        rs.close();
     }
 }
