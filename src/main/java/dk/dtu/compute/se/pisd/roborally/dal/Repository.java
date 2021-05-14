@@ -120,6 +120,9 @@ class Repository implements IRepository {
                 generatedKeys.close();
 
                 createPlayersInDB(game);
+                createCardStackinDB(game);
+                createCardFieldsinDB(game);
+
 
                 ps = getSelectGameStatementU();
                 ps.setInt(1, game.getGameId());
@@ -135,8 +138,7 @@ class Repository implements IRepository {
                 connection.commit();
                 connection.setAutoCommit(true);
 
-                createCardFieldsinDB(game);
-                createCardStackinDB(game);
+
 
                 return true;
             } catch (SQLException e) {
@@ -179,8 +181,8 @@ class Repository implements IRepository {
             rs.close();
 
             updatePlayersInDB(game);
-            updateCardFieldsinDB(game);
             updateCardStacksinDB(game);
+            updateCardFieldsinDB(game);
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -226,8 +228,8 @@ class Repository implements IRepository {
 
             game.setGameId(id);
             loadPlayersFromDB(game);
-            loadCardFieldsFromDB(game);
             loadCardStackFromDB(game);
+            loadCardFieldsFromDB(game);
             if (playerNo >= 0 && playerNo < game.getPlayersNumber()) {
                 game.setCurrentPlayer(game.getPlayer(playerNo));
             } else {
@@ -707,14 +709,14 @@ class Repository implements IRepository {
             Object c = rs.getObject(CARDSTACK_COMMAND);
 
             if (c != null) {
-                Command command = Command.values()[rs.getInt(CARDSTACK_COMMAND)];
-                if (type == CARDSTACK_TYPE_DECK){
+                Command command = Command.getCommand(rs.getInt(CARDSTACK_COMMAND));
+                if (type == CARDSTACK_TYPE_DECK) {
                     player.getCardDeck().push(new CommandCard(command));
-                } else if (type == CARDSTACK_TYPE_DISCARD){
+                } else if (type == CARDSTACK_TYPE_DISCARD) {
                     player.getDiscardpile().push(new CommandCard(command));
                 }
             }
-
         }
+        rs.close();
     }
 }
