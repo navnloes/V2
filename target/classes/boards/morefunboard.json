@@ -1,6 +1,6 @@
 {
   "width": 12,
-  "height":12,
+  "height": 6,
   "antennaX": 7,
   "antennaY": 5,
   "spaces": [
@@ -62,7 +62,7 @@
         }
       ],
       "x": 8,
-      "y": 8
+      "y": 2
     },
     {
       "walls": [
@@ -77,7 +77,7 @@
         }
       ],
       "x": 10,
-      "y": 10
+      "y": 3
     },
     {
       "walls": [
@@ -91,8 +91,8 @@
           }
         }
       ],
-      "x": 1,
-      "y": 10
+      "x": 10,
+      "y": 1
     },
     {
       "walls": [
@@ -106,8 +106,8 @@
           }
         }
       ],
-      "x": 3,
-      "y": 8
+      "x": 8,
+      "y": 3
     },
     {
       "walls": [
@@ -126,7 +126,7 @@
     },
     {
       "walls": [
-        "NORTH"
+        "SOUTH"
       ],
       "actions": [
         {
@@ -137,7 +137,7 @@
         }
       ],
       "x": 5,
-      "y": 10
+      "y": 0
     },
     {
       "walls": [
@@ -209,8 +209,8 @@
           }
         }
       ],
-      "x": 0,
-      "y": 5
+      "x": 2,
+      "y": 4
     },
     {
       "walls": [],
@@ -223,20 +223,7 @@
         }
       ],
       "x": 11,
-      "y": 5
-    },
-    {
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction",
-          "INSTANCE": {
-            "direction": "LEFT"
-          }
-        }
-      ],
-      "x": 9,
-      "y": 6
+      "y": 4
     },
     {
       "walls": [],
@@ -248,8 +235,8 @@
           }
         }
       ],
-      "x": 2,
-      "y": 3
+      "x": 3,
+      "y": 2
     },
     {
       "walls": [],
@@ -261,8 +248,8 @@
           }
         }
       ],
-      "x": 4,
-      "y": 6
+      "x": 6,
+      "y": 4
     },
     {
       "walls": [],
@@ -274,8 +261,8 @@
           }
         }
       ],
-      "x": 4,
-      "y": 7
+      "x": 7,
+      "y": 4
     },
     {
       "walls": [],
@@ -287,21 +274,8 @@
           }
         }
       ],
-      "x": 4,
-      "y": 8
-    },
-    {
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.GearsFieldAction",
-          "INSTANCE": {
-            "direction": "RIGHT"
-          }
-        }
-      ],
-      "x": 4,
-      "y": 9
+      "x": 8,
+      "y": 4
     },
     {
       "actions": [
@@ -323,7 +297,7 @@
         }
       ],
       "x": 1,
-      "y": 8
+      "y": 5
     },
     {
       "actions": [
@@ -344,8 +318,8 @@
           }
         }
       ],
-      "x": 7,
-      "y": 10
+      "x": 0,
+      "y": 1
     },
     {
       "walls": [],
@@ -358,37 +332,7 @@
         }
       ],
       "x": 1,
-      "y": 5
-    },
-    {
-      "walls": [
-        "NORTH"
-      ],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.DoubleConveyorBeltFieldAction",
-          "INSTANCE": {
-            "heading": "WEST"
-          }
-        }
-      ],
-      "x": 3,
-      "y": 11
-    },
-    {
-      "walls": [
-        "SOUTH"
-      ],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.controller.DoubleConveyorBeltFieldAction",
-          "INSTANCE": {
-            "heading": "WEST"
-          }
-        }
-      ],
-      "x": 11,
-      "y": 7
+      "y": 3
     },
     {
       "walls": [

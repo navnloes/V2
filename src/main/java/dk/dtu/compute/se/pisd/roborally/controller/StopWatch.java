@@ -72,7 +72,6 @@ public class StopWatch extends Subject {
         timer.cancel();
     }
 
-
     public int getInterval() {
         return interval;
     }
@@ -85,7 +84,6 @@ public class StopWatch extends Subject {
         this.interval = interval;
     }
 
-    public void reset() {
-        time = Duration.ZERO;
+    public void reset() {time = Duration.ZERO;
     }
 }
