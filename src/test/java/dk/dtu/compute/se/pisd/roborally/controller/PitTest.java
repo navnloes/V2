@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+
 class PitTest {
 
     private final int TEST_WIDTH = 8;
@@ -33,38 +35,46 @@ class PitTest {
 
     @Test
     void doAction() {
-        Space space = new Space(gameController.board, 3,3);
+        Space space = gameController.board.getSpace(3,3);
         Pit pit = new Pit();
         space.addFieldAction(pit);
         Player player = gameController.board.getCurrentPlayer();
+        Space startSpace = gameController.board.getSpace(5,5);
+        player.setStartSpace(startSpace);
 
         CommandCardField[] card = player.getCards();
         CommandCardField[] program = player.getProgram();
 
         CommandCard commandCard;
-        for (CommandCardField c : card){
-            commandCard = new CommandCard(Command.FORWARD);
-            c.setCard(commandCard);
-            System.out.println(c.getCard().getCommand());
 
-        }
         for (CommandCardField p : program){
             commandCard = new CommandCard(Command.FORWARD);
             p.setCard(commandCard);
             System.out.println(p.getCard().getCommand());
         }
 
+        for (CommandCardField p : card){
+            commandCard = new CommandCard(Command.LEFT);
+            p.setCard(commandCard);
+            System.out.println(p.getCard().getCommand());
+        }
+
+        //player is on (3,3)
         player.setSpace(space);
 
+        for (FieldAction f : space.getActions()){
+            f.doAction(gameController,space);
+        }
 
-        //Assertions.assertTrue(player.isReboot());
-
+        //check if all cards are turned into nullvalues and invisible
         for (CommandCardField c : card){
-            Assertions.assertNull(c.getCard());
+            Assertions.assertFalse(c.isVisible());
         }
         for (CommandCardField p : program){
             Assertions.assertNull(p.getCard());
         }
+        //check if player has rebooted on its startspace (5,5)
+        Assertions.assertEquals(player.getSpace(),startSpace);
 
 
 
