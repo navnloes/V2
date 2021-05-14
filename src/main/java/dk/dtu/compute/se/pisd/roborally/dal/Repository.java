@@ -99,6 +99,11 @@ class Repository implements IRepository {
         this.connector = connector;
     }
 
+    /**
+     * This method creates/inserts the data of the game into the database
+     * @param game Board game that needs to be saved
+     * @return
+     */
     @Override
     public boolean createGameInDB(Board game) {
         if (game.getGameId() == null) {
