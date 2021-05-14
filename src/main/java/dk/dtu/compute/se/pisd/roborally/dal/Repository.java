@@ -66,10 +66,6 @@ class Repository implements IRepository {
 
     private static final int FIELD_TYPE_HAND = 1;
 
-    private static final int FIELD_TYPE_DECK = 0;
-
-    private static final int FIELD_TYPE_DISCARD = 1;
-
     private static final String FIELD_POS = "position";
 
     private static final String FIELD_VISIBLE = "visible";
