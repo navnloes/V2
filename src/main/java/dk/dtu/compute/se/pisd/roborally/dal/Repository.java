@@ -231,6 +231,7 @@ class Repository implements IRepository {
             game.setGameId(id);
             loadPlayersFromDB(game);
             loadCardFieldsFromDB(game);
+            loadCardStackFromDB(game);
             if (playerNo >= 0 && playerNo < game.getPlayersNumber()) {
                 game.setCurrentPlayer(game.getPlayer(playerNo));
             } else {
@@ -693,31 +694,31 @@ class Repository implements IRepository {
     }
 
     private void loadCardStackFromDB(Board game) throws SQLException {
+
+        for (Player player : game.getPlayers()){
+            player.getCardDeck().clear();
+            player.getDiscardpile().clear();
+        }
         PreparedStatement ps = getSelectCardStackStatement();
         ps.setInt(1,game.getGameId());
 
         ResultSet rs = ps.executeQuery();
+
         while (rs.next()){
-            int playerId = rs.getInt(FIELD_PLAYERID);
+            int playerId = rs.getInt(CARDSTACK_PLAYERID);
             Player player = game.getPlayer(playerId);
-            int type = rs.getInt(FIELD_TYPE);
-            int pos = rs.getInt(FIELD_POS);
-            CommandCardField field;
-            if (type == FIELD_TYPE_REGISTER){
-                field = player.getProgramField(pos);
-            } else if (type == FIELD_TYPE_HAND) {
-                field = player.getCardField(pos);
-            } else {
-                field = null;
-            }
-            if (field != null) {
-                field.setVisible(rs.getBoolean(FIELD_VISIBLE));
-                Object c = rs.getObject(FIELD_COMMAND);
-                if (c != null) {
-                    Command card = Command.values()[rs.getInt(FIELD_COMMAND)];
-                    field.setCard(new CommandCard(card));
+            int type = rs.getInt(CARDSTACK_TYPE);
+            Object c = rs.getObject(CARDSTACK_COMMAND);
+
+            if (c != null) {
+                Command command = Command.values()[rs.getInt(CARDSTACK_COMMAND)];
+                if (type == CARDSTACK_TYPE_DECK){
+                    player.getCardDeck().push(new CommandCard(command));
+                } else if (type == CARDSTACK_TYPE_DISCARD){
+                    player.getDiscardpile().push(new CommandCard(command));
                 }
             }
+
         }
     }
 }
