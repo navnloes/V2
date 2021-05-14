@@ -8,7 +8,21 @@ public class DoubleConveyorBeltFieldAction extends FieldAction{
 
     /**
      *
-     * @Author S205354
+     * @author S205354
+     *
+     * DoubleConveyorBelt has the responsilibty of containting the doAction of ConveyorBelt and is the element
+     * we list to create the visual element in SpaceView.
+     *
+     * doAction method contains the logic for what will happen when a player steps onto the space that contains
+     * a DoubleConveyorBelt. This Method takes the player, and moves the player one space towards the heading the co-
+     * nveyer belt points while the player still keeps its original heading.
+     *
+     * @param gameController is needed to use the methods in the gameController for player in question on space.
+     * @param space is needed to distinguish the space doAction is used on.
+     *
+     * @param heading is needed as a parameter to create visual element so the arrow points the correct way
+     *                and to used as a factor in doAction method.
+     *
      * */
 
     Heading heading;
