@@ -295,7 +295,7 @@ public class Player extends Subject {
     }
 
     /**
-     * @author s205353
+     * @author s205354, altered by (s205353)
      * This method crowns a player the winner of the game, when the third value of the checkPoint array is true
      * checkPointArray[2] is true, when the robot has collected all three checkPoints
      */

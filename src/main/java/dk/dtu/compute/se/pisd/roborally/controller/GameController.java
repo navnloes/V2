@@ -247,6 +247,7 @@ public class GameController {
                         if (!space.getActions().isEmpty()){
                             for (FieldAction fieldAction : space.getActions()) {
                                 fieldAction.doAction(board.getGameController(), space);
+                                player.createWinner();
                             }
                         }
                     }
@@ -376,8 +377,6 @@ public class GameController {
                 System.out.println("target is null");
             }
         }
-        player.createWinner();
-
 
     }
 
@@ -491,6 +490,10 @@ public class GameController {
                     System.out.println("Illegal heading - player.getHeading() " + t + " in moveToSpace");
                     break;
             }
+        }
+
+        if (space.hasPriorityAntenna()){
+            blocks = true;
         }
         return blocks;
     }

@@ -32,7 +32,7 @@ class PitTest {
     }
 
     @Test
-    void doAction() {
+    void doAction() throws ImpossibleMoveException {
         Space space = new Space(gameController.board, 3,3);
         Pit pit = new Pit();
         space.addFieldAction(pit);
@@ -42,22 +42,15 @@ class PitTest {
         CommandCardField[] program = player.getProgram();
 
         CommandCard commandCard;
-        for (CommandCardField c : card){
-            commandCard = new CommandCard(Command.FORWARD);
-            c.setCard(commandCard);
-            System.out.println(c.getCard().getCommand());
 
-        }
         for (CommandCardField p : program){
             commandCard = new CommandCard(Command.FORWARD);
             p.setCard(commandCard);
             System.out.println(p.getCard().getCommand());
         }
 
-        player.setSpace(space);
+        gameController.moveToSpace(player,space,player.getHeading());
 
-
-        //Assertions.assertTrue(player.isReboot());
 
         for (CommandCardField c : card){
             Assertions.assertNull(c.getCard());
