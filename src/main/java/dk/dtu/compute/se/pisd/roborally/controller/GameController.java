@@ -385,6 +385,7 @@ public class GameController {
      * Method moves player two spaces forward
      *
      * @param player to be moved
+     * @author S205354
      */
     public void fastForward(@NotNull Player player) {
 
@@ -396,6 +397,7 @@ public class GameController {
      * Method turns player to the right of the current 'Heading' / facing
      *
      * @param player to be turned
+     * @author S205354
      */
     public void turnRight(@NotNull Player player) {
         Heading heading = player.getHeading();
@@ -406,6 +408,7 @@ public class GameController {
      * Method turns player to the left of the current 'Heading' / facing
      *
      * @param player to be turned
+     * @author S205354
      */
     public void turnLeft(@NotNull Player player) {
         Heading heading = player.getHeading();
