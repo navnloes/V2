@@ -126,7 +126,7 @@ class Repository implements IRepository {
                 connection.setAutoCommit(true);
 
                 createCardFieldsinDB(game);
-                createCardStackInDB(game);
+                createCardStackinDB(game);
 
                 return true;
             } catch (SQLException e) {
@@ -170,6 +170,7 @@ class Repository implements IRepository {
 
             updatePlayersInDB(game);
             updateCardFieldsinDB(game);
+            updateCardStacksinDB(game);
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -614,7 +615,7 @@ class Repository implements IRepository {
      * @param game
      * @throws SQLException
      */
-    private void createCardStackInDB (Board game) throws SQLException {
+    private void createCardStackinDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectCardStackStatement();
         ps.setInt(1, game.getGameId());
         ResultSet rs = ps.executeQuery();
@@ -648,5 +649,32 @@ class Repository implements IRepository {
             }
         }
         rs.close();
+    }
+
+
+    /**
+     * This method updates the cardStacks in the databases by deleting the current saved cards and inserting new ones
+     * this is due to the fact that the size of deck and discardpile is variable
+     * @param game which cards need to be saved
+     * @author s205353
+     */
+    private void updateCardStacksinDB(Board game){
+        Connection connection = connector.getConnection();
+        try {
+            connection.setAutoCommit(false);
+
+            PreparedStatement ps = getSelectCardStackStatement();
+            ps.setInt(1, game.getGameId());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                rs.deleteRow();
+            }
+            rs.close();
+            createCardStackinDB(game);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
