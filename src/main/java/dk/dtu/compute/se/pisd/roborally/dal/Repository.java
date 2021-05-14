@@ -62,6 +62,8 @@ class Repository implements IRepository {
 
     private static final String PLAYER_HEADING = "heading";
 
+    private static final String PLAYER_CHECKPOINTTOKENS = "checkpointTokens";
+
     private static final int FIELD_TYPE_REGISTER = 0;
 
     private static final int FIELD_TYPE_HAND = 1;
@@ -277,6 +279,7 @@ class Repository implements IRepository {
             rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
             rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
             rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+            rs.updateInt(PLAYER_CHECKPOINTTOKENS,player.getCheckPointToken());
             rs.insertRow();
         }
         rs.close();
@@ -302,6 +305,11 @@ class Repository implements IRepository {
                 player.setSpace(game.getSpace(x, y));
                 int heading = rs.getInt(PLAYER_HEADING);
                 player.setHeading(Heading.values()[heading]);
+                int checkPointTokens = rs.getInt(PLAYER_CHECKPOINTTOKENS);
+                player.setCheckPointToken(checkPointTokens);
+                for (int j = 0; j < checkPointTokens; j++){
+                    player.getCheckPointArray()[j] = true;
+                }
             } else {
                 System.err.println("Game in DB does not have a player with id " + i + "!");
             }
@@ -321,6 +329,7 @@ class Repository implements IRepository {
             rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
             rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
             rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+            rs.updateInt(PLAYER_CHECKPOINTTOKENS,player.getCheckPointToken());
             rs.updateRow();
         }
         rs.close();
