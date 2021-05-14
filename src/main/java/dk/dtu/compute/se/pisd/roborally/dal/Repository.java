@@ -80,6 +80,20 @@ class Repository implements IRepository {
 
     private static final String FIELD_TYPE = "type";
 
+    private static final int CARDSTACK_TYPE_DECK = 0;
+
+    private static final int CARDSTACK_TYPE_DISCARD = 1;
+
+    private static final String CARDSTACK_POS = "position";
+
+    private static final String CARDSTACK_COMMAND = "command";
+
+    private static final String CARDSTACK_PLAYERID = "playerID";
+
+    private static final String CARDSTACK_TYPE = "type";
+
+
+
 
     private Connector connector;
 
@@ -628,10 +642,10 @@ class Repository implements IRepository {
             for (CommandCard c : deck){
                 rs.moveToInsertRow();
                 rs.updateInt("gameID", game.getGameId());
-                rs.updateInt(FIELD_PLAYERID, player.getPlayerId());
-                rs.updateInt(FIELD_TYPE, FIELD_TYPE_DECK);
-                rs.updateInt(FIELD_POS, deckpos);
-                rs.updateObject(FIELD_COMMAND, c.getCommand().ordinal());
+                rs.updateInt(CARDSTACK_PLAYERID, player.getPlayerId());
+                rs.updateInt(CARDSTACK_TYPE, CARDSTACK_TYPE_DECK);
+                rs.updateInt(CARDSTACK_POS, deckpos);
+                rs.updateObject(CARDSTACK_COMMAND, c.getCommand().ordinal());
                 rs.insertRow();
                 deckpos++;
             }
@@ -640,10 +654,10 @@ class Repository implements IRepository {
             for (CommandCard c : discards){
                 rs.moveToInsertRow();
                 rs.updateInt("gameID", game.getGameId());
-                rs.updateInt(FIELD_PLAYERID, player.getPlayerId());
-                rs.updateInt(FIELD_TYPE, FIELD_TYPE_DISCARD);
-                rs.updateInt(FIELD_POS, deckpos);
-                rs.updateObject(FIELD_COMMAND, c.getCommand().ordinal());
+                rs.updateInt(CARDSTACK_PLAYERID, player.getPlayerId());
+                rs.updateInt(CARDSTACK_TYPE, CARDSTACK_TYPE_DISCARD);
+                rs.updateInt(CARDSTACK_POS, deckpos);
+                rs.updateObject(CARDSTACK_COMMAND, c.getCommand().ordinal());
                 rs.insertRow();
                 deckpos++;
             }
@@ -675,6 +689,35 @@ class Repository implements IRepository {
 
         } catch (SQLException e){
             e.printStackTrace();
+        }
+    }
+
+    private void loadCardStackFromDB(Board game) throws SQLException {
+        PreparedStatement ps = getSelectCardStackStatement();
+        ps.setInt(1,game.getGameId());
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            int playerId = rs.getInt(FIELD_PLAYERID);
+            Player player = game.getPlayer(playerId);
+            int type = rs.getInt(FIELD_TYPE);
+            int pos = rs.getInt(FIELD_POS);
+            CommandCardField field;
+            if (type == FIELD_TYPE_REGISTER){
+                field = player.getProgramField(pos);
+            } else if (type == FIELD_TYPE_HAND) {
+                field = player.getCardField(pos);
+            } else {
+                field = null;
+            }
+            if (field != null) {
+                field.setVisible(rs.getBoolean(FIELD_VISIBLE));
+                Object c = rs.getObject(FIELD_COMMAND);
+                if (c != null) {
+                    Command card = Command.values()[rs.getInt(FIELD_COMMAND)];
+                    field.setCard(new CommandCard(card));
+                }
+            }
         }
     }
 }
