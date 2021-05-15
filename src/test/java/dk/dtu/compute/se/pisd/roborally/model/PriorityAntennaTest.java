@@ -58,6 +58,27 @@ class PriorityAntennaTest {
             System.out.println("[" + player.getName() + "]");
         }
 
+    }
 
+    @Test
+    void getPlayerTurnsSameDistance() {
+        Board board = gameController.board;
+        Player player0 = board.getPlayer(0);
+        Player player1 = board.getPlayer(1);
+
+        Space space = board.getSpace(5, 5);
+        player0.setSpace(space);
+        space = board.getSpace(5, 1);
+        player1.setSpace(space);
+
+        space = board.getSpace(5, 3);
+        PriorityAntenna priorityAntenna = new PriorityAntenna();
+        priorityAntenna.setSpace(space);
+
+        priorityAntenna.sortPlayerArray(board);
+
+        for (Player player : priorityAntenna.getPlayerTurns()){
+            System.out.println("[" + player.getName() + "]");
+        }
     }
 }
