@@ -2,7 +2,6 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
