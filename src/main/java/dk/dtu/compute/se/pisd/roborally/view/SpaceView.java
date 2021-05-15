@@ -23,10 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.*;
-import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -179,15 +176,15 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 this.getChildren().add(label);
 
-                //Pit
-            } else if (fieldAction instanceof Pit) {
+                //PitFieldAction
+            } else if (fieldAction instanceof PitFieldAction) {
                 gc.setLineWidth(1);
                 gc.setStroke(Color.BROWN);
                 gc.setFill(Color.BLACK);
                 gc.fillOval(12.5, 12.5, 49, 49);
                 gc.strokeOval(12.5, 12.5, 50, 50);
                 gc.strokeOval(12.5, 12.5, 51, 51);
-                Node label = new Label("Pit ");
+                Node label = new Label("Pit");
                 this.getChildren().add(label);
             }
         }

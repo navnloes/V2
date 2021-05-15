@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-
 class PitTest {
 
     private final int TEST_WIDTH = 8;
@@ -36,7 +34,7 @@ class PitTest {
     @Test
     void doAction() {
         Space space = gameController.board.getSpace(3,3);
-        Pit pit = new Pit();
+        PitFieldAction pit = new PitFieldAction();
         space.addFieldAction(pit);
         Player player = gameController.board.getCurrentPlayer();
         Space startSpace = gameController.board.getSpace(5,5);
