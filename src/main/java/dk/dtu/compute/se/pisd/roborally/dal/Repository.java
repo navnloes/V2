@@ -462,7 +462,7 @@ class Repository implements IRepository {
 
     /**
      * This method returns an Arraylist of all the gameIds of the saved games
-     * @return
+     * @return ArrayList<Integer> gameIds
      */
     public ArrayList<Integer> getGameIds() {
         ArrayList<Integer> gameIds = new ArrayList<>();
@@ -531,6 +531,11 @@ class Repository implements IRepository {
         return select_card_field_stmt;
     }
 
+    /**
+     * This method loads all the cardFields from the database for the desired game
+     * @param game Board game
+     * @throws SQLException
+     */
     private void loadCardFieldsFromDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectCardFieldStatement();
         ps.setInt(1, game.getGameId());
@@ -669,9 +674,10 @@ class Repository implements IRepository {
     }
 
     /**
+     * @author s205353
      * This method inserts each player's deck cards and discard cards into the table
      *
-     * @param game
+     * @param game Board game
      * @throws SQLException
      */
     private void createCardStackinDB(Board game) throws SQLException {
@@ -712,11 +718,11 @@ class Repository implements IRepository {
 
 
     /**
+     * @author s205353
      * This method updates the cardStacks in the databases by deleting the current saved cards and inserting new ones
      * this is due to the fact that the size of deck and discardpile is variable
      *
      * @param game which cards need to be saved
-     * @author s205353
      */
     private void updateCardStacksinDB(Board game) {
         Connection connection = connector.getConnection();
@@ -738,6 +744,12 @@ class Repository implements IRepository {
         }
     }
 
+    /**
+     * This method loads the cardstacks deck and discarpile from the database
+     * The loaded cards are pushed into the loaded player's stack of cards
+     * @param game Board game
+     * @throws SQLException
+     */
     private void loadCardStackFromDB(Board game) throws SQLException {
 
         for (Player player : game.getPlayers()) {
