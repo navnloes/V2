@@ -32,7 +32,7 @@ import java.sql.Statement;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- * @Altered by s205354, s205353
+ * @altered by s205354, s205353
  *
  */
 public class Connector {
