@@ -27,6 +27,13 @@ public class StopWatch extends Subject {
 
     private Label label;
 
+    /**
+     * This is the constructor of the stopwatch
+     * @param interval int interval
+     * @param delay int delay
+     * @param period int period
+     * @param displayLabel Label displayLabel
+     */
     public StopWatch(int interval, int delay, int period, Label displayLabel) {
         this.timer = new Timer();
         this.interval = interval;
@@ -36,8 +43,9 @@ public class StopWatch extends Subject {
         //this.gameController = gameController;
     }
 
-
-
+    /**
+     * This method starts the timer
+     */
     public void startTimer(){
         this.timer = new Timer();
         activeInterval = interval;
@@ -52,37 +60,49 @@ public class StopWatch extends Subject {
         }, delay, period);
     }
 
+    /**
+     * This method sets the active interval
+     * @return int activeInterval
+     */
     public final int setInterval() {
         if (activeInterval == 1) {
             timer.cancel();
-            /*for (StopWatchListener l : listeners){
-                l.onZero();
-            }*/
-            //gameController.finishProgrammingPhase();
         }
         --activeInterval;
-
         notifyChange();
         label.setText(activeInterval + "");
         return activeInterval;
     }
 
+    /**
+     * This method stops the timer
+     */
     public void stop() {
         timer.cancel();
     }
 
+    /**
+     * This getter returns the interval
+     * @return int interval
+     */
     public int getInterval() {
         return interval;
     }
 
+    /**
+     * This getter returns the activeInterval
+     * @return int activeInterval
+     */
     public int getActiveInterval() {
         return activeInterval;
     }
 
+    /**
+     * This method sets the interval
+     * @param interval int interval
+     */
     public void setInterval(int interval) {
         this.interval = interval;
     }
 
-    public void reset() {time = Duration.ZERO;
-    }
 }
