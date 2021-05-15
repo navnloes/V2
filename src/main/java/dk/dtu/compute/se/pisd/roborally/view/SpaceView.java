@@ -59,6 +59,10 @@ public class SpaceView extends StackPane implements ViewObserver {
     Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
+    /**
+     * This is the constructor of SpaceView class
+     * @param space Space space
+     */
     public SpaceView(@NotNull Space space) {
         this.space = space;
 
@@ -71,8 +75,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
-
-        //TODO: finde ud af om dette kan undgås
         if(!space.hasPriorityAntenna()) {
             if ((space.x + space.y) % 2 == 0) {
                 this.setStyle("-fx-background-color: white;");
@@ -83,7 +85,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         updateSpaces();
         updatePlayer();
-
 
         // This space view should listen to changes of the space
         space.attach(this);
@@ -96,7 +97,6 @@ public class SpaceView extends StackPane implements ViewObserver {
      *
      * @author S205354, S205353
      */
-
     private void updateSpaces() {
 
         this.getChildren().clear();
@@ -179,6 +179,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 this.getChildren().add(label);
 
+                //Pit
             } else if (fieldAction instanceof Pit) {
                 gc.setLineWidth(1);
                 gc.setStroke(Color.BROWN);
@@ -194,16 +195,14 @@ public class SpaceView extends StackPane implements ViewObserver {
         //Walls
         headings = space.getWalls();
         drawWalls();
-        // drawGears();
-        //playerAttackMove(player);
 
+        //PriorityAntenna
         if (space.hasPriorityAntenna()){
             FileInputStream input = null;
             try {
                 ClassLoader classLoader = SpaceView.class.getClassLoader();
                 String filename =
                         classLoader.getResource(BOARDSFOLDER).getPath() + "/antennaV2.jpg";
-
 
                 input = new FileInputStream(filename);
                 Image image2 = new Image(input);
@@ -230,6 +229,9 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     }
 
+    /**
+     * This method updates the player on this space
+     */
     public void updatePlayer() {
 
         //Player Sprite
@@ -256,8 +258,6 @@ public class SpaceView extends StackPane implements ViewObserver {
     /**
      * @author S205354, S205353
      */
-
-
     private void drawWalls() {
         if (!headings.isEmpty()) {
 
@@ -285,13 +285,11 @@ public class SpaceView extends StackPane implements ViewObserver {
     /**
      * drawStartPosition @author s205354
      */
-
     private void drawStartPosition () {
 
         Player player = space.getPlayer();
 
         if (player != null && space == player.getStartSpace()) {
-
 
             switch (player.getColor()) {
                 case "red":
@@ -322,7 +320,10 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     }
 
-
+    /**
+     * This method updates the spaceview of the space
+     * @param subject
+     */
     @Override
     public void updateView(Subject subject) {
 
