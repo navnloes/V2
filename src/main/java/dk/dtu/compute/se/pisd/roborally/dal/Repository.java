@@ -530,6 +530,7 @@ class Repository implements IRepository {
                 }
             }
         }
+        rs.close();
     }
 
     /**

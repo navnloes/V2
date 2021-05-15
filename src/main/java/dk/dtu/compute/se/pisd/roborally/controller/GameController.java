@@ -52,8 +52,6 @@ public class GameController {
      * @param space the space to which the current player should move
      */
     public void moveCurrentPlayerToSpace(@NotNull Space space) {
-
-
         if (space.getPlayer() == null) {
             Player currentPlayer = board.getCurrentPlayer();
             currentPlayer.setSpace(space);
@@ -214,7 +212,6 @@ public class GameController {
                 break;
             }
         }
-
         if ((board.getPhase() == Phase.ACTIVATION) ||
                 (board.getPhase() == Phase.PLAYER_INTERACTION && board.getUserChoice() != null)
                         && currentPlayer != null) {
@@ -244,6 +241,7 @@ public class GameController {
                 } else {
                     for (Player player : board.getPlayers()){
                         Space space = player.getSpace();
+                        space.setPlayer(player);
                         if (!space.getActions().isEmpty()){
                             for (FieldAction fieldAction : space.getActions()) {
                                 fieldAction.doAction(board.getGameController(), space);

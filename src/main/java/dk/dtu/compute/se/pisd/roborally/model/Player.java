@@ -363,7 +363,7 @@ public class Player extends Subject {
      * This method is called when a robot is hit by a laser
      * The robot's life gets updated, and if the robot has lost all of its 3 lives, then it is rebooted
      *
-     * @auhtor s205353, s205339, s201192
+     * @author s205353, s205339, s201192
      */
     public void spamDamage(int damageCards) {
         for (int i = 0; i < damageCards; i++)
@@ -412,6 +412,10 @@ public class Player extends Subject {
         playerActions.add(playerAction);
     }
 
+    /**
+     * This method makes a given card invisible
+     * @param i is the index of the card in the CommandCard[] cards
+     */
     public void setCardInvisible(int i) {
         cards[i].setVisible(false);
         notifyChange();
@@ -470,10 +474,18 @@ public class Player extends Subject {
         discardpile.push(card);
     }
 
+    /**
+     * This method returns the player's cardDeck
+     * @return Stack<CommandCard> deck
+     */
     public Stack<CommandCard> getCardDeck(){
         return deck;
     }
 
+    /**
+     * This method returns the player's discardpile
+     * @return Stack<CommandCard> discardpile
+     */
     public Stack<CommandCard> getDiscardpile(){
         return discardpile;
     }
