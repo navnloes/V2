@@ -32,7 +32,7 @@ import java.sql.Statement;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- * @Altered by s205354, s205353
+ * @altered by s205354, s205353
  *
  */
 public class Connector {
@@ -41,7 +41,7 @@ public class Connector {
     private static final int    PORT     = 3306;
     //private static final String DATABASE = "pisu";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "pelle";
+    private static final String PASSWORD = "root";
 
     private static final String DELIMITER = ";;";
     
