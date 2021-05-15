@@ -20,6 +20,7 @@
  *
  */
 package dk.dtu.compute.se.pisd.roborally.dal;
+
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 
@@ -91,8 +92,6 @@ class Repository implements IRepository {
     private static final String CARDSTACK_TYPE = "type";
 
 
-
-
     private Connector connector;
 
     Repository(Connector connector) {
@@ -101,8 +100,9 @@ class Repository implements IRepository {
 
     /**
      * This method creates/inserts the data of the game into the database
+     *
      * @param game Board game that needs to be saved
-     * @return
+     * @return boolean true if the game is succesfully created
      */
     @Override
     public boolean createGameInDB(Board game) {
@@ -145,8 +145,6 @@ class Repository implements IRepository {
                 connection.commit();
                 connection.setAutoCommit(true);
 
-
-
                 return true;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -166,6 +164,12 @@ class Repository implements IRepository {
         return false;
     }
 
+    /**
+     * This method updates the game in the database
+     * First it updates the currently saved game, and then it updates the saved players, cardstacks and cardfields
+     * @param game
+     * @return true if the game is succesfully updated in the database
+     */
     @Override
     public boolean updateGameInDB(Board game) {
         assert game.getGameId() != null;
@@ -209,6 +213,11 @@ class Repository implements IRepository {
         return false;
     }
 
+    /**
+     * This method loads a given game from the database
+     * @param id int id - the gameID of the game to be loaded
+     * @return Board game - if the game is succesfully loaded
+     */
     @Override
     public Board loadGameFromDB(int id) {
         try {
@@ -219,16 +228,11 @@ class Repository implements IRepository {
             int playerNo;
             if (rs.next()) {
                 String boardName = rs.getString(GAME_BOARDNAME);
-                // TODO currently we do not set the games name (needs to be added)
-                 game = LoadBoard.loadBoard(boardName);
-                // TODO and we should also store the used game board in the database
-                //      for now, we use the default game board
-
+                game = LoadBoard.loadBoard(boardName);
                 playerNo = rs.getInt(GAME_CURRENTPLAYER);
                 game.setPhase(Phase.values()[rs.getInt(GAME_PHASE)]);
                 game.setStep(rs.getInt(GAME_STEP));
             } else {
-                // TODO error handling
                 return null;
             }
             rs.close();
@@ -250,6 +254,10 @@ class Repository implements IRepository {
         return null;
     }
 
+    /**
+     * This method returns all of the saved games in the DB
+     * @return List<GameInDB> result - all saved games in the database
+     */
     @Override
     public List<GameInDB> getGames() {
         List<GameInDB> result = new ArrayList<>();
@@ -268,6 +276,11 @@ class Repository implements IRepository {
         return result;
     }
 
+    /**
+     *This method creates the players in the database
+     * @param game Board game
+     * @throws SQLException
+     */
     private void createPlayersInDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectPlayersStatementU();
         ps.setInt(1, game.getGameId());
@@ -284,12 +297,18 @@ class Repository implements IRepository {
             rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
             rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
             rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
-            rs.updateInt(PLAYER_CHECKPOINTTOKENS,player.getCheckPointToken());
+            rs.updateInt(PLAYER_CHECKPOINTTOKENS, player.getCheckPointToken());
             rs.insertRow();
         }
         rs.close();
     }
 
+    /**
+     * This method loads the saved players from the database
+     * this method is used when loading a specific game from the database
+     * @param game Board game
+     * @throws SQLException
+     */
     private void loadPlayersFromDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectPlayersASCStatement();
         ps.setInt(1, game.getGameId());
@@ -312,7 +331,7 @@ class Repository implements IRepository {
                 player.setHeading(Heading.values()[heading]);
                 int checkPointTokens = rs.getInt(PLAYER_CHECKPOINTTOKENS);
                 player.setCheckPointToken(checkPointTokens);
-                for (int j = 0; j < checkPointTokens; j++){
+                for (int j = 0; j < checkPointTokens; j++) {
                     player.getCheckPointArray()[j] = true;
                 }
             } else {
@@ -322,6 +341,11 @@ class Repository implements IRepository {
         rs.close();
     }
 
+    /**
+     * This method updates the saved players in the database
+     * @param game Board game
+     * @throws SQLException
+     */
     private void updatePlayersInDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectPlayersStatementU();
         ps.setInt(1, game.getGameId());
@@ -334,7 +358,7 @@ class Repository implements IRepository {
             rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
             rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
             rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
-            rs.updateInt(PLAYER_CHECKPOINTTOKENS,player.getCheckPointToken());
+            rs.updateInt(PLAYER_CHECKPOINTTOKENS, player.getCheckPointToken());
             rs.updateRow();
         }
         rs.close();
@@ -436,16 +460,19 @@ class Repository implements IRepository {
         return select_games_stmt;
     }
 
-    public ArrayList<Integer> getGameIds(){
+    /**
+     * This method returns an Arraylist of all the gameIds of the saved games
+     * @return
+     */
+    public ArrayList<Integer> getGameIds() {
         ArrayList<Integer> gameIds = new ArrayList<>();
         Connection connection = connector.getConnection();
-        String query = "select * from game order by gameId DESC";
         int id = 0;
         try {
             connection.setAutoCommit(false);
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = getSelectGameIdsStatement();
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 id = rs.getInt("gameId");
                 gameIds.add(id);
             }
@@ -458,11 +485,12 @@ class Repository implements IRepository {
 
     /**
      * This method gets the saved players from the database and adds them to ArrayList<Player> players
-     * @param board Board board
+     *
+     * @param board  Board board
      * @param gameId int gameId of the chosen game
      * @return ArrayList<Player> players
      */
-    public ArrayList<Player> getPlayerList(Board board, int gameId){
+    public ArrayList<Player> getPlayerList(Board board, int gameId) {
         ArrayList<Player> players = new ArrayList<>();
 
         Connection connection = connector.getConnection();
@@ -471,12 +499,12 @@ class Repository implements IRepository {
             connection.setAutoCommit(false);
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                Player player = new Player(board,rs.getString(4),rs.getString(3));
+            while (rs.next()) {
+                Player player = new Player(board, rs.getString(4), rs.getString(3));
 
                 player.setPlayerId(rs.getInt(2));
                 player.setHeading(Heading.getHeading(rs.getInt(7)));
-                player.setSpace(new Space (board, rs.getInt(5),rs.getInt(6)));
+                player.setSpace(new Space(board, rs.getInt(5), rs.getInt(6)));
                 players.add(player);
             }
             rs.close();
@@ -490,8 +518,8 @@ class Repository implements IRepository {
     private static final String SQL_SELECT_CARD_FIELDS = "SELECT* FROM CardField WHERE gameID = ?";
     private PreparedStatement select_card_field_stmt = null;
 
-    private PreparedStatement getSelectCardFieldStatement(){
-        if (select_card_field_stmt == null){
+    private PreparedStatement getSelectCardFieldStatement() {
+        if (select_card_field_stmt == null) {
             Connection connection = connector.getConnection();
             try {
                 select_card_field_stmt = connection.prepareStatement(
@@ -505,16 +533,16 @@ class Repository implements IRepository {
 
     private void loadCardFieldsFromDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectCardFieldStatement();
-        ps.setInt(1,game.getGameId());
+        ps.setInt(1, game.getGameId());
 
         ResultSet rs = ps.executeQuery();
-        while (rs.next()){
+        while (rs.next()) {
             int playerId = rs.getInt(FIELD_PLAYERID);
             Player player = game.getPlayer(playerId);
             int type = rs.getInt(FIELD_TYPE);
             int pos = rs.getInt(FIELD_POS);
             CommandCardField field;
-            if (type == FIELD_TYPE_REGISTER){
+            if (type == FIELD_TYPE_REGISTER) {
                 field = player.getProgramField(pos);
             } else if (type == FIELD_TYPE_HAND) {
                 field = player.getCardField(pos);
@@ -535,10 +563,11 @@ class Repository implements IRepository {
 
     /**
      * This method creates the cardFields in the database
+     *
      * @param game
      * @throws SQLException
      */
-    private void createCardFieldsinDB (Board game) throws SQLException {
+    private void createCardFieldsinDB(Board game) throws SQLException {
         PreparedStatement ps = getSelectCardFieldStatement();
         ps.setInt(1, game.getGameId());
         ResultSet rs = ps.executeQuery();
@@ -553,7 +582,7 @@ class Repository implements IRepository {
                 rs.updateInt(FIELD_TYPE, FIELD_TYPE_HAND);
                 rs.updateBoolean(FIELD_VISIBLE, cards[j].isVisible());
                 rs.updateInt(FIELD_POS, j);
-                if(cards[j].getCard() != null)
+                if (cards[j].getCard() != null)
                     rs.updateObject(FIELD_COMMAND, cards[j].getCard().getCommand().ordinal());
                 else
                     rs.updateObject(FIELD_COMMAND, null);
@@ -566,7 +595,7 @@ class Repository implements IRepository {
                 rs.updateInt(FIELD_TYPE, FIELD_TYPE_REGISTER);
                 rs.updateInt(FIELD_POS, j);
                 rs.updateBoolean(FIELD_VISIBLE, program[j].isVisible());
-                if(program[j].getCard() != null)
+                if (program[j].getCard() != null)
                     rs.updateObject(FIELD_COMMAND, program[j].getCard().getCommand().ordinal());
                 else
                     rs.updateObject(FIELD_COMMAND, null);
@@ -578,10 +607,11 @@ class Repository implements IRepository {
 
     /**
      * This method updates the cardFields in the databases
+     *
      * @param game which cards need to be saved
      * @author s205353
      */
-    private void updateCardFieldsinDB(Board game){
+    private void updateCardFieldsinDB(Board game) {
         Connection connection = connector.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -596,17 +626,17 @@ class Repository implements IRepository {
                 int pos = rs.getInt(FIELD_POS);
                 int type = rs.getInt(FIELD_TYPE);
                 boolean visible = false;
-                if(type == FIELD_TYPE_REGISTER) {
+                if (type == FIELD_TYPE_REGISTER) {
                     visible = player.getProgram()[pos].isVisible();
                     rs.updateBoolean(FIELD_VISIBLE, visible);
-                    if(player.getProgram()[pos].getCard() != null)
+                    if (player.getProgram()[pos].getCard() != null)
                         rs.updateObject(FIELD_COMMAND, player.getProgram()[pos].getCard().getCommand().ordinal());
                     else
                         rs.updateObject(FIELD_COMMAND, null);
-                } else if (type == FIELD_TYPE_HAND){
+                } else if (type == FIELD_TYPE_HAND) {
                     visible = player.getCards()[pos].isVisible();
                     rs.updateBoolean(FIELD_VISIBLE, visible);
-                    if(player.getCards()[pos].getCard() != null)
+                    if (player.getCards()[pos].getCard() != null)
                         rs.updateObject(FIELD_COMMAND, player.getCards()[pos].getCard().getCommand().ordinal());
                     else
                         rs.updateObject(FIELD_COMMAND, null);
@@ -617,7 +647,7 @@ class Repository implements IRepository {
             }
             rs.close();
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -625,8 +655,8 @@ class Repository implements IRepository {
     private static final String SQL_SELECT_CARDSTACK = "SELECT* FROM CardStack WHERE gameID = ?";
     private PreparedStatement select_cardstack_stmt = null;
 
-    private PreparedStatement getSelectCardStackStatement(){
-        if (select_cardstack_stmt == null){
+    private PreparedStatement getSelectCardStackStatement() {
+        if (select_cardstack_stmt == null) {
             Connection connection = connector.getConnection();
             try {
                 select_cardstack_stmt = connection.prepareStatement(
@@ -640,6 +670,7 @@ class Repository implements IRepository {
 
     /**
      * This method inserts each player's deck cards and discard cards into the table
+     *
      * @param game
      * @throws SQLException
      */
@@ -653,7 +684,7 @@ class Repository implements IRepository {
             Stack<CommandCard> deck = player.getCardDeck();
             Stack<CommandCard> discards = player.getDiscardpile();
             int deckpos = 0;
-            for (CommandCard c : deck){
+            for (CommandCard c : deck) {
                 rs.moveToInsertRow();
                 rs.updateInt("gameID", game.getGameId());
                 rs.updateInt(CARDSTACK_PLAYERID, player.getPlayerId());
@@ -665,7 +696,7 @@ class Repository implements IRepository {
             }
 
             deckpos = 0;
-            for (CommandCard c : discards){
+            for (CommandCard c : discards) {
                 rs.moveToInsertRow();
                 rs.updateInt("gameID", game.getGameId());
                 rs.updateInt(CARDSTACK_PLAYERID, player.getPlayerId());
@@ -683,10 +714,11 @@ class Repository implements IRepository {
     /**
      * This method updates the cardStacks in the databases by deleting the current saved cards and inserting new ones
      * this is due to the fact that the size of deck and discardpile is variable
+     *
      * @param game which cards need to be saved
      * @author s205353
      */
-    private void updateCardStacksinDB(Board game){
+    private void updateCardStacksinDB(Board game) {
         Connection connection = connector.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -701,23 +733,23 @@ class Repository implements IRepository {
             rs.close();
             createCardStackinDB(game);
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     private void loadCardStackFromDB(Board game) throws SQLException {
 
-        for (Player player : game.getPlayers()){
+        for (Player player : game.getPlayers()) {
             player.getCardDeck().clear();
             player.getDiscardpile().clear();
         }
         PreparedStatement ps = getSelectCardStackStatement();
-        ps.setInt(1,game.getGameId());
+        ps.setInt(1, game.getGameId());
 
         ResultSet rs = ps.executeQuery();
 
-        while (rs.next()){
+        while (rs.next()) {
             int playerId = rs.getInt(CARDSTACK_PLAYERID);
             Player player = game.getPlayer(playerId);
             int type = rs.getInt(CARDSTACK_TYPE);

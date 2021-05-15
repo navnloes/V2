@@ -241,6 +241,7 @@ public class GameController {
                 } else {
                     for (Player player : board.getPlayers()){
                         Space space = player.getSpace();
+                        //this setter ensures that the space a given player knows, is the same space that player is on
                         space.setPlayer(player);
                         if (!space.getActions().isEmpty()){
                             for (FieldAction fieldAction : space.getActions()) {
