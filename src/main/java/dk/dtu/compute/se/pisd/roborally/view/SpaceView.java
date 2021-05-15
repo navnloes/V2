@@ -81,15 +81,21 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
 
-
+        updateSpaces();
         updatePlayer();
+
 
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
     }
 
-    private void updatePlayer() {
+    /**
+     *  updatePlayer while name semi missleading also contains the fieldAction visual elements for the board
+     *  that gets created when spaces are being setup.
+     */
+
+    private void updateSpaces() {
 
         this.getChildren().clear();
 
@@ -183,28 +189,6 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
 
-
-
-        //Player Sprite
-        Player player = space.getPlayer();
-        if (player != null) {
-            Polygon arrow = new Polygon(0.0, 0.0,
-                    10.0, 20.0,
-                    20.0, 0.0);
-            try {
-                arrow.setFill(Color.valueOf(player.getColor()));
-            } catch (Exception e) {
-                arrow.setFill(Color.MEDIUMPURPLE);
-            }
-
-            arrow.setRotate((90 * player.getHeading().ordinal()) % 360);
-            this.getChildren().add(arrow);
-
-            Label label = new Label(Integer.toString(player.getCheckPointToken()));
-            this.getChildren().add(label);
-            label.toFront();
-        }
-
         //Walls
         headings = space.getWalls();
         drawWalls();
@@ -242,6 +226,29 @@ public class SpaceView extends StackPane implements ViewObserver {
             System.out.println("Unable to create multi Canvas");
         }
 
+    }
+
+    public void updatePlayer() {
+
+        //Player Sprite
+        Player player = space.getPlayer();
+        if (player != null) {
+            Polygon arrow = new Polygon(0.0, 0.0,
+                    10.0, 20.0,
+                    20.0, 0.0);
+            try {
+                arrow.setFill(Color.valueOf(player.getColor()));
+            } catch (Exception e) {
+                arrow.setFill(Color.MEDIUMPURPLE);
+            }
+
+            arrow.setRotate((90 * player.getHeading().ordinal()) % 360);
+            this.getChildren().add(arrow);
+
+            Label label = new Label(Integer.toString(player.getCheckPointToken()));
+            this.getChildren().add(label);
+            label.toFront();
+        }
     }
 
     /**
@@ -314,48 +321,11 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
 
-    //TODO: Laser hvis muligt.
-    private void playerAttackMove(Player player) {
-
-//        if(!(player == null)) {
-//
-//            String billedSti = "pictures/laser";
-//
-//            try {
-//                BufferedImage laser = ImageIO.read(new File(billedSti));
-//                JLabel picLabel = new JLabel(new ImageIcon(laser));
-//                JPanel jPanel = new JPanel();
-//                jPanel.add(picLabel);
-//            } catch (Exception e) {
-//            }
-//        }
-
-
-//        if (!(player == null)) {
-//            gc.setLineWidth(8);
-//            gc.setStroke(Color.DARKRED);
-//
-//            if (player.getHeading() == Heading.NORTH) {
-//                gc.strokeLine(0, 0,
-//                        0, 0);
-//            } else if (player.getHeading() == Heading.EAST) {
-//                gc.strokeLine(2, 2,
-//                        SPACE_WIDTH - 2, 2);
-//            } else if (player.getHeading() == Heading.SOUTH) {
-//                gc.strokeLine(35, 35,
-//                        35, 50);
-//            } else if (player.getHeading() == Heading.WEST) {
-//                gc.strokeLine(SPACE_WIDTH - 2, 2,
-//                        SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-//            }
-//
-//        }
-    }
-
     @Override
     public void updateView(Subject subject) {
 
         if (subject == this.space) {
+            updateSpaces();
             updatePlayer();
         }
     }
