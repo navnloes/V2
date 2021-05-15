@@ -46,6 +46,12 @@ public class Space extends Subject {
     private List<Heading> walls;
     private List<FieldAction> fieldActions;
 
+    /**
+     * This is the constructor for Space
+     * @param board Board board
+     * @param x int x-coordinate
+     * @param y int y-coordinate
+     */
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
@@ -57,10 +63,18 @@ public class Space extends Subject {
         hasPriorityAntenna = false;
     }
 
+    /**
+     * This getter returns the player on the given space
+     * @return Player player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * This method sets the player on the given space
+     * @param player Player player
+     */
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;
         if (player != oldPlayer &&
@@ -77,6 +91,9 @@ public class Space extends Subject {
         }
     }
 
+    /**
+     * This method notifies the observer of a playerChange on this space
+     */
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can
@@ -84,26 +101,50 @@ public class Space extends Subject {
         notifyChange();
     }
 
+    /**
+     * This getter returns the fieldActions on this space
+     * @return List<FieldAction> fieldActions
+     */
     public List<FieldAction> getActions() {
         return fieldActions;
     }
 
+    /**
+     * This getter returns the walls on this space
+     * @return List<Heading> walls
+     */
     public List<Heading> getWalls(){
         return walls;
     }
 
+    /**
+     * This method adds a wall to a space
+     * @param wall Heading wall
+     */
     public void addWall(Heading wall){
         walls.add(wall);
     }
 
+    /**
+     * This method adds a fieldAction to this space
+     * @param fieldAction FieldAction fieldAction
+     */
     public void addFieldAction(FieldAction fieldAction){
         fieldActions.add(fieldAction);
     }
 
+    /**
+     * This method tells the space that it has a priorityAntenna
+     * @param has boolean has
+     */
     public void setPriorityAntenna(boolean has){
         hasPriorityAntenna = has;
     }
 
+    /**
+     * This getter returns the boolean hasPriorityAntenna and is used to check if the space has a priorityAntenna
+     * @return boolean hasPriorityAntenna
+     */
     public boolean hasPriorityAntenna(){
         return hasPriorityAntenna;
     }

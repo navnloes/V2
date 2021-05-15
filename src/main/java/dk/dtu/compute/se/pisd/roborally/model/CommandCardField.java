@@ -38,16 +38,28 @@ public class CommandCardField extends Subject {
 
     private boolean visible;
 
+    /**
+     * This is the constructor of CommandCardfield
+     * @param player
+     */
     public CommandCardField(Player player) {
         this.player = player;
         this.card = null;
         this.visible = true;
     }
 
+    /**
+     * this getter returns the commandCard on this commandCardField
+     * @return CommandCard card
+     */
     public CommandCard getCard() {
         return card;
     }
 
+    /**
+     *This setter sets a card on this commandCardField
+     * @param card CommandCard card
+     */
     public void setCard(CommandCard card) {
         if (card != this.card) {
             this.card = card;
@@ -55,10 +67,18 @@ public class CommandCardField extends Subject {
         }
     }
 
+    /**
+     * This method makes a commandCardField visible
+     * @return boolean visible
+     */
     public boolean isVisible() {
         return visible;
     }
 
+    /**
+     * This method sets the visibility of the commandCardField
+     * @param visible
+     */
     public void setVisible(boolean visible) {
         if (visible != this.visible) {
             this.visible = visible;

@@ -32,16 +32,28 @@ import org.jetbrains.annotations.NotNull;
  */
 public class CommandCard extends Subject {
 
+    /**
+     * This getter returns the command of the commandCard
+     * @return Command command
+     */
     public Command getCommand() {
         return command;
     }
 
     final public Command command;
 
+    /**
+     * This is the constructor of CommandCard
+     * @param command
+     */
     public CommandCard(@NotNull Command command) {
         this.command = command;
     }
 
+    /**
+     * This getter returns the name of the CommandCard / the command's name
+     * @return String command name
+     */
     public String getName() {
         return command.displayName;
     }

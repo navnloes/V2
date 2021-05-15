@@ -33,6 +33,10 @@ import javafx.application.Platform;
  */
 public interface ViewObserver extends Observer {
 
+    /**
+     * This method updates the view of the passed subject
+     * @param subject Subject subject
+     */
     void updateView(Subject subject);
 
     @Override

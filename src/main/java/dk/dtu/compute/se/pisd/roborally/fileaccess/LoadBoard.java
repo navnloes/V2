@@ -46,6 +46,11 @@ public class LoadBoard {
     private static String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
 
+    /**
+     * This method loads a json board
+     * @param boardname String boardname
+     * @return Board
+     */
     public static Board loadBoard(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
@@ -103,6 +108,11 @@ public class LoadBoard {
         return null;
     }
 
+    /**
+     * This method saves the board
+     * @param board Board board
+     * @param name String name
+     */
     public static void saveBoard(Board board, String name) {
         BoardTemplate template = new BoardTemplate();
         template.width = board.width;
@@ -163,6 +173,14 @@ public class LoadBoard {
         }
     }
 
+    /**
+     * This method creates a board
+     * @param x int x
+     * @param y int y
+     * @param boardName String boardName
+     * @param json boolean json
+     * @return Board
+     */
     private static Board createBoard(int x, int y, String boardName, boolean json){
         Board board = new Board(x,y, boardName);
 

@@ -67,6 +67,11 @@ public class CardFieldView extends GridPane implements ViewObserver {
 
     private GameController gameController;
 
+    /**
+     * This is the constructor of CardFieldView
+     * @param gameController GameController gameController
+     * @param field CommandCardField field
+     */
     public CardFieldView(@NotNull GameController gameController, @NotNull CommandCardField field) {
         this.gameController = gameController;
         this.field = field;

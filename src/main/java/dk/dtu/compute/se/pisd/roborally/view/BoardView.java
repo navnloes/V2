@@ -52,6 +52,10 @@ public class BoardView extends VBox implements ViewObserver {
 
     private Label statusLabel;
 
+    /**
+     * This is the constructor of BoardView
+     * @param gameController Gamecontroller gameController
+     */
     public BoardView(@NotNull GameController gameController) {
 
         board = gameController.board;

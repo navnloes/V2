@@ -53,42 +53,27 @@ public enum Command {
         this.options = Collections.unmodifiableList(Arrays.asList(options));
     }
 
+    /**
+     * This method true if Command is interactive
+     * @return boolean !options.isEmpty
+     */
     public boolean isInteractive() {
         return !options.isEmpty();
     }
 
+    /**
+     * This method returns the options of a Command
+     * @return options
+     */
     public List<Command> getOptions() {
         return options;
     }
 
-    public static int getId(Command command){
-        int cId = -1;
-        switch (command) {
-            case FORWARD:
-                cId = 0;
-                break;
-            case RIGHT:
-                cId = 1;
-                break;
-            case LEFT:
-                cId = 2;
-                break;
-            case FAST_FORWARD:
-                cId = 3;
-                break;
-            case OPTION_LEFT_RIGHT:
-                cId = 4;
-                break;
-            case SPAM:
-                cId = 5;
-                break;
-            default:
-                System.out.println("Illegal cardType - CardID " + cId + " in updatecardFieldsInDB");
-                break;
-        }
-        return cId;
-    }
-
+    /**
+     * This method returns the command based on an int
+     * @param index int index
+     * @return Command command
+     */
     public static Command getCommand(int index){
         Command command = null;
         switch (index) {

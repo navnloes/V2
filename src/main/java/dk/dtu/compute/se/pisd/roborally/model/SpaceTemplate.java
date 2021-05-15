@@ -40,6 +40,9 @@ public class SpaceTemplate {
     public int x;
     public int y;
 
+    /**
+     * This is the constructor of SpaceTemplate
+     */
     public SpaceTemplate(){
     }
 

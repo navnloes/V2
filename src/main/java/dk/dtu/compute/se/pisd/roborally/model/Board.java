@@ -286,10 +286,18 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * This getter returns hte priorityAntenna on the board
+     * @return
+     */
     public PriorityAntenna getPriorityAntenna(){
         return priorityAntenna;
     }
 
+    /**
+     * This method adds priorityAntenna to the board
+     * @param priorityAntenna PriorityAntenna priorityAntenna
+     */
     public void addPriorityAntenna(PriorityAntenna priorityAntenna){
         this.priorityAntenna = priorityAntenna;
     }

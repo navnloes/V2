@@ -6,6 +6,12 @@ public class ImpossibleMoveException extends Exception {
     private Space space;
     private Heading heading;
 
+    /**
+     * This is the constructor of ImpossibleMoveException
+     * @param player Player player
+     * @param space Space space
+     * @param heading Heading heading
+     */
     public ImpossibleMoveException(
             Player player, Space space, Heading heading) {
         super("Move impossible");
