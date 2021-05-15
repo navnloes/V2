@@ -91,8 +91,10 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     *  updatePlayer while name semi missleading also contains the fieldAction visual elements for the board
+     *  updateSpaces contains the fieldAction visual elements for the board
      *  that gets created when spaces are being setup.
+     *
+     * @author S205354, S205353
      */
 
     private void updateSpaces() {
