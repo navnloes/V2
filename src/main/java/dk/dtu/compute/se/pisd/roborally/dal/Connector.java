@@ -56,7 +56,7 @@ public class Connector {
 			createDatabaseSchema("schemas/createdatabase.sql");
 			createDatabaseSchema("schemas/createschema.sql");
 		} catch (SQLException e) {
-			// TODO we should try to diagnose and fix some problems here and
+			// we should try to diagnose and fix some problems here and
 			//      exit in a more graceful way
 			e.printStackTrace();
 			// Platform.exit();
@@ -81,7 +81,7 @@ public class Connector {
     		connection.commit();
     	} catch (SQLException e) {
     		e.printStackTrace();
-    		// TODO error handling
+    		// error handling
     		try {
 				connection.rollback();
 			} catch (SQLException e1) {}

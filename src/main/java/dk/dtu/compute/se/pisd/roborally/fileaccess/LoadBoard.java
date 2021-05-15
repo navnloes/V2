@@ -59,7 +59,7 @@ public class LoadBoard {
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(BOARDSFOLDER + "/" + boardname + "." + JSON_EXT);
         if (inputStream == null) {
-            // TODO these constants should be defined somewhere
+            // these constants should be defined somewhere
             return createBoard(8, 8, boardname, false);
         }
 
@@ -126,14 +126,14 @@ public class LoadBoard {
                     spaceTemplate.x = space.x;
                     spaceTemplate.y = space.y;
                     spaceTemplate.actions.addAll(space.getActions());
-                    //TODO:spaceTemplate.walls.addAll(space.getWalls());
+                    //spaceTemplate.walls.addAll(space.getWalls());
                     template.spaces.add(spaceTemplate);
                 }
             }
         }
 
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
-        // TODO: this is not very defensive, and will result in a NullPointerException
+        //  this is not very defensive, and will result in a NullPointerException
         //       when the folder "resources" does not exist! But, it does not need
         //       the file "simpleCards.json" to exist!
         String filename =

@@ -18,8 +18,6 @@ class PlayerTest {
 
     private GameController gameController;
 
-
-    //TODO: hvad er det
     @BeforeEach
     void setUp() {
         Board board = new Board(TEST_WIDTH, TEST_HEIGHT);
