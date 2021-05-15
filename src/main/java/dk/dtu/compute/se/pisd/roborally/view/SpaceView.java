@@ -161,9 +161,13 @@ public class SpaceView extends StackPane implements ViewObserver {
                 } else {
                     gc.setFill(Color.DARKGREEN);
                 }
+
                 gc.fillOval(17.5, 17.5, 40, 40);
 
                 Label label = new Label(((GearsFieldAction) fieldAction).getDirection().toString());
+
+                this.getChildren().add(canvas);
+                canvas.toBack();
 
                 this.getChildren().add(gearPart1);
                 gearPart1.toBack();
@@ -176,6 +180,8 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 this.getChildren().add(label);
 
+
+
                 //PitFieldAction
             } else if (fieldAction instanceof PitFieldAction) {
                 gc.setLineWidth(1);
@@ -186,6 +192,16 @@ public class SpaceView extends StackPane implements ViewObserver {
                 gc.strokeOval(12.5, 12.5, 51, 51);
                 Node label = new Label("Pit");
                 this.getChildren().add(label);
+            }
+
+            try {
+
+                if (!(fieldAction instanceof GearsFieldAction)) {
+                    this.getChildren().add(canvas);
+                    canvas.toBack();}
+            }
+            catch (Exception e) {
+                System.out.println("Unable to create multi Canvas");
             }
         }
 
@@ -214,15 +230,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
 
-        try {
 
-            this.getChildren().add(canvas);
-            canvas.toBack();
-
-        }
-        catch (Exception e) {
-            System.out.println("Unable to create multi Canvas");
-        }
 
     }
 
