@@ -48,6 +48,10 @@ public class RoboRallyMenuBar extends MenuBar {
 
     private MenuItem exitApp;
 
+    /**
+     * This is the constructor of the RoboRallyMenuBar
+     * @param appController Appcontroller appController
+     */
     public RoboRallyMenuBar(AppController appController) {
         this.appController = appController;
 
@@ -79,6 +83,9 @@ public class RoboRallyMenuBar extends MenuBar {
         update();
     }
 
+    /**
+     * This method updates the menubar
+     */
     public void update() {
         if (appController.isGameRunning()) {
             newGame.setVisible(false);

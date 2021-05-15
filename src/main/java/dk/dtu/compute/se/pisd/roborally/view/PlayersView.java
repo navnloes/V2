@@ -39,6 +39,10 @@ public class PlayersView extends TabPane implements ViewObserver {
 
     private PlayerView[] playerViews;
 
+    /**
+     * This is the constructor of PlayersView
+     * @param gameController Gamecontroller gameController
+     */
     public PlayersView(GameController gameController) {
         board = gameController.board;
 

@@ -27,13 +27,24 @@ public class DoubleConveyorBeltFieldAction extends FieldAction{
 
     Heading heading;
 
+    /**
+     * This is the constructor of this doubleConveyorBeltFieldAction
+     */
     public DoubleConveyorBeltFieldAction(){
     }
 
+    /**
+     * This getter returns the heading of this doubleConveyorBeltFieldAction
+     * @return Heading heading
+     */
     public Heading getHeading(){
         return heading;
     }
 
+    /**
+     * This setter sets the heading of this doubleConveyorBeltFieldAction
+     * @param heading
+     */
     public void setHeading(Heading heading){
         this.heading = heading;
     }
