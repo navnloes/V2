@@ -443,7 +443,7 @@ class Repository implements IRepository {
     }
 
     private static final String SQL_SELECT_GAMES =
-            "SELECT gameID, name FROM Game";
+            "SELECT gameID, name FROM Game ORDER BY gameID desc";
 
     private PreparedStatement select_games_stmt = null;
 
