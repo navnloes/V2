@@ -5,6 +5,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import java.util.*;
 
 /**
+ * This is the PriorityAntenna class which calculates the activation order of the robots
  * @author s205353, s205354,  s205352
  */
 
